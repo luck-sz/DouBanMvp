@@ -10,5 +10,5 @@ package com.example.douban.app.data.api;
  * ================================================
  */
 public interface Api {
-    String APP_DOMAIN = "https://api.bgm.tv";
+    String APP_DOMAIN = "http://api.douban.com";
 }
