@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -174,7 +175,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
 
     @Override
     public void setMovieItem(MovieItemAdapter movieItemAdapter) {
-        mRecycleView.setLayoutManager(new LinearLayoutManager(_mActivity));
+        mRecycleView.setLayoutManager(new GridLayoutManager(_mActivity, 3));
         mRecycleView.setAdapter(movieItemAdapter);
     }
 }

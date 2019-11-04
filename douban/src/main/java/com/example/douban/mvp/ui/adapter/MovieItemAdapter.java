@@ -34,17 +34,16 @@ public class MovieItemAdapter extends BaseSectionMultiItemQuickAdapter<SectionMu
     protected void convert(@NonNull BaseViewHolder helper, SectionMultipleItem item) {
         // deal with multiple type items viewHolder
 
-        helper.addOnClickListener(R.id.card_view);
         switch (helper.getItemViewType()) {
             case MultipleItem.HOT_ITEM:
-//                ArmsUtils.obtainAppComponentFromContext(mContext)
-//                        .imageLoader()
-//                        .loadImage(mContext, ImageConfigImpl
-//                                .builder()
-//                                .imageView(helper.getView(R.id.iv))
-//                                .url(item.getEntriesBean().getImages().getLarge())
-//                                .build());
-                helper.setText(R.id.tv_name, item.getEntriesBean().getTitle());
+                ArmsUtils.obtainAppComponentFromContext(mContext)
+                        .imageLoader()
+                        .loadImage(mContext, ImageConfigImpl
+                                .builder()
+                                .imageView(helper.getView(R.id.iv_img))
+                                .url(item.getEntriesBean().getImages().getLarge())
+                                .build());
+                helper.setText(R.id.tv_movie_name, item.getEntriesBean().getTitle());
                 break;
             case MultipleItem.COMING_ITEM:
                 helper.setImageResource(R.id.iv, R.mipmap.animation_img2);
