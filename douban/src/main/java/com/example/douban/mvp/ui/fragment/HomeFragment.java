@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,11 @@ import android.view.ViewGroup;
 import com.example.douban.R;
 import com.example.douban.app.base.MySupportFragment;
 import com.example.douban.app.data.entity.Banner;
+import com.example.douban.app.data.entity.home.SectionMultipleItem;
 import com.example.douban.di.component.DaggerHomeComponent;
 import com.example.douban.mvp.contract.HomeContract;
 import com.example.douban.mvp.presenter.HomePresenter;
+import com.example.douban.mvp.ui.adapter.MovieItemAdapter;
 import com.example.douban.mvp.ui.view.BannerViewHolder;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
@@ -25,8 +28,6 @@ import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -45,10 +46,14 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  */
 public class HomeFragment extends MySupportFragment<HomePresenter> implements HomeContract.View {
 
-    @BindView(R.id.my_banner)
-    MZBannerView myBanner;
+    @BindView(R.id.rv_list)
+    RecyclerView mRecycleView;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout mRefreshLayout;
 
-    private View view;
+    View view;
+    View mBannerView;
+    MZBannerView mMyBanner;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -76,24 +81,23 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     @Override
     public void onPause() {
         super.onPause();
-        myBanner.pause();//暂停轮播
+        mMyBanner.pause();//暂停轮播
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        myBanner.start();//开始轮播
+        mMyBanner.start();//开始轮播
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
-        super.onLazyInitView(savedInstanceState);
-        mPresenter.getBanners();
+        initBannerView();
+        initRefreshLayout();
+        if (mPresenter != null) {
+            mPresenter.getBanners();
+            mPresenter.getAllData();
+        }
     }
 
     @Override
@@ -103,12 +107,12 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
 
     @Override
     public void showLoading() {
-
+        mRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideLoading() {
-
+        mRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -128,22 +132,49 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
 
     }
 
+    private void initBannerView() {
+        mBannerView = getLayoutInflater().inflate(R.layout.view_banner, null, false);
+        mMyBanner = mBannerView.findViewById(R.id.my_banner);
+    }
+
+    private void initRefreshLayout() {
+        mRefreshLayout.setColorSchemeColors(ArmsUtils.getColor(_mActivity, R.color.colorPrimary));
+        mRefreshLayout.setOnRefreshListener(() -> {
+            if (mPresenter != null) {
+                mPresenter.getAllData();
+            }
+        });
+    }
+
     @Override
     public void setBanner(List<Banner> banners) {
-        myBanner.setIndicatorVisible(false);
-        myBanner.setDelayedTime(3000);
-        myBanner.setDuration(1500);
-        myBanner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
+        mMyBanner.setIndicatorVisible(false);
+        mMyBanner.setDelayedTime(3000);
+        mMyBanner.setDuration(1500);
+        mMyBanner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int position) {
             }
         });
-        myBanner.setPages(banners, new MZHolderCreator<BannerViewHolder>() {
+        mMyBanner.setPages(banners, new MZHolderCreator<BannerViewHolder>() {
             @Override
             public BannerViewHolder createViewHolder() {
                 return new BannerViewHolder();
             }
         });
-        myBanner.start();
+        mMyBanner.start();
+    }
+
+    @Override
+    public void addHeadView(MovieItemAdapter movieItemAdapter) {
+        if (movieItemAdapter.getHeaderLayoutCount() < 1) {
+            movieItemAdapter.addHeaderView(mBannerView);
+        }
+    }
+
+    @Override
+    public void setMovieItem(MovieItemAdapter movieItemAdapter) {
+        mRecycleView.setLayoutManager(new LinearLayoutManager(_mActivity));
+        mRecycleView.setAdapter(movieItemAdapter);
     }
 }

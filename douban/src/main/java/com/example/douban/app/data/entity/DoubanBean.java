@@ -4,7 +4,6 @@ import java.util.List;
 
 public class DoubanBean {
 
-
     /**
      * title : 正在上映的电影
      * total : 51

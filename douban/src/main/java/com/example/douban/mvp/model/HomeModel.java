@@ -2,7 +2,10 @@ package com.example.douban.mvp.model;
 
 import android.app.Application;
 
+import com.example.douban.app.data.api.service.DouBanService;
 import com.example.douban.app.data.entity.Banner;
+import com.example.douban.app.data.entity.DoubanBean;
+import com.example.douban.app.data.entity.home.SectionMultipleItem;
 import com.google.gson.Gson;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
@@ -25,7 +28,7 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 
 /**
@@ -67,23 +70,40 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                 Document document = Jsoup.connect("https://movie.douban.com/").get();
                 emitter.onNext(document);
             }
-        }).subscribeOn(Schedulers.io())
-                .flatMap(new Function<Document, ObservableSource<List<Banner>>>() {
+        }).flatMap(new Function<Document, ObservableSource<List<Banner>>>() {
+            @Override
+            public ObservableSource<List<Banner>> apply(Document document) throws Exception {
+                Elements home = document.select("div.gallery-frame");
+                Elements bd = document.select("div.gallery-bd");
+                List<Banner> banners = new ArrayList<>();
+                for (int i = 0; i < home.size(); i++) {
+                    String img = home.get(i).select("a").select("img").attr("src");
+                    String title = home.get(i).select("a").select("img").attr("alt");
+                    String content = bd.get(i).select("p").text();
+                    String detail = home.get(i).select("a").attr("href");
+                    Banner banner = new Banner(img, title, content, detail);
+                    banners.add(banner);
+                }
+                return Observable.just(banners);
+            }
+        });
+    }
+
+    @Override
+    public Observable<List<SectionMultipleItem>> getAllData() {
+        List<SectionMultipleItem> list = new ArrayList<>();
+        return mRepositoryManager.obtainRetrofitService(DouBanService.class)
+                .getNowPlaying()
+                .map(new Function<DoubanBean, List<SectionMultipleItem>>() {
                     @Override
-                    public ObservableSource<List<Banner>> apply(Document document) throws Exception {
-                        Elements home = document.select("div.gallery-frame");
-                        Elements bd = document.select("div.gallery-bd");
-                        List<Banner> banners = new ArrayList<>();
-                        for (int i = 0; i < home.size(); i++) {
-                            String img = home.get(i).select("a").select("img").attr("src");
-                            String title = home.get(i).select("a").select("img").attr("alt");
-                            String content = bd.get(i).select("p").text();
-                            String detail = home.get(i).select("a").attr("href");
-                            Banner banner = new Banner(img, title, content, detail);
-                            banners.add(banner);
+                    public List<SectionMultipleItem> apply(DoubanBean doubanBean) throws Exception {
+                        list.add(0, new SectionMultipleItem(true, "影院热映", true));
+                        for (int i = 0; i < 6; i++) {
+                            list.add(new SectionMultipleItem(SectionMultipleItem.HOT_ITEM, doubanBean.getEntries().get(i)));
                         }
-                        return Observable.just(banners);
+                        return list;
                     }
                 });
     }
+
 }

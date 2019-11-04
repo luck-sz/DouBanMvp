@@ -64,6 +64,8 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.9.2'
     // 仿魅族Banner
     implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
+    // BaseRecycleAdapter
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
     //tools
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
 
