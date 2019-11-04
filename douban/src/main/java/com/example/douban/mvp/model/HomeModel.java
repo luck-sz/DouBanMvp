@@ -27,6 +27,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 import timber.log.Timber;
 
@@ -91,19 +92,53 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
 
     @Override
     public Observable<List<SectionMultipleItem>> getAllData() {
-        List<SectionMultipleItem> list = new ArrayList<>();
-        return mRepositoryManager.obtainRetrofitService(DouBanService.class)
-                .getNowPlaying()
-                .map(new Function<DoubanBean, List<SectionMultipleItem>>() {
+        List<SectionMultipleItem> hotList = new ArrayList<>();
+        List<SectionMultipleItem> comingList = new ArrayList<>();
+        List<SectionMultipleItem> allData = new ArrayList<>();
+
+        return Observable.zip(mRepositoryManager.obtainRetrofitService(DouBanService.class)
+                        .getNowPlaying()
+                        .map(new Function<DoubanBean, List<SectionMultipleItem>>() {
+                            @Override
+                            public List<SectionMultipleItem> apply(DoubanBean doubanBean) throws Exception {
+                                hotList.add(0, new SectionMultipleItem(true, "影院热映", true));
+                                for (int i = 0; i < 6; i++) {
+                                    hotList.add(new SectionMultipleItem(SectionMultipleItem.HOT_ITEM, doubanBean.getEntries().get(i)));
+                                }
+                                return hotList;
+                            }
+                        }),
+                mRepositoryManager.obtainRetrofitService(DouBanService.class)
+                        .getComing()
+                        .map(new Function<DoubanBean, List<SectionMultipleItem>>() {
+                            @Override
+                            public List<SectionMultipleItem> apply(DoubanBean doubanBean) throws Exception {
+                                comingList.add(0, new SectionMultipleItem(true, "即将上映", true));
+                                for (int i = 0; i < 6; i++) {
+                                    comingList.add(new SectionMultipleItem(SectionMultipleItem.HOT_ITEM, doubanBean.getEntries().get(i)));
+                                }
+                                return comingList;
+                            }
+                        }), new BiFunction<List<SectionMultipleItem>, List<SectionMultipleItem>, List<SectionMultipleItem>>() {
                     @Override
-                    public List<SectionMultipleItem> apply(DoubanBean doubanBean) throws Exception {
-                        list.add(0, new SectionMultipleItem(true, "影院热映", true));
-                        for (int i = 0; i < 6; i++) {
-                            list.add(new SectionMultipleItem(SectionMultipleItem.HOT_ITEM, doubanBean.getEntries().get(i)));
-                        }
-                        return list;
+                    public List<SectionMultipleItem> apply(List<SectionMultipleItem> sectionMultipleItems, List<SectionMultipleItem> sectionMultipleItems1) throws Exception {
+                        sectionMultipleItems.addAll(sectionMultipleItems1);
+                        return null;
                     }
                 });
+
+//        return mRepositoryManager.obtainRetrofitService(DouBanService.class)
+//                .getNowPlaying()
+//                .map(new Function<DoubanBean, List<SectionMultipleItem>>() {
+//                    @Override
+//                    public List<SectionMultipleItem> apply(DoubanBean doubanBean) throws Exception {
+//                        list.add(0, new SectionMultipleItem(true, "影院热映", true));
+//                        for (int i = 0; i < 6; i++) {
+//                            list.add(new SectionMultipleItem(SectionMultipleItem.HOT_ITEM, doubanBean.getEntries().get(i)));
+//                        }
+//                        return list;
+//                    }
+//                });
     }
 
 }

@@ -10,7 +10,7 @@
         android:id="@+id/my_banner"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="3dp"
         app:canLoop="true"
         app:middle_page_cover="true"
         app:open_mz_mode="true" />
