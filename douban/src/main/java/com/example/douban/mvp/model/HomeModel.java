@@ -123,22 +123,9 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                     @Override
                     public List<SectionMultipleItem> apply(List<SectionMultipleItem> sectionMultipleItems, List<SectionMultipleItem> sectionMultipleItems1) throws Exception {
                         sectionMultipleItems.addAll(sectionMultipleItems1);
-                        return null;
+                        return sectionMultipleItems;
                     }
                 });
-
-//        return mRepositoryManager.obtainRetrofitService(DouBanService.class)
-//                .getNowPlaying()
-//                .map(new Function<DoubanBean, List<SectionMultipleItem>>() {
-//                    @Override
-//                    public List<SectionMultipleItem> apply(DoubanBean doubanBean) throws Exception {
-//                        list.add(0, new SectionMultipleItem(true, "影院热映", true));
-//                        for (int i = 0; i < 6; i++) {
-//                            list.add(new SectionMultipleItem(SectionMultipleItem.HOT_ITEM, doubanBean.getEntries().get(i)));
-//                        }
-//                        return list;
-//                    }
-//                });
     }
 
 }
