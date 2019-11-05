@@ -39,12 +39,41 @@
             android:layout_marginTop="3dp"
             android:paddingStart="3dp"
             android:paddingEnd="3dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginBottom="3dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/rating_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:stepSize="0.01"
+                android:rating="3.8"
+                android:layout_marginLeft="3dp"
+                android:minHeight="14dp"
+                android:maxHeight="14dp"
+                app:mrb_progressTint="#f44336"
+                style="@style/Widget.MaterialRatingBar.RatingBar.Indicator" />
+
+            <TextView
+                android:id="@+id/tv_rating"
+                android:text="9.6"
+                android:textSize="12sp"
+                android:layout_marginLeft="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 

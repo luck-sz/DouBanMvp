@@ -115,7 +115,7 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                             public List<SectionMultipleItem> apply(DoubanBean doubanBean) throws Exception {
                                 comingList.add(0, new SectionMultipleItem(true, "即将上映", true));
                                 for (int i = 0; i < 6; i++) {
-                                    comingList.add(new SectionMultipleItem(SectionMultipleItem.HOT_ITEM, doubanBean.getEntries().get(i)));
+                                    comingList.add(new SectionMultipleItem(SectionMultipleItem.COMING_ITEM, doubanBean.getEntries().get(i)));
                                 }
                                 return comingList;
                             }

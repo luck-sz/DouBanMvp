@@ -16,6 +16,7 @@ import com.example.douban.mvp.ui.fragment.HomeFragment;
 import com.gyf.immersionbar.ImmersionBar;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+import com.noober.background.BackgroundLibrary;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

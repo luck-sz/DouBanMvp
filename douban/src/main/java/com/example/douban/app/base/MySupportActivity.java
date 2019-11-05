@@ -17,6 +17,7 @@ import com.jess.arms.integration.cache.CacheType;
 import com.jess.arms.integration.lifecycle.ActivityLifecycleable;
 import com.jess.arms.mvp.IPresenter;
 import com.jess.arms.utils.ArmsUtils;
+import com.noober.background.BackgroundLibrary;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
@@ -61,6 +62,7 @@ public abstract class MySupportActivity<P extends IPresenter> extends SupportAct
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        BackgroundLibrary.inject(this);
         super.onCreate(savedInstanceState);
         try {
             int layoutResID = initView(savedInstanceState);
