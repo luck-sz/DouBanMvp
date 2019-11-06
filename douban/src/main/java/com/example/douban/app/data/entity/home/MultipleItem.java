@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 public class MultipleItem implements MultiItemEntity {
     public static final int HOT_ITEM = 1;
     public static final int COMING_ITEM = 2;
-    public static final int IMG_TEXT = 3;
+    public static final int MOVIE_ARENA = 3;
 
     public static final int TEXT_SPAN_SIZE = 3;
     public static final int IMG_SPAN_SIZE = 1;

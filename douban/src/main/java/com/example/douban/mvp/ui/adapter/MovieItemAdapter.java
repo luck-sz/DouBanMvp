@@ -3,7 +3,6 @@ package com.example.douban.mvp.ui.adapter;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseSectionMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.douban.R;
@@ -70,6 +69,7 @@ public class MovieItemAdapter extends BaseSectionMultiItemQuickAdapter<SectionMu
                 helper.setText(R.id.tv_movie_name, item.getEntriesBean().getTitle());
                 helper.setText(R.id.tv_wish, item.getEntriesBean().getWish() + "人想看");
                 helper.setText(R.id.tv_date, item.getEntriesBean().getPubdate());
+                break;
             default:
                 break;
         }

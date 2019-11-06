@@ -29,7 +29,6 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
-import timber.log.Timber;
 
 
 /**
@@ -94,7 +93,6 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     public Observable<List<SectionMultipleItem>> getAllData() {
         List<SectionMultipleItem> hotList = new ArrayList<>();
         List<SectionMultipleItem> comingList = new ArrayList<>();
-        List<SectionMultipleItem> allData = new ArrayList<>();
 
         return Observable.zip(mRepositoryManager.obtainRetrofitService(DouBanService.class)
                         .getNowPlaying()
@@ -117,6 +115,7 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                                 for (int i = 0; i < 6; i++) {
                                     comingList.add(new SectionMultipleItem(SectionMultipleItem.COMING_ITEM, doubanBean.getEntries().get(i)));
                                 }
+                                comingList.add(new SectionMultipleItem(true, "电影榜单", false));
                                 return comingList;
                             }
                         }), new BiFunction<List<SectionMultipleItem>, List<SectionMultipleItem>, List<SectionMultipleItem>>() {

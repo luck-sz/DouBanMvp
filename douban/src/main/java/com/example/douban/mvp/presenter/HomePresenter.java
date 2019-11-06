@@ -107,6 +107,7 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
             movieItemAdapter = new MovieItemAdapter(R.layout.section_head, sectionMultipleItems);
         }
         mRootView.addHeadView(movieItemAdapter);
+        mRootView.addFootView(movieItemAdapter);
         mRootView.setMovieItem(movieItemAdapter);
 
     }

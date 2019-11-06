@@ -2,7 +2,6 @@ package com.example.douban.app.data.entity.home;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.chad.library.adapter.base.entity.SectionMultiEntity;
-import com.example.douban.app.data.entity.Banner;
 import com.example.douban.app.data.entity.DoubanBean;
 
 /**
@@ -16,20 +15,6 @@ public class SectionMultipleItem extends SectionMultiEntity<Object> implements M
     private int itemType;
     private boolean isMore;
     private DoubanBean.EntriesBean entriesBean;
-//    private Banner banner;
-//
-//    public Banner getBanner() {
-//        return banner;
-//    }
-//
-//    public void setBanner(Banner banner) {
-//        this.banner = banner;
-//    }
-//
-//    public SectionMultipleItem(int itemType, Banner banner){
-//        super(banner);
-//        this.banner = banner;
-//    }
 
     public SectionMultipleItem(boolean isHeader, String header, boolean isMore) {
         super(isHeader, header);

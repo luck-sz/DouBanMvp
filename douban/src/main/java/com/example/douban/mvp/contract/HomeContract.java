@@ -32,6 +32,8 @@ public interface HomeContract {
         void addHeadView(MovieItemAdapter movieItemAdapter);
 
         void setMovieItem(MovieItemAdapter movieItemAdapter);
+
+        void addFootView(MovieItemAdapter movieItemAdapter);
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存

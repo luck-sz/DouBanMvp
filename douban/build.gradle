@@ -68,8 +68,10 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
     // 评分控件
     implementation 'me.zhanghai.android.materialratingbar:library:1.3.2'
-    //
+    // 控件样式
     implementation 'com.noober.background:core:1.6.0'
+    //基础工具库
+    implementation "com.github.tamsiree.RxTool:RxKit:2.3.9"
     //tools
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
 

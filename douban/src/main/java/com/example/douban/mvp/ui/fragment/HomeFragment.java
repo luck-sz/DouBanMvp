@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
 
     View view;
     View mBannerView;
+    View mFootView;
     MZBannerView mMyBanner;
 
     public static HomeFragment newInstance() {
@@ -94,6 +96,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         initBannerView();
+        initFootView();
         initRefreshLayout();
         if (mPresenter != null) {
             mPresenter.getBanners();
@@ -138,6 +141,10 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         mMyBanner = mBannerView.findViewById(R.id.my_banner);
     }
 
+    private void initFootView() {
+        mFootView = getLayoutInflater().inflate(R.layout.view_foot, null, false);
+    }
+
     private void initRefreshLayout() {
         mRefreshLayout.setColorSchemeColors(ArmsUtils.getColor(_mActivity, R.color.colorPrimary));
         mRefreshLayout.setOnRefreshListener(() -> {
@@ -177,5 +184,10 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     public void setMovieItem(MovieItemAdapter movieItemAdapter) {
         mRecycleView.setLayoutManager(new GridLayoutManager(_mActivity, 3));
         mRecycleView.setAdapter(movieItemAdapter);
+    }
+
+    @Override
+    public void addFootView(MovieItemAdapter movieItemAdapter) {
+//        movieItemAdapter.addFooterView(mFootView);
     }
 }
