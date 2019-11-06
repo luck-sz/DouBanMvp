@@ -48,14 +48,8 @@ public class MovieItemAdapter extends BaseSectionMultiItemQuickAdapter<SectionMu
                 // 电影名字
                 helper.setText(R.id.tv_movie_name, item.getEntriesBean().getTitle());
                 // 评分
-                if (!item.getEntriesBean().getRating().equals("")) {
-                    helper.ratingBar.setRating(Float.parseFloat(item.getEntriesBean().getRating()) / 2);
-                    helper.setText(R.id.tv_rating, item.getEntriesBean().getRating());
-                } else {
-                    helper.ratingBar.setRating(0);
-                    helper.setText(R.id.tv_rating, "0.0");
-                }
-
+                helper.ratingBar.setRating(Float.parseFloat(item.getEntriesBean().getRating()) / 2);
+                helper.setText(R.id.tv_rating, item.getEntriesBean().getRating());
                 break;
             case MultipleItem.COMING_ITEM:
                 ArmsUtils.obtainAppComponentFromContext(mContext)

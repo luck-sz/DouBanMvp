@@ -6,13 +6,16 @@ import android.view.ViewGroup;
 
 import com.example.douban.R;
 import com.example.douban.app.data.entity.Banner;
+import com.example.douban.app.data.entity.MoviesList;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
 import com.example.douban.mvp.ui.adapter.MovieItemAdapter;
+import com.example.douban.mvp.ui.adapter.MoviesListAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
 
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
@@ -50,8 +53,8 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     @Inject
     AppManager mAppManager;
 
-    MovieItemAdapter movieItemAdapter;
-
+    private MovieItemAdapter movieItemAdapter;
+    private MoviesListAdapter moviesListAdapter;
 
     @Inject
     public HomePresenter(HomeContract.Model model, HomeContract.View rootView) {
@@ -109,7 +112,25 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
         mRootView.addHeadView(movieItemAdapter);
         mRootView.addFootView(movieItemAdapter);
         mRootView.setMovieItem(movieItemAdapter);
+    }
 
+    private void getFootDate() {
+        mModel.getFootData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    mRootView.showLoading();
+                })
+                .doFinally(() -> {
+                    mRootView.hideLoading();
+                })
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<MoviesList>(mErrorHandler) {
+                    @Override
+                    public void onNext(MoviesList moviesList) {
+
+                    }
+                });
     }
 
 }

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.douban.R;
 import com.example.douban.app.base.MySupportFragment;
@@ -30,6 +31,7 @@ import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import java.util.List;
 
 import butterknife.BindView;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -188,6 +190,9 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
 
     @Override
     public void addFootView(MovieItemAdapter movieItemAdapter) {
-//        movieItemAdapter.addFooterView(mFootView);
+        if (movieItemAdapter.getFooterLayoutCount() == 0) {
+            Timber.d("添加了布局");
+            movieItemAdapter.addFooterView(mFootView);
+        }
     }
 }

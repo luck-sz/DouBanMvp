@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.douban.app.data.api.service.DouBanService;
 import com.example.douban.app.data.entity.Banner;
 import com.example.douban.app.data.entity.DoubanBean;
+import com.example.douban.app.data.entity.MoviesList;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
 import com.google.gson.Gson;
 import com.jess.arms.integration.IRepositoryManager;
@@ -100,8 +101,10 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                             @Override
                             public List<SectionMultipleItem> apply(DoubanBean doubanBean) throws Exception {
                                 hotList.add(0, new SectionMultipleItem(true, "影院热映", true));
-                                for (int i = 0; i < 6; i++) {
-                                    hotList.add(new SectionMultipleItem(SectionMultipleItem.HOT_ITEM, doubanBean.getEntries().get(i)));
+                                for (int i = 0; i < doubanBean.getEntries().size(); i++) {
+                                    if (!doubanBean.getEntries().get(i).getRating().equals("") && hotList.size() < 7) {
+                                        hotList.add(new SectionMultipleItem(SectionMultipleItem.HOT_ITEM, doubanBean.getEntries().get(i)));
+                                    }
                                 }
                                 return hotList;
                             }
@@ -115,7 +118,7 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                                 for (int i = 0; i < 6; i++) {
                                     comingList.add(new SectionMultipleItem(SectionMultipleItem.COMING_ITEM, doubanBean.getEntries().get(i)));
                                 }
-                                comingList.add(new SectionMultipleItem(true, "电影榜单", false));
+                                comingList.add(new SectionMultipleItem(true, "电影榜单", true));
                                 return comingList;
                             }
                         }), new BiFunction<List<SectionMultipleItem>, List<SectionMultipleItem>, List<SectionMultipleItem>>() {
@@ -125,6 +128,13 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                         return sectionMultipleItems;
                     }
                 });
+    }
+
+    @Override
+    public Observable<MoviesList> getFootData() {
+        return mRepositoryManager
+                .obtainRetrofitService(DouBanService.class)
+                .getWeekly();
     }
 
 }
