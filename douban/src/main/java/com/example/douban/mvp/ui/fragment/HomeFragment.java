@@ -22,6 +22,7 @@ import com.example.douban.di.component.DaggerHomeComponent;
 import com.example.douban.mvp.contract.HomeContract;
 import com.example.douban.mvp.presenter.HomePresenter;
 import com.example.douban.mvp.ui.adapter.MovieItemAdapter;
+import com.example.douban.mvp.ui.adapter.MoviesListAdapter;
 import com.example.douban.mvp.ui.view.BannerViewHolder;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
@@ -59,6 +60,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     View mBannerView;
     View mFootView;
     MZBannerView mMyBanner;
+    RecyclerView mFootRecycler;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -102,6 +104,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         initRefreshLayout();
         if (mPresenter != null) {
             mPresenter.getBanners();
+            mPresenter.getFootDate();
             mPresenter.getAllData();
         }
     }
@@ -145,6 +148,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
 
     private void initFootView() {
         mFootView = getLayoutInflater().inflate(R.layout.view_foot, null, false);
+        mFootRecycler = mFootView.findViewById(R.id.rv_movies_list);
     }
 
     private void initRefreshLayout() {
@@ -189,9 +193,14 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     }
 
     @Override
+    public void setMoviesListItem(MoviesListAdapter moviesListItem) {
+        mFootRecycler.setLayoutManager(new LinearLayoutManager(_mActivity, LinearLayoutManager.HORIZONTAL, false));
+        mFootRecycler.setAdapter(moviesListItem);
+    }
+
+    @Override
     public void addFootView(MovieItemAdapter movieItemAdapter) {
         if (movieItemAdapter.getFooterLayoutCount() == 0) {
-            Timber.d("添加了布局");
             movieItemAdapter.addFooterView(mFootView);
         }
     }

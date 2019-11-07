@@ -11,21 +11,21 @@ import com.jess.arms.utils.ArmsUtils;
 
 import java.util.List;
 
-public class MoviesListAdapter extends BaseQuickAdapter<MoviesList, BaseViewHolder> {
+public class MoviesListAdapter extends BaseQuickAdapter<MoviesList.SubjectsBean, BaseViewHolder> {
 
-    public MoviesListAdapter(int layoutResId, List<MoviesList> data) {
+    public MoviesListAdapter(int layoutResId, List<MoviesList.SubjectsBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, MoviesList item) {
-        helper.setText(R.id.tv_movies_list_title, item.getTitle());
+    protected void convert(@NonNull BaseViewHolder helper, MoviesList.SubjectsBean item) {
+        helper.setText(R.id.tv_movies_list_title, "一周口碑电影榜");
         ArmsUtils.obtainAppComponentFromContext(mContext)
                 .imageLoader()
                 .loadImage(mContext, ImageConfigImpl
                         .builder()
                         .imageView(helper.getView(R.id.movies_img))
-                        .url(item.getSubjects().get(0).getSubject().getImages().getLarge())
+                        .url(item.getSubject().getImages().getLarge())
                         .build());
     }
 }

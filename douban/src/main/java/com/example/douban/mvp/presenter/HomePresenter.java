@@ -114,23 +114,24 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
         mRootView.setMovieItem(movieItemAdapter);
     }
 
-    private void getFootDate() {
+    public void getFootDate() {
         mModel.getFootData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> {
-                    mRootView.showLoading();
-                })
-                .doFinally(() -> {
-                    mRootView.hideLoading();
-                })
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
                 .subscribe(new ErrorHandleSubscriber<MoviesList>(mErrorHandler) {
                     @Override
                     public void onNext(MoviesList moviesList) {
-
+                        setListMovieAdapter(moviesList);
                     }
                 });
+    }
+
+    private void setListMovieAdapter(MoviesList moviesList) {
+        if (moviesListAdapter == null) {
+            moviesListAdapter = new MoviesListAdapter(R.layout.item_movies_list, moviesList.getSubjects());
+        }
+        mRootView.setMoviesListItem(moviesListAdapter);
     }
 
 }

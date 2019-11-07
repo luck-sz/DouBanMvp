@@ -14,12 +14,13 @@
         android:foreground="?android:attr/selectableItemBackground"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="4dp"
+        android:layout_marginBottom="12dp"
         app:cardElevation="2dp"
         app:cardUseCompatPadding="true">
 
         <ImageView
             android:id="@+id/movies_img"
-            android:layout_width="180dp"
+            android:layout_width="220dp"
             android:layout_height="180dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher" />
