@@ -1,11 +1,15 @@
 package com.example.douban.mvp.model;
 
 import android.app.Application;
+import android.graphics.Movie;
 
 import com.example.douban.app.data.api.service.DouBanService;
 import com.example.douban.app.data.entity.Banner;
 import com.example.douban.app.data.entity.DoubanBean;
-import com.example.douban.app.data.entity.MoviesList;
+import com.example.douban.app.data.entity.MovieListBean;
+import com.example.douban.app.data.entity.NewMoviesBean;
+import com.example.douban.app.data.entity.UsBoxBean;
+import com.example.douban.app.data.entity.WeeklyBean;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
 import com.google.gson.Gson;
 import com.jess.arms.integration.IRepositoryManager;
@@ -23,13 +27,16 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
+import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Function3;
 
 
 /**
@@ -131,10 +138,69 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     }
 
     @Override
-    public Observable<MoviesList> getFootData() {
-        return mRepositoryManager
-                .obtainRetrofitService(DouBanService.class)
-                .getWeekly();
+    public Observable<List<MovieListBean>> getMovieListData() {
+        Observable<MovieListBean> weeklyObservable = mRepositoryManager.obtainRetrofitService(DouBanService.class)
+                .getWeekly()
+                .map(new Function<WeeklyBean, MovieListBean>() {
+                    @Override
+                    public MovieListBean apply(WeeklyBean weeklyBean) throws Exception {
+                        List<MovieListBean.Movie> movies = new ArrayList<>();
+                        MovieListBean movieListBean = new MovieListBean();
+                        movieListBean.setTitle("一周口碑电影榜");
+                        movieListBean.setSize(weeklyBean.getSubjects().size());
+                        movieListBean.setImg(weeklyBean.getSubjects().get(0).getSubject().getImages().getLarge());
+                        for (int i = 0; i < 3; i++) {
+                            movies.add(new MovieListBean.Movie(i + 1, weeklyBean.getSubjects().get(i).getSubject().getTitle(), weeklyBean.getSubjects().get(i).getSubject().getRating().getAverage()));
+                        }
+                        movieListBean.setMovies(movies);
+                        return movieListBean;
+                    }
+                });
+        Observable<MovieListBean> newMoviesObservable = mRepositoryManager.obtainRetrofitService(DouBanService.class)
+                .getNewMovies()
+                .map(new Function<NewMoviesBean, MovieListBean>() {
+                    @Override
+                    public MovieListBean apply(NewMoviesBean newMoviesBean) throws Exception {
+                        MovieListBean movieListBean = new MovieListBean();
+                        List<MovieListBean.Movie> movies = new ArrayList<>();
+                        movieListBean.setTitle("一周新电影榜");
+                        movieListBean.setSize(newMoviesBean.getSubjects().size());
+                        movieListBean.setImg(newMoviesBean.getSubjects().get(0).getImages().getLarge());
+                        for (int i = 0; i < 3; i++) {
+                            movies.add(new MovieListBean.Movie(i + 1, newMoviesBean.getSubjects().get(i).getTitle(), newMoviesBean.getSubjects().get(i).getRating().getAverage()));
+                        }
+                        movieListBean.setMovies(movies);
+                        return movieListBean;
+                    }
+                });
+        Observable<MovieListBean> usBoxObservable = mRepositoryManager.obtainRetrofitService(DouBanService.class)
+                .getUsBox()
+                .map(new Function<UsBoxBean, MovieListBean>() {
+                    @Override
+                    public MovieListBean apply(UsBoxBean usBoxBean) throws Exception {
+                        MovieListBean movieListBean = new MovieListBean();
+                        List<MovieListBean.Movie> movies = new ArrayList<>();
+                        movieListBean.setTitle("北美票房榜");
+                        movieListBean.setSize(usBoxBean.getSubjects().size());
+                        movieListBean.setImg(usBoxBean.getSubjects().get(0).getSubject().getImages().getLarge());
+                        for (int i = 0; i < 3; i++) {
+                            movies.add(new MovieListBean.Movie(i + 1, usBoxBean.getSubjects().get(i).getSubject().getTitle(), 1.2));
+                        }
+                        movieListBean.setMovies(movies);
+                        return movieListBean;
+                    }
+                });
+
+        return Observable.zip(weeklyObservable, newMoviesObservable, usBoxObservable, new Function3<MovieListBean, MovieListBean, MovieListBean, List<MovieListBean>>() {
+            @Override
+            public List<MovieListBean> apply(MovieListBean list1, MovieListBean list2, MovieListBean list3) throws Exception {
+                List<MovieListBean> movieListBeans = new ArrayList<>();
+                movieListBeans.add(list1);
+                movieListBeans.add(list2);
+                movieListBeans.add(list3);
+                return movieListBeans;
+            }
+        });
     }
 
 }

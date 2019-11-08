@@ -104,7 +104,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         initRefreshLayout();
         if (mPresenter != null) {
             mPresenter.getBanners();
-            mPresenter.getFootDate();
+            mPresenter.getMovieListData();
             mPresenter.getAllData();
         }
     }

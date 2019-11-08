@@ -2,6 +2,10 @@ package com.example.douban.app.data.entity;
 
 public class Banner {
 
+    /**
+     * 首页Banner
+     */
+
     private String img;
     private String title;
     private String content;

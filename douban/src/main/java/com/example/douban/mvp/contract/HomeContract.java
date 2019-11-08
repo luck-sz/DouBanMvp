@@ -1,7 +1,8 @@
 package com.example.douban.mvp.contract;
 
 import com.example.douban.app.data.entity.Banner;
-import com.example.douban.app.data.entity.MoviesList;
+import com.example.douban.app.data.entity.MovieListBean;
+import com.example.douban.app.data.entity.WeeklyBean;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
 import com.example.douban.mvp.ui.adapter.MovieItemAdapter;
 import com.example.douban.mvp.ui.adapter.MoviesListAdapter;
@@ -46,7 +47,7 @@ public interface HomeContract {
         Observable<List<Banner>> getBanners();
         // 获取所有数据
         Observable<List<SectionMultipleItem>> getAllData();
-        // 获取电影榜单数据
-        Observable<MoviesList> getFootData();
+        // 获取电影榜单List
+        Observable<List<MovieListBean>> getMovieListData();
     }
 }

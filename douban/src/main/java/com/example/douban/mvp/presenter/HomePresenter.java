@@ -1,12 +1,11 @@
 package com.example.douban.mvp.presenter;
 
 import android.app.Application;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 
 import com.example.douban.R;
 import com.example.douban.app.data.entity.Banner;
-import com.example.douban.app.data.entity.MoviesList;
+import com.example.douban.app.data.entity.MovieListBean;
+import com.example.douban.app.data.entity.WeeklyBean;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
 import com.example.douban.mvp.ui.adapter.MovieItemAdapter;
 import com.example.douban.mvp.ui.adapter.MoviesListAdapter;
@@ -15,9 +14,7 @@ import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -114,22 +111,22 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
         mRootView.setMovieItem(movieItemAdapter);
     }
 
-    public void getFootDate() {
-        mModel.getFootData()
+    public void getMovieListData() {
+        mModel.getMovieListData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<MoviesList>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<List<MovieListBean>>(mErrorHandler) {
                     @Override
-                    public void onNext(MoviesList moviesList) {
-                        setListMovieAdapter(moviesList);
+                    public void onNext(List<MovieListBean> movieListBeans) {
+                        setListMovieAdapter(movieListBeans);
                     }
                 });
     }
 
-    private void setListMovieAdapter(MoviesList moviesList) {
+    private void setListMovieAdapter(List<MovieListBean> movieListBeans) {
         if (moviesListAdapter == null) {
-            moviesListAdapter = new MoviesListAdapter(R.layout.item_movies_list, moviesList.getSubjects());
+            moviesListAdapter = new MoviesListAdapter(R.layout.item_movies_list, movieListBeans);
         }
         mRootView.setMoviesListItem(moviesListAdapter);
     }

@@ -31,7 +31,19 @@
             android:textSize="18sp"
             android:textColor="@color/white"
             android:textStyle="bold"
+            android:layout_marginBottom="12dp"
             android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_movie_tip"
+            android:text="每周五更新  共10部"
+            android:textSize="12sp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="6dp"
+            android:textColor="@color/white"
+            android:layout_gravity="top|right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
