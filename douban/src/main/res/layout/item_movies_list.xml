@@ -31,7 +31,7 @@
             android:textSize="18sp"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="24dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -46,6 +46,45 @@
             android:layout_gravity="top|right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            android:background="#4C463A"
+            android:layout_gravity="bottom">
+
+            <TextView
+                android:id="@+id/tv_no_1"
+                android:text="1.少年的你"
+                android:textSize="16sp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_no_2"
+                android:text="2.续命之徒"
+                android:textSize="16sp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_no_3"
+                android:text="3.金发男子"
+                android:textSize="16sp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 </LinearLayout>
