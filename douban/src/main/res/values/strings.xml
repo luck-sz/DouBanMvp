@@ -3,4 +3,8 @@
 
     <string name="title_home">首页</string>
     <string name="main_search">搜索</string>
+
+    <string name="bottom_nav_home">首页</string>
+    <string name="bottom_nav_book">图书</string>
+    <string name="bottom_nav_my">我的</string>
 </resources>

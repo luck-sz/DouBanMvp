@@ -148,7 +148,7 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                         MovieListBean movieListBean = new MovieListBean();
                         movieListBean.setTitle("一周口碑电影榜");
                         movieListBean.setSize(weeklyBean.getSubjects().size());
-                        movieListBean.setImg(weeklyBean.getSubjects().get(0).getSubject().getImages().getLarge());
+                        movieListBean.setImg(weeklyBean.getSubjects().get(1).getSubject().getImages().getLarge());
                         for (int i = 0; i < 3; i++) {
                             movies.add(new MovieListBean.Movie(i + 1, weeklyBean.getSubjects().get(i).getSubject().getTitle(), weeklyBean.getSubjects().get(i).getSubject().getRating().getAverage()));
                         }
@@ -184,7 +184,7 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                         movieListBean.setSize(usBoxBean.getSubjects().size());
                         movieListBean.setImg(usBoxBean.getSubjects().get(0).getSubject().getImages().getLarge());
                         for (int i = 0; i < 3; i++) {
-                            movies.add(new MovieListBean.Movie(i + 1, usBoxBean.getSubjects().get(i).getSubject().getTitle(), 1.2));
+                            movies.add(new MovieListBean.Movie(i + 1, usBoxBean.getSubjects().get(i).getSubject().getTitle(), usBoxBean.getSubjects().get(i).getSubject().getRating().getAverage()));
                         }
                         movieListBean.setMovies(movies);
                         return movieListBean;

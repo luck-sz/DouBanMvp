@@ -9,5 +9,4 @@
     <include layout="@layout/include_title"/>
 
     <include layout="@layout/main_content" />
-
 </LinearLayout>

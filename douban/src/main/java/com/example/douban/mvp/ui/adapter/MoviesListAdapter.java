@@ -1,6 +1,8 @@
 package com.example.douban.mvp.ui.adapter;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -22,9 +24,10 @@ public class MoviesListAdapter extends BaseQuickAdapter<MovieListBean, BaseViewH
     protected void convert(@NonNull BaseViewHolder helper, MovieListBean item) {
         helper.setText(R.id.tv_movies_list_title, item.getTitle());
         helper.setText(R.id.tv_movie_tip, "每周五更新·共" + item.getSize() + "部");
-        helper.setText(R.id.tv_no_1, "1." + item.getMovies().get(0).getMovie_name());
-        helper.setText(R.id.tv_no_2, "2." + item.getMovies().get(1).getMovie_name());
-        helper.setText(R.id.tv_no_3, "3." + item.getMovies().get(2).getMovie_name());
+        RecyclerView mRecycleView = helper.getView(R.id.rv_sub_movie);
+        SubTitleAdapter subTitleAdapter = new SubTitleAdapter(R.layout.item_sub_title, item.getMovies());
+        mRecycleView.setLayoutManager(new LinearLayoutManager(mContext));
+        mRecycleView.setAdapter(subTitleAdapter);
         ArmsUtils.obtainAppComponentFromContext(mContext)
                 .imageLoader()
                 .loadImage(mContext, ImageConfigImpl
