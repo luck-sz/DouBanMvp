@@ -8,8 +8,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -55,6 +58,8 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     RecyclerView mRecycleView;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     View view;
     View mBannerView;
@@ -99,6 +104,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        initToolBar();
         initBannerView();
         initFootView();
         initRefreshLayout();
@@ -139,6 +145,24 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     @Override
     public void killMyself() {
 
+    }
+
+    private void initToolBar() {
+        toolbar.setTitle("首页");
+        toolbar.inflateMenu(R.menu.main_home_menu);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.home_search:
+                        showMessage("搜索...");
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     private void initBannerView() {

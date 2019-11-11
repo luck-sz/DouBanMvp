@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,11 +14,13 @@ import com.example.douban.app.base.MySupportActivity;
 import com.example.douban.di.component.DaggerMainComponent;
 import com.example.douban.mvp.contract.MainContract;
 import com.example.douban.mvp.presenter.MainPresenter;
+import com.example.douban.mvp.ui.fragment.BookFragment;
 import com.example.douban.mvp.ui.fragment.HomeFragment;
+import com.example.douban.mvp.ui.fragment.UserFragment;
 import com.gyf.immersionbar.ImmersionBar;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-import com.noober.background.BackgroundLibrary;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,8 +43,8 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  */
 public class MainActivity extends MySupportActivity<MainPresenter> implements MainContract.View {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.bottomNav)
+    BottomNavigationViewEx bottomNav;
     private SupportFragment[] mFragments = new SupportFragment[3];
 
     @Override
@@ -62,9 +65,8 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         initStatusBar();
-        initToolBar();
         initFragment();
-        showHideFragment(mFragments[0]);
+        initBottomNav();
     }
 
     @Override
@@ -94,12 +96,6 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
         finish();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_home_menu, menu);
-        return true;
-    }
-
     private void initStatusBar() {
         ImmersionBar.with(this)
                 .transparentStatusBar()
@@ -110,34 +106,45 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
                 .init();
     }
 
-    private void initToolBar() {
-        setSupportActionBar(toolbar);
-        toolbar.inflateMenu(R.menu.main_home_menu);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.main_search:
-                        showMessage("搜索...");
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
-    }
-
     private void initFragment() {
         SupportFragment firstFragment = findFragment(HomeFragment.class);
         if (firstFragment == null) {
             mFragments[0] = HomeFragment.newInstance();
+            mFragments[1] = BookFragment.newInstance();
+            mFragments[2] = UserFragment.newInstance();
+
             loadMultipleRootFragment(R.id.frame_content, 0,
-                    mFragments[0]
+                    mFragments[0],
+                    mFragments[1],
+                    mFragments[2]
             );
         } else {
             mFragments[0] = firstFragment;
+            mFragments[1] = findFragment(BookFragment.class);
+            mFragments[2] = findFragment(UserFragment.class);
         }
     }
 
+    private void initBottomNav() {
+        bottomNav.setCurrentItem(0);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_home:
+                        showHideFragment(mFragments[0]);
+                        break;
+                    case R.id.nav_book:
+                        showHideFragment(mFragments[1]);
+                        break;
+                    case R.id.nav_user:
+                        showHideFragment(mFragments[2]);
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+    }
 }
