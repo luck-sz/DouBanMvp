@@ -150,6 +150,12 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
             moviesListAdapter = new MoviesListAdapter(R.layout.item_movies_list, movieListBeans);
         }
         mRootView.setMoviesListItem(moviesListAdapter);
+        moviesListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Toast.makeText(mApplication, movieListBeans.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

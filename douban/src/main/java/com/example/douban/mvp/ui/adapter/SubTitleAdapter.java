@@ -18,6 +18,7 @@ public class SubTitleAdapter extends BaseQuickAdapter<MovieListBean.Movie, BaseV
 
     @Override
     protected void convert(BaseViewHolder helper, MovieListBean.Movie item) {
+        helper.addOnClickListener(R.id.ll_child_item);
         helper.setText(R.id.tv_sub_movie_name, item.getRank() + "." + item.getMovie_name());
         helper.setText(R.id.tv_sub_rating, item.getRating() + "");
     }
