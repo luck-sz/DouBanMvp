@@ -1,7 +1,10 @@
 package com.example.douban.mvp.presenter;
 
 import android.app.Application;
+import android.view.View;
+import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.Banner;
 import com.example.douban.app.data.entity.MovieListBean;
@@ -109,6 +112,24 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
         mRootView.addHeadView(movieItemAdapter);
         mRootView.addFootView(movieItemAdapter);
         mRootView.setMovieItem(movieItemAdapter);
+        movieItemAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                SectionMultipleItem multipleItem = movieItemAdapter.getData().get(position);
+                switch (view.getId()) {
+                    case R.id.ll_item:
+                        if (multipleItem.getEntriesBean() != null) {
+                            Toast.makeText(mApplication, multipleItem.getEntriesBean().getTitle(), Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case R.id.more:
+                        Toast.makeText(mApplication, multipleItem.getHeader(), Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     public void getMovieListData() {

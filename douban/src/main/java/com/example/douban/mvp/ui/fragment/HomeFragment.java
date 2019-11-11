@@ -19,10 +19,10 @@ import com.example.douban.app.base.MySupportFragment;
 import com.example.douban.app.data.entity.Banner;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
 import com.example.douban.di.component.DaggerHomeComponent;
+import com.example.douban.mvp.ui.adapter.MoviesListAdapter;
 import com.example.douban.mvp.contract.HomeContract;
 import com.example.douban.mvp.presenter.HomePresenter;
 import com.example.douban.mvp.ui.adapter.MovieItemAdapter;
-import com.example.douban.mvp.ui.adapter.MoviesListAdapter;
 import com.example.douban.mvp.ui.view.BannerViewHolder;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
@@ -168,6 +168,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         mMyBanner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int position) {
+                showMessage("当前位置:" + position);
             }
         });
         mMyBanner.setPages(banners, new MZHolderCreator<BannerViewHolder>() {

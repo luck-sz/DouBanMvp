@@ -14,17 +14,27 @@ public class SectionMultipleItem extends SectionMultiEntity<Object> implements M
 
     private int itemType;
     private boolean isMore;
+    private String header;
     private DoubanBean.EntriesBean entriesBean;
 
     public SectionMultipleItem(boolean isHeader, String header, boolean isMore) {
         super(isHeader, header);
         this.isMore = isMore;
+        this.header = header;
     }
 
     public SectionMultipleItem(int itemType, DoubanBean.EntriesBean entriesBean) {
         super(entriesBean);
         this.entriesBean = entriesBean;
         this.itemType = itemType;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
     }
 
     public boolean isMore() {

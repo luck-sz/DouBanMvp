@@ -27,7 +27,7 @@ public class MovieItemAdapter extends BaseSectionMultiItemQuickAdapter<SectionMu
     @Override
     protected void convertHead(@NonNull MovieViewHolder helper, final SectionMultipleItem item) {
         // deal with header viewHolder
-        helper.setText(R.id.header, item.header);
+        helper.setText(R.id.header, item.getHeader());
         helper.setVisible(R.id.more, item.isMore());
         helper.addOnClickListener(R.id.more);
     }
@@ -35,7 +35,7 @@ public class MovieItemAdapter extends BaseSectionMultiItemQuickAdapter<SectionMu
     @Override
     protected void convert(@NonNull MovieViewHolder helper, SectionMultipleItem item) {
         // deal with multiple type items viewHolder
-
+        helper.addOnClickListener(R.id.ll_item);
         switch (helper.getItemViewType()) {
             case MultipleItem.HOT_ITEM:
                 ArmsUtils.obtainAppComponentFromContext(mContext)

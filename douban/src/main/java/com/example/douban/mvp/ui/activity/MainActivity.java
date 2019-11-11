@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.douban.R;
 import com.example.douban.app.base.MySupportActivity;
@@ -112,6 +113,19 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
     private void initToolBar() {
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.main_home_menu);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.main_search:
+                        showMessage("搜索...");
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     private void initFragment() {
