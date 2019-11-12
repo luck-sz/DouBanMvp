@@ -34,6 +34,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
+import timber.log.Timber;
 
 
 /**
@@ -206,6 +207,17 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                 return movieList;
             }
         });
+
+//        return Observable.merge(newPlayingObservable, comingObservable, movieListObservable)
+//                .map(new Function<List<SectionMultipleItem>, List<SectionMultipleItem>>() {
+//                    @Override
+//                    public List<SectionMultipleItem> apply(List<SectionMultipleItem> sectionMultipleItems) throws Exception {
+//                        List<SectionMultipleItem> list = new ArrayList<>();
+//                        list.addAll(sectionMultipleItems);
+//                        Timber.d(list.size() + "大小");
+//                        return list;
+//                    }
+//                });
 
         return Observable.zip(newPlayingObservable, comingObservable, movieListObservable, new Function3<List<SectionMultipleItem>, List<SectionMultipleItem>, List<SectionMultipleItem>, List<SectionMultipleItem>>() {
             @Override
