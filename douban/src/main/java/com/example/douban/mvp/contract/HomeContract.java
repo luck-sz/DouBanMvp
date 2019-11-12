@@ -1,11 +1,8 @@
 package com.example.douban.mvp.contract;
 
 import com.example.douban.app.data.entity.Banner;
-import com.example.douban.app.data.entity.MovieListBean;
-import com.example.douban.app.data.entity.WeeklyBean;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
-import com.example.douban.mvp.ui.adapter.MovieItemAdapter;
-import com.example.douban.mvp.ui.adapter.MoviesListAdapter;
+import com.example.douban.mvp.ui.adapter.SectionMultipleItemAdapter;
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 
@@ -32,22 +29,17 @@ public interface HomeContract {
 
         void setBanner(List<Banner> banners);
 
-        void addHeadView(MovieItemAdapter movieItemAdapter);
+        void addHeadView(SectionMultipleItemAdapter sectionMultipleItemAdapter);
 
-        void setMovieItem(MovieItemAdapter movieItemAdapter);
-
-        void setMoviesListItem(MoviesListAdapter moviesListItem);
-
-        void addFootView(MovieItemAdapter movieItemAdapter);
+        void setMovieItem(SectionMultipleItemAdapter sectionMultipleItemAdapter);
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel {
         // 获取头部Banners
         Observable<List<Banner>> getBanners();
+
         // 获取所有数据
         Observable<List<SectionMultipleItem>> getAllData();
-        // 获取电影榜单List
-        Observable<List<MovieListBean>> getMovieListData();
     }
 }

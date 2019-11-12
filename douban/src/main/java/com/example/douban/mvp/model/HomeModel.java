@@ -1,12 +1,11 @@
 package com.example.douban.mvp.model;
 
 import android.app.Application;
-import android.graphics.Movie;
 
 import com.example.douban.app.data.api.service.DouBanService;
 import com.example.douban.app.data.entity.Banner;
-import com.example.douban.app.data.entity.DoubanBean;
 import com.example.douban.app.data.entity.MovieListBean;
+import com.example.douban.app.data.entity.DoubanBean;
 import com.example.douban.app.data.entity.NewMoviesBean;
 import com.example.douban.app.data.entity.UsBoxBean;
 import com.example.douban.app.data.entity.WeeklyBean;
@@ -27,13 +26,11 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
-import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
@@ -101,44 +98,39 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     public Observable<List<SectionMultipleItem>> getAllData() {
         List<SectionMultipleItem> hotList = new ArrayList<>();
         List<SectionMultipleItem> comingList = new ArrayList<>();
+        List<SectionMultipleItem> movieList = new ArrayList<>();
 
-        return Observable.zip(mRepositoryManager.obtainRetrofitService(DouBanService.class)
-                        .getNowPlaying()
-                        .map(new Function<DoubanBean, List<SectionMultipleItem>>() {
-                            @Override
-                            public List<SectionMultipleItem> apply(DoubanBean doubanBean) throws Exception {
-                                hotList.add(0, new SectionMultipleItem(true, "影院热映", true));
-                                for (int i = 0; i < doubanBean.getEntries().size(); i++) {
-                                    if (!doubanBean.getEntries().get(i).getRating().equals("") && hotList.size() < 7) {
-                                        hotList.add(new SectionMultipleItem(SectionMultipleItem.HOT_ITEM, doubanBean.getEntries().get(i)));
-                                    }
-                                }
-                                return hotList;
-                            }
-                        }),
-                mRepositoryManager.obtainRetrofitService(DouBanService.class)
-                        .getComing()
-                        .map(new Function<DoubanBean, List<SectionMultipleItem>>() {
-                            @Override
-                            public List<SectionMultipleItem> apply(DoubanBean doubanBean) throws Exception {
-                                comingList.add(0, new SectionMultipleItem(true, "即将上映", true));
-                                for (int i = 0; i < 6; i++) {
-                                    comingList.add(new SectionMultipleItem(SectionMultipleItem.COMING_ITEM, doubanBean.getEntries().get(i)));
-                                }
-                                comingList.add(new SectionMultipleItem(true, "电影榜单", true));
-                                return comingList;
-                            }
-                        }), new BiFunction<List<SectionMultipleItem>, List<SectionMultipleItem>, List<SectionMultipleItem>>() {
+        // 影院热映数据
+        Observable<List<SectionMultipleItem>> newPlayingObservable = mRepositoryManager.obtainRetrofitService(DouBanService.class)
+                .getNowPlaying()
+                .map(new Function<DoubanBean, List<SectionMultipleItem>>() {
                     @Override
-                    public List<SectionMultipleItem> apply(List<SectionMultipleItem> sectionMultipleItems, List<SectionMultipleItem> sectionMultipleItems1) throws Exception {
-                        sectionMultipleItems.addAll(sectionMultipleItems1);
-                        return sectionMultipleItems;
+                    public List<SectionMultipleItem> apply(DoubanBean doubanBean) throws Exception {
+                        hotList.add(0, new SectionMultipleItem(SectionMultipleItem.HEAD_ITEM, true, "影院热映", true));
+                        for (int i = 0; i < doubanBean.getSubjects().size(); i++) {
+                            if (hotList.size() < 7) {
+                                hotList.add(new SectionMultipleItem(SectionMultipleItem.HOT_ITEM, doubanBean.getSubjects().get(i)));
+                            }
+                        }
+                        return hotList;
                     }
                 });
-    }
 
-    @Override
-    public Observable<List<MovieListBean>> getMovieListData() {
+        // 即将上映的数据
+        Observable<List<SectionMultipleItem>> comingObservable = mRepositoryManager.obtainRetrofitService(DouBanService.class)
+                .getComing()
+                .map(new Function<DoubanBean, List<SectionMultipleItem>>() {
+                    @Override
+                    public List<SectionMultipleItem> apply(DoubanBean doubanBean) throws Exception {
+                        comingList.add(0, new SectionMultipleItem(SectionMultipleItem.HEAD_ITEM, true, "即将上映", true));
+                        for (int i = 0; i < 6; i++) {
+                            comingList.add(new SectionMultipleItem(SectionMultipleItem.COMING_ITEM, doubanBean.getSubjects().get(i)));
+                        }
+                        return comingList;
+                    }
+                });
+
+        // 一周口碑榜数据
         Observable<MovieListBean> weeklyObservable = mRepositoryManager.obtainRetrofitService(DouBanService.class)
                 .getWeekly()
                 .map(new Function<WeeklyBean, MovieListBean>() {
@@ -156,6 +148,8 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                         return movieListBean;
                     }
                 });
+
+        // 一周新电影榜数据
         Observable<MovieListBean> newMoviesObservable = mRepositoryManager.obtainRetrofitService(DouBanService.class)
                 .getNewMovies()
                 .map(new Function<NewMoviesBean, MovieListBean>() {
@@ -173,6 +167,8 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                         return movieListBean;
                     }
                 });
+
+        // 北美票房榜数据
         Observable<MovieListBean> usBoxObservable = mRepositoryManager.obtainRetrofitService(DouBanService.class)
                 .getUsBox()
                 .map(new Function<UsBoxBean, MovieListBean>() {
@@ -191,7 +187,9 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                     }
                 });
 
-        return Observable.zip(weeklyObservable, newMoviesObservable, usBoxObservable, new Function3<MovieListBean, MovieListBean, MovieListBean, List<MovieListBean>>() {
+        // 电影榜单数据（口碑+新电影+北美）
+        // 即将上映的数据
+        Observable<List<SectionMultipleItem>> movieListObservable = Observable.zip(weeklyObservable, newMoviesObservable, usBoxObservable, new Function3<MovieListBean, MovieListBean, MovieListBean, List<MovieListBean>>() {
             @Override
             public List<MovieListBean> apply(MovieListBean list1, MovieListBean list2, MovieListBean list3) throws Exception {
                 List<MovieListBean> movieListBeans = new ArrayList<>();
@@ -200,7 +198,22 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                 movieListBeans.add(list3);
                 return movieListBeans;
             }
+        }).map(new Function<List<MovieListBean>, List<SectionMultipleItem>>() {
+            @Override
+            public List<SectionMultipleItem> apply(List<MovieListBean> movieListBeans) throws Exception {
+                movieList.add(new SectionMultipleItem(SectionMultipleItem.HEAD_ITEM, true, "电影榜单", true));
+                movieList.add(new SectionMultipleItem(SectionMultipleItem.MOVIE_LIST_ITEM, movieListBeans));
+                return movieList;
+            }
+        });
+
+        return Observable.zip(newPlayingObservable, comingObservable, movieListObservable, new Function3<List<SectionMultipleItem>, List<SectionMultipleItem>, List<SectionMultipleItem>, List<SectionMultipleItem>>() {
+            @Override
+            public List<SectionMultipleItem> apply(List<SectionMultipleItem> list1, List<SectionMultipleItem> list2, List<SectionMultipleItem> list3) throws Exception {
+                list1.addAll(list2);
+                list1.addAll(list3);
+                return list1;
+            }
         });
     }
-
 }

@@ -1,17 +1,15 @@
 package com.example.douban.mvp.presenter;
 
 import android.app.Application;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.Banner;
-import com.example.douban.app.data.entity.MovieListBean;
-import com.example.douban.app.data.entity.WeeklyBean;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
-import com.example.douban.mvp.ui.adapter.MovieItemAdapter;
-import com.example.douban.mvp.ui.adapter.MoviesListAdapter;
+import com.example.douban.mvp.ui.adapter.SectionMultipleItemAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
@@ -52,9 +50,7 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
-
-    private MovieItemAdapter movieItemAdapter;
-    private MoviesListAdapter moviesListAdapter;
+    private SectionMultipleItemAdapter sectionMultipleItemAdapter;
 
     @Inject
     public HomePresenter(HomeContract.Model model, HomeContract.View rootView) {
@@ -106,56 +102,32 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
 
 
     private void setMovieAdapter(List<SectionMultipleItem> sectionMultipleItems) {
-        if (movieItemAdapter == null && sectionMultipleItems.size() > 0) {
-            movieItemAdapter = new MovieItemAdapter(R.layout.section_head, sectionMultipleItems);
+        if (sectionMultipleItemAdapter == null && sectionMultipleItems.size() > 0) {
+            sectionMultipleItemAdapter = new SectionMultipleItemAdapter(sectionMultipleItems);
         }
-        mRootView.addHeadView(movieItemAdapter);
-        mRootView.addFootView(movieItemAdapter);
-        mRootView.setMovieItem(movieItemAdapter);
-        movieItemAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mRootView.addHeadView(sectionMultipleItemAdapter);
+        mRootView.setMovieItem(sectionMultipleItemAdapter);
+        sectionMultipleItemAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
+                int type = sectionMultipleItems.get(position).getItemType();
+                if (type == SectionMultipleItem.COMING_ITEM || type == SectionMultipleItem.HOT_ITEM) {
+                    return 2;
+                } else if (type == SectionMultipleItem.HEAD_ITEM || type == SectionMultipleItem.MOVIE_LIST_ITEM) {
+                    return 6;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        sectionMultipleItemAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                SectionMultipleItem multipleItem = movieItemAdapter.getData().get(position);
-                switch (view.getId()) {
-                    case R.id.ll_item:
-                        if (multipleItem.getEntriesBean() != null) {
-                            Toast.makeText(mApplication, multipleItem.getEntriesBean().getTitle(), Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-                    case R.id.more:
-                        Toast.makeText(mApplication, multipleItem.getHeader(), Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        break;
+                SectionMultipleItem sectionMultipleItem = sectionMultipleItemAdapter.getData().get(position);
+                if (view.getId() == R.id.more) {
+                    Toast.makeText(mApplication, sectionMultipleItem.getHeader(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-
-    public void getMovieListData() {
-        mModel.getMovieListData()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<List<MovieListBean>>(mErrorHandler) {
-                    @Override
-                    public void onNext(List<MovieListBean> movieListBeans) {
-                        setListMovieAdapter(movieListBeans);
-                    }
-                });
-    }
-
-    private void setListMovieAdapter(List<MovieListBean> movieListBeans) {
-        if (moviesListAdapter == null) {
-            moviesListAdapter = new MoviesListAdapter(R.layout.item_movies_list, movieListBeans);
-        }
-        mRootView.setMoviesListItem(moviesListAdapter);
-        moviesListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Toast.makeText(mApplication, movieListBeans.get(position).getTitle(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
 }

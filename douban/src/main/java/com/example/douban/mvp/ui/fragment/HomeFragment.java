@@ -6,26 +6,20 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.douban.R;
 import com.example.douban.app.base.MySupportFragment;
 import com.example.douban.app.data.entity.Banner;
-import com.example.douban.app.data.entity.home.SectionMultipleItem;
 import com.example.douban.di.component.DaggerHomeComponent;
-import com.example.douban.mvp.ui.adapter.MoviesListAdapter;
 import com.example.douban.mvp.contract.HomeContract;
 import com.example.douban.mvp.presenter.HomePresenter;
-import com.example.douban.mvp.ui.adapter.MovieItemAdapter;
+import com.example.douban.mvp.ui.adapter.SectionMultipleItemAdapter;
 import com.example.douban.mvp.ui.view.BannerViewHolder;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
@@ -35,7 +29,6 @@ import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import java.util.List;
 
 import butterknife.BindView;
-import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -110,7 +103,6 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         initRefreshLayout();
         if (mPresenter != null) {
             mPresenter.getBanners();
-            mPresenter.getMovieListData();
             mPresenter.getAllData();
         }
     }
@@ -171,8 +163,8 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     }
 
     private void initFootView() {
-        mFootView = getLayoutInflater().inflate(R.layout.view_foot, null, false);
-        mFootRecycler = mFootView.findViewById(R.id.rv_movies_list);
+        mFootView = getLayoutInflater().inflate(R.layout.item_movie_list, null, false);
+        mFootRecycler = mFootView.findViewById(R.id.rv_movie_list);
     }
 
     private void initRefreshLayout() {
@@ -205,28 +197,15 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     }
 
     @Override
-    public void addHeadView(MovieItemAdapter movieItemAdapter) {
-        if (movieItemAdapter.getHeaderLayoutCount() < 1) {
-            movieItemAdapter.addHeaderView(mBannerView);
+    public void addHeadView(SectionMultipleItemAdapter sectionMultipleItemAdapter) {
+        if (sectionMultipleItemAdapter.getHeaderLayoutCount() < 1) {
+            sectionMultipleItemAdapter.addHeaderView(mBannerView);
         }
     }
 
     @Override
-    public void setMovieItem(MovieItemAdapter movieItemAdapter) {
-        mRecycleView.setLayoutManager(new GridLayoutManager(_mActivity, 3));
-        mRecycleView.setAdapter(movieItemAdapter);
-    }
-
-    @Override
-    public void setMoviesListItem(MoviesListAdapter moviesListItem) {
-        mFootRecycler.setLayoutManager(new LinearLayoutManager(_mActivity, LinearLayoutManager.HORIZONTAL, false));
-        mFootRecycler.setAdapter(moviesListItem);
-    }
-
-    @Override
-    public void addFootView(MovieItemAdapter movieItemAdapter) {
-        if (movieItemAdapter.getFooterLayoutCount() == 0) {
-            movieItemAdapter.addFooterView(mFootView);
-        }
+    public void setMovieItem(SectionMultipleItemAdapter sectionMultipleItemAdapter) {
+        mRecycleView.setLayoutManager(new GridLayoutManager(_mActivity, 6));
+        mRecycleView.setAdapter(sectionMultipleItemAdapter);
     }
 }

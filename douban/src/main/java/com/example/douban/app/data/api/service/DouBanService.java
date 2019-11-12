@@ -15,7 +15,7 @@ public interface DouBanService {
      *
      * @return
      */
-    @GET("/v2/movie/nowplaying?apikey=0b2bdeda43b5688921839c8ecb20399b")
+    @GET("/v2/movie/in_theaters?apikey=0b2bdeda43b5688921839c8ecb20399b")
     Observable<DoubanBean> getNowPlaying();
 
     /**
@@ -23,7 +23,7 @@ public interface DouBanService {
      *
      * @return
      */
-    @GET("/v2/movie/coming?apikey=0b2bdeda43b5688921839c8ecb20399b&start=0&count=6")
+    @GET("/v2/movie/coming_soon?apikey=0b2bdeda43b5688921839c8ecb20399b")
     Observable<DoubanBean> getComing();
 
 
@@ -32,7 +32,7 @@ public interface DouBanService {
      *
      * @return
      */
-    @GET("/v2/movie/weekly?apikey=0b2bdeda43b5688921839c8ecb20399b&start=0&count=6")
+    @GET("/v2/movie/weekly?apikey=0b2bdeda43b5688921839c8ecb20399b")
     Observable<WeeklyBean> getWeekly();
 
     /**
