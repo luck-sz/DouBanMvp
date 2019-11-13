@@ -19,12 +19,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 
 import com.example.douban.mvp.contract.HomeContract;
 import com.jess.arms.utils.RxLifecycleUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,8 +68,8 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
         this.mApplication = null;
     }
 
-    public void getBanners() {
-        mModel.getBanners()
+    public void getBanners(boolean update) {
+        mModel.getBanners(update)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
@@ -81,12 +83,14 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
                 });
     }
 
-    public void getAllData() {
-        mModel.getAllData()
+    public void getAllData(boolean update) {
+        mModel.getAllData(update)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
-                    mRootView.showLoading();
+                    if (update) {
+                        mRootView.showLoading();
+                    }
                 })
                 .doFinally(() -> {
                     mRootView.hideLoading();
@@ -95,17 +99,19 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
                 .subscribe(new ErrorHandleSubscriber<List<SectionMultipleItem>>(mErrorHandler) {
                     @Override
                     public void onNext(List<SectionMultipleItem> sectionMultipleItems) {
-                        setMovieAdapter(sectionMultipleItems);
+                        setMovieAdapter(sectionMultipleItems, update);
                     }
                 });
     }
 
-
-    private void setMovieAdapter(List<SectionMultipleItem> sectionMultipleItems) {
+    private void setMovieAdapter(List<SectionMultipleItem> sectionMultipleItems, boolean update) {
         if (sectionMultipleItemAdapter == null && sectionMultipleItems.size() > 0) {
             sectionMultipleItemAdapter = new SectionMultipleItemAdapter(sectionMultipleItems);
+            mRootView.addHeadView(sectionMultipleItemAdapter);
         }
-        mRootView.addHeadView(sectionMultipleItemAdapter);
+        if (update){
+            sectionMultipleItemAdapter.setNewData(sectionMultipleItems);
+        }
         mRootView.setMovieItem(sectionMultipleItemAdapter);
         sectionMultipleItemAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
             @Override

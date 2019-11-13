@@ -6,12 +6,13 @@ import com.example.douban.app.data.entity.Banner;
 import com.example.douban.app.data.entity.DoubanBean;
 import com.example.douban.app.data.entity.MovieListBean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
  */
-public class SectionMultipleItem extends SectionMultiEntity<Object> implements MultiItemEntity {
+public class SectionMultipleItem extends SectionMultiEntity<Object> implements MultiItemEntity,Serializable {
 
     public static final int HOT_ITEM = 1;
     public static final int COMING_ITEM = 2;
@@ -20,14 +21,14 @@ public class SectionMultipleItem extends SectionMultiEntity<Object> implements M
 
     private int itemType;
     private boolean isMore;
-    private String header;
+    private String sectionHead;
     private DoubanBean.SubjectsBean subjectsBean;
     private List<MovieListBean> list;
 
-    public SectionMultipleItem(int itemType, boolean isHeader, String header, boolean isMore) {
-        super(isHeader, header);
+    public SectionMultipleItem(int itemType, boolean isHeader, String sectionHead, boolean isMore) {
+        super(isHeader, sectionHead);
         this.itemType = itemType;
-        this.header = header;
+        this.sectionHead = sectionHead;
         this.isMore = isMore;
     }
 
@@ -44,11 +45,11 @@ public class SectionMultipleItem extends SectionMultiEntity<Object> implements M
     }
 
     public String getHeader() {
-        return header;
+        return sectionHead;
     }
 
     public void setHeader(String header) {
-        this.header = header;
+        this.sectionHead = header;
     }
 
     public boolean isMore() {

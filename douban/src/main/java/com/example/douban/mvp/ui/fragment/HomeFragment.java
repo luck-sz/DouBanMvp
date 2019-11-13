@@ -23,6 +23,7 @@ import com.example.douban.mvp.ui.adapter.SectionMultipleItemAdapter;
 import com.example.douban.mvp.ui.view.BannerViewHolder;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+import com.vondear.rxtool.RxSPTool;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
@@ -59,6 +60,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     View mFootView;
     MZBannerView mMyBanner;
     RecyclerView mFootRecycler;
+    boolean update;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -101,9 +103,14 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         initBannerView();
         initFootView();
         initRefreshLayout();
+        // 查询本地数据 为空时更新数据
+        String mHomeData = RxSPTool.getContent(_mActivity, "HomeData");
+        if (mHomeData.equals("")) {
+            update = true;
+        }
         if (mPresenter != null) {
-            mPresenter.getBanners();
-            mPresenter.getAllData();
+            mPresenter.getBanners(update);
+            mPresenter.getAllData(update);
         }
     }
 
@@ -171,7 +178,8 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         mRefreshLayout.setColorSchemeColors(ArmsUtils.getColor(_mActivity, R.color.colorPrimary));
         mRefreshLayout.setOnRefreshListener(() -> {
             if (mPresenter != null) {
-                mPresenter.getAllData();
+                mPresenter.getBanners(true);
+                mPresenter.getAllData(true);
             }
         });
     }

@@ -11,6 +11,7 @@ import com.example.douban.app.data.entity.UsBoxBean;
 import com.example.douban.app.data.entity.WeeklyBean;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 
@@ -19,6 +20,7 @@ import com.jess.arms.di.scope.FragmentScope;
 import javax.inject.Inject;
 
 import com.example.douban.mvp.contract.HomeContract;
+import com.vondear.rxtool.RxSPTool;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -26,12 +28,14 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 import timber.log.Timber;
@@ -69,8 +73,32 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     }
 
     @Override
-    public Observable<List<Banner>> getBanners() {
-        return Observable.create(new ObservableOnSubscribe<Document>() {
+    public Observable<List<Banner>> getBanners(boolean update) {
+
+        Observable<List<Banner>> mCacheBanner = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                String mBannerData = RxSPTool.getContent(mApplication, "BannerData");
+                if (!mBannerData.equals("")) {
+                    emitter.onNext(mBannerData);
+                } else {
+                    emitter.onComplete();
+                }
+            }
+        }).map(new Function<String, List<Banner>>() {
+            @Override
+            public List<Banner> apply(String s) throws Exception {
+                List<Banner> list = mGson.fromJson(s, new TypeToken<List<Banner>>() {
+                }.getType());
+                if (list.size() > 0) {
+                    return list;
+                } else {
+                    return null;
+                }
+            }
+        });
+
+        Observable<List<Banner>> mNetBanner = Observable.create(new ObservableOnSubscribe<Document>() {
             @Override
             public void subscribe(ObservableEmitter<Document> emitter) throws Exception {
                 Document document = Jsoup.connect("https://movie.douban.com/").get();
@@ -90,13 +118,19 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                     Banner banner = new Banner(img, title, content, detail);
                     banners.add(banner);
                 }
+                String data = mGson.toJson(banners);
+                RxSPTool.putContent(mApplication, "BannerData", data);
                 return Observable.just(banners);
             }
         });
+        if (update){
+            return mNetBanner;
+        }
+        return Observable.concat(mCacheBanner, mNetBanner);
     }
 
     @Override
-    public Observable<List<SectionMultipleItem>> getAllData() {
+    public Observable<List<SectionMultipleItem>> getAllData(boolean update) {
         List<SectionMultipleItem> hotList = new ArrayList<>();
         List<SectionMultipleItem> comingList = new ArrayList<>();
         List<SectionMultipleItem> movieList = new ArrayList<>();
@@ -208,24 +242,45 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
             }
         });
 
-//        return Observable.merge(newPlayingObservable, comingObservable, movieListObservable)
-//                .map(new Function<List<SectionMultipleItem>, List<SectionMultipleItem>>() {
-//                    @Override
-//                    public List<SectionMultipleItem> apply(List<SectionMultipleItem> sectionMultipleItems) throws Exception {
-//                        List<SectionMultipleItem> list = new ArrayList<>();
-//                        list.addAll(sectionMultipleItems);
-//                        Timber.d(list.size() + "大小");
-//                        return list;
-//                    }
-//                });
-
-        return Observable.zip(newPlayingObservable, comingObservable, movieListObservable, new Function3<List<SectionMultipleItem>, List<SectionMultipleItem>, List<SectionMultipleItem>, List<SectionMultipleItem>>() {
+        Observable<List<SectionMultipleItem>> mNet = Observable.zip(newPlayingObservable, comingObservable, movieListObservable, new Function3<List<SectionMultipleItem>, List<SectionMultipleItem>, List<SectionMultipleItem>, List<SectionMultipleItem>>() {
             @Override
             public List<SectionMultipleItem> apply(List<SectionMultipleItem> list1, List<SectionMultipleItem> list2, List<SectionMultipleItem> list3) throws Exception {
                 list1.addAll(list2);
                 list1.addAll(list3);
+                if (list1.size() > 0) {
+                    String data = mGson.toJson(list1);
+                    RxSPTool.putContent(mApplication, "HomeData", data);
+                }
                 return list1;
             }
         });
+
+        Observable<List<SectionMultipleItem>> mCache = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                String mHomeData = RxSPTool.getContent(mApplication, "HomeData");
+                if (!mHomeData.equals("")) {
+                    emitter.onNext(mHomeData);
+                } else {
+                    emitter.onComplete();
+                }
+            }
+        }).map(new Function<String, List<SectionMultipleItem>>() {
+            @Override
+            public List<SectionMultipleItem> apply(String s) throws Exception {
+                List<SectionMultipleItem> list = mGson.fromJson(s, new TypeToken<List<SectionMultipleItem>>() {
+                }.getType());
+                if (list.size() > 0) {
+                    return list;
+                } else {
+                    return null;
+                }
+            }
+        });
+        if (update) {
+            return mNet;
+        }
+        return Observable.concat(mCache, mNet);
+
     }
 }
