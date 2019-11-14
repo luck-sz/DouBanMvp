@@ -2,6 +2,7 @@ package com.example.douban.mvp.model;
 
 import android.app.Application;
 
+import com.example.douban.app.data.api.cache.TvCache;
 import com.example.douban.app.data.api.service.TvService;
 import com.example.douban.app.data.entity.tv.TvBean;
 import com.google.gson.Gson;
@@ -19,6 +20,8 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
+import io.rx_cache2.EvictProvider;
+import io.rx_cache2.Reply;
 
 
 /**
@@ -54,12 +57,20 @@ public class TvChildModel extends BaseModel implements TvChildContract.Model {
 
     @Override
     public Observable<List<TvBean.SubjectsBean>> getTvData(String tag, boolean update) {
-        return mRepositoryManager.obtainRetrofitService(TvService.class)
+        Observable<List<TvBean.SubjectsBean>> data = mRepositoryManager.obtainRetrofitService(TvService.class)
                 .getTvData(tag)
                 .map(new Function<TvBean, List<TvBean.SubjectsBean>>() {
                     @Override
                     public List<TvBean.SubjectsBean> apply(TvBean tvBean) throws Exception {
                         return tvBean.getSubjects();
+                    }
+                });
+        return mRepositoryManager.obtainCacheService(TvCache.class)
+                .getTvData(data, new EvictProvider(update))
+                .map(new Function<Reply<List<TvBean.SubjectsBean>>, List<TvBean.SubjectsBean>>() {
+                    @Override
+                    public List<TvBean.SubjectsBean> apply(Reply<List<TvBean.SubjectsBean>> listReply) throws Exception {
+                        return listReply.getData();
                     }
                 });
     }

@@ -3,6 +3,7 @@ package com.example.douban.mvp.model;
 import android.app.Application;
 
 import com.example.douban.app.data.api.Api;
+import com.example.douban.app.data.api.cache.TvCache;
 import com.example.douban.app.data.api.service.TvService;
 import com.example.douban.app.data.entity.tv.Tags;
 import com.google.gson.Gson;
@@ -16,6 +17,10 @@ import javax.inject.Inject;
 import com.example.douban.mvp.contract.TvContract;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
+import io.rx_cache2.EvictDynamicKey;
+import io.rx_cache2.EvictProvider;
+import io.rx_cache2.Reply;
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 
 
@@ -53,7 +58,17 @@ public class TvModel extends BaseModel implements TvContract.Model {
 
     @Override
     public Observable<Tags> getTags() {
-        return mRepositoryManager.obtainRetrofitService(TvService.class)
+        Observable<Tags> data = mRepositoryManager
+                .obtainRetrofitService(TvService.class)
                 .getTags();
+        return mRepositoryManager
+                .obtainCacheService(TvCache.class)
+                .getTags(data, new EvictProvider(false))
+                .map(new Function<Reply<Tags>, Tags>() {
+                    @Override
+                    public Tags apply(Reply<Tags> tagsReply) throws Exception {
+                        return tagsReply.getData();
+                    }
+                });
     }
 }
