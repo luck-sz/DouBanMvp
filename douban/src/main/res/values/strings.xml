@@ -1,10 +1,16 @@
 <resources>
-    <string name="app_name">豆瓣电影</string>
+    <string name="app_name">掌上豆瓣</string>
 
     <string name="title_home">首页</string>
     <string name="main_search">搜索</string>
 
     <string name="bottom_nav_home">首页</string>
-    <string name="bottom_nav_book">图书</string>
+    <string name="bottom_nav_book">电视</string>
     <string name="bottom_nav_my">我的</string>
+    
+    <!--电视tab-->
+    <string name="tv_tab_hot">热门</string>
+    <string name="tv_tab_jp_tv">日剧</string>
+    <string name="tv_tab_us_tv">美剧</string>
+    <string name="tv_tab_animation">日本动画</string>
 </resources>

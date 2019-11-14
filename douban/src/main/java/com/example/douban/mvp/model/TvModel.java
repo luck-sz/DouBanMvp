@@ -2,22 +2,28 @@ package com.example.douban.mvp.model;
 
 import android.app.Application;
 
+import com.example.douban.app.data.api.Api;
+import com.example.douban.app.data.api.service.TvService;
+import com.example.douban.app.data.entity.tv.Tags;
 import com.google.gson.Gson;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 
-import com.jess.arms.di.scope.ActivityScope;
+import com.jess.arms.di.scope.FragmentScope;
 
 import javax.inject.Inject;
 
-import com.example.douban.mvp.contract.MainContract;
+import com.example.douban.mvp.contract.TvContract;
+
+import io.reactivex.Observable;
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 
 
 /**
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 11/02/2019 13:28
+ * Created by MVPArmsTemplate on 11/11/2019 10:29
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -25,16 +31,17 @@ import com.example.douban.mvp.contract.MainContract;
  * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
  * ================================================
  */
-@ActivityScope
-public class MainModel extends BaseModel implements MainContract.Model {
+@FragmentScope
+public class TvModel extends BaseModel implements TvContract.Model {
     @Inject
     Gson mGson;
     @Inject
     Application mApplication;
 
     @Inject
-    public MainModel(IRepositoryManager repositoryManager) {
+    public TvModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
+        RetrofitUrlManager.getInstance().putDomain("tv", Api.TV_BASE_URL);
     }
 
     @Override
@@ -42,5 +49,11 @@ public class MainModel extends BaseModel implements MainContract.Model {
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<Tags> getTags() {
+        return mRepositoryManager.obtainRetrofitService(TvService.class)
+                .getTags();
     }
 }

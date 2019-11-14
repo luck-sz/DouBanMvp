@@ -9,8 +9,7 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.douban.R;
-import com.example.douban.app.data.entity.MovieListBean;
-import com.example.douban.app.data.entity.WeeklyBean;
+import com.example.douban.app.data.entity.home.MovieListBean;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 

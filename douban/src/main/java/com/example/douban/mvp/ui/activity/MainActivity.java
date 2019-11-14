@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.douban.R;
@@ -14,7 +12,7 @@ import com.example.douban.app.base.MySupportActivity;
 import com.example.douban.di.component.DaggerMainComponent;
 import com.example.douban.mvp.contract.MainContract;
 import com.example.douban.mvp.presenter.MainPresenter;
-import com.example.douban.mvp.ui.fragment.BookFragment;
+import com.example.douban.mvp.ui.fragment.TvFragment;
 import com.example.douban.mvp.ui.fragment.HomeFragment;
 import com.example.douban.mvp.ui.fragment.UserFragment;
 import com.gyf.immersionbar.ImmersionBar;
@@ -23,7 +21,6 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
@@ -110,7 +107,7 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
         SupportFragment firstFragment = findFragment(HomeFragment.class);
         if (firstFragment == null) {
             mFragments[0] = HomeFragment.newInstance();
-            mFragments[1] = BookFragment.newInstance();
+            mFragments[1] = TvFragment.newInstance();
             mFragments[2] = UserFragment.newInstance();
 
             loadMultipleRootFragment(R.id.frame_content, 0,
@@ -120,7 +117,7 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
             );
         } else {
             mFragments[0] = firstFragment;
-            mFragments[1] = findFragment(BookFragment.class);
+            mFragments[1] = findFragment(TvFragment.class);
             mFragments[2] = findFragment(UserFragment.class);
         }
     }

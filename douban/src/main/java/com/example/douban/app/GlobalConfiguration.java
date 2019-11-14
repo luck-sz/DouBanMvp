@@ -15,6 +15,9 @@ import com.jess.arms.integration.ConfigModule;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
+import okhttp3.HttpUrl;
+
 /**
  * ================================================
  * App 的全局配置信息在此配置, 需要将此实现类声明到 AndroidManifest 中
@@ -40,7 +43,7 @@ public final class GlobalConfiguration implements ConfigModule {
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
         }
 
-        builder.baseurl(Api.APP_DOMAIN)
+        builder.baseurl(Api.MOVIE_BASE_URL)
                 //强烈建议自己自定义图片加载逻辑, 因为 arms-imageloader-glide 提供的 GlideImageLoaderStrategy 并不能满足复杂的需求
                 //请参考 https://github.com/JessYanCoding/MVPArms/wiki#3.4
                 .imageLoaderStrategy(new GlideImageLoaderStrategy())
@@ -95,7 +98,7 @@ public final class GlobalConfiguration implements ConfigModule {
                     //使用一行代码监听 Retrofit／Okhttp 上传下载进度监听, 以及 Glide 加载进度监听, 详细使用方法请查看 https://github.com/JessYanCoding/ProgressManager
 //                    ProgressManager.getInstance().with(okhttpBuilder);
                     //让 Retrofit 同时支持多个 BaseUrl 以及动态改变 BaseUrl, 详细使用方法请查看 https://github.com/JessYanCoding/RetrofitUrlManager
-//                    RetrofitUrlManager.getInstance().with(okhttpBuilder);
+                    RetrofitUrlManager.getInstance().with(okhttpBuilder);
                 })
                 .rxCacheConfiguration((context1, rxCacheBuilder) -> {//这里可以自己自定义配置 RxCache 的参数
                     rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);

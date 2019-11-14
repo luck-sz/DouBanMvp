@@ -2,13 +2,14 @@ package com.example.douban.mvp.model;
 
 import android.app.Application;
 
+import com.example.douban.app.data.api.Api;
 import com.example.douban.app.data.api.service.DouBanService;
-import com.example.douban.app.data.entity.Banner;
-import com.example.douban.app.data.entity.MovieListBean;
-import com.example.douban.app.data.entity.DoubanBean;
-import com.example.douban.app.data.entity.NewMoviesBean;
-import com.example.douban.app.data.entity.UsBoxBean;
-import com.example.douban.app.data.entity.WeeklyBean;
+import com.example.douban.app.data.entity.home.Banner;
+import com.example.douban.app.data.entity.home.MovieListBean;
+import com.example.douban.app.data.entity.home.DoubanBean;
+import com.example.douban.app.data.entity.home.NewMoviesBean;
+import com.example.douban.app.data.entity.home.UsBoxBean;
+import com.example.douban.app.data.entity.home.WeeklyBean;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,17 +29,14 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
-import timber.log.Timber;
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 
 
 /**
@@ -63,6 +61,7 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     @Inject
     public HomeModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
+        RetrofitUrlManager.getInstance().putDomain("movie", Api.MOVIE_BASE_URL);
     }
 
     @Override
@@ -123,7 +122,7 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                 return Observable.just(banners);
             }
         });
-        if (update){
+        if (update) {
             return mNetBanner;
         }
         return Observable.concat(mCacheBanner, mNetBanner);

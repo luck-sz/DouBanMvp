@@ -1,12 +1,9 @@
 package com.example.douban.mvp.ui.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.douban.R;
-import com.example.douban.app.data.entity.MovieListBean;
+import com.example.douban.app.data.entity.home.MovieListBean;
 
 import java.util.List;
 

@@ -2,16 +2,20 @@ package com.example.douban.mvp.presenter;
 
 import android.app.Application;
 
+import com.example.douban.app.data.entity.tv.Tags;
+import com.example.douban.mvp.contract.TvContract;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
+import com.jess.arms.utils.RxLifecycleUtils;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
 import javax.inject.Inject;
-
-import com.example.douban.mvp.contract.BookContract;
 
 
 /**
@@ -27,7 +31,7 @@ import com.example.douban.mvp.contract.BookContract;
  * ================================================
  */
 @FragmentScope
-public class BookPresenter extends BasePresenter<BookContract.Model, BookContract.View> {
+public class TvPresenter extends BasePresenter<TvContract.Model, TvContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -38,7 +42,7 @@ public class BookPresenter extends BasePresenter<BookContract.Model, BookContrac
     AppManager mAppManager;
 
     @Inject
-    public BookPresenter(BookContract.Model model, BookContract.View rootView) {
+    public TvPresenter(TvContract.Model model, TvContract.View rootView) {
         super(model, rootView);
     }
 
@@ -50,4 +54,18 @@ public class BookPresenter extends BasePresenter<BookContract.Model, BookContrac
         this.mImageLoader = null;
         this.mApplication = null;
     }
+
+    public void initTab() {
+        mModel.getTags()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<Tags>(mErrorHandler) {
+                    @Override
+                    public void onNext(Tags tags) {
+                        mRootView.setTabTitle(tags.getTags());
+                    }
+                });
+    }
+
 }

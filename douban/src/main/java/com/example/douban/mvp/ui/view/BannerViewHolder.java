@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.douban.R;
-import com.example.douban.app.data.entity.Banner;
+import com.example.douban.app.data.entity.home.Banner;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
 public class BannerViewHolder implements MZViewHolder<Banner> {

@@ -2,9 +2,6 @@ package com.example.douban.app.data.entity.home;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.chad.library.adapter.base.entity.SectionMultiEntity;
-import com.example.douban.app.data.entity.Banner;
-import com.example.douban.app.data.entity.DoubanBean;
-import com.example.douban.app.data.entity.MovieListBean;
 
 import java.io.Serializable;
 import java.util.List;

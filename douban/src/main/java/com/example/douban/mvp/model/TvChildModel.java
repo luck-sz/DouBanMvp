@@ -10,14 +10,14 @@ import com.jess.arms.di.scope.FragmentScope;
 
 import javax.inject.Inject;
 
-import com.example.douban.mvp.contract.BookContract;
+import com.example.douban.mvp.contract.TvChildContract;
 
 
 /**
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 11/11/2019 10:29
+ * Created by MVPArmsTemplate on 11/14/2019 11:25
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -26,14 +26,14 @@ import com.example.douban.mvp.contract.BookContract;
  * ================================================
  */
 @FragmentScope
-public class BookModel extends BaseModel implements BookContract.Model {
+public class TvChildModel extends BaseModel implements TvChildContract.Model {
     @Inject
     Gson mGson;
     @Inject
     Application mApplication;
 
     @Inject
-    public BookModel(IRepositoryManager repositoryManager) {
+    public TvChildModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
     }
 

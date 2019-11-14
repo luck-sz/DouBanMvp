@@ -5,18 +5,18 @@ import dagger.Component;
 
 import com.jess.arms.di.component.AppComponent;
 
-import com.example.douban.di.module.BookModule;
-import com.example.douban.mvp.contract.BookContract;
+import com.example.douban.di.module.TvChildModule;
+import com.example.douban.mvp.contract.TvChildContract;
 
 import com.jess.arms.di.scope.FragmentScope;
-import com.example.douban.mvp.ui.fragment.BookFragment;
+import com.example.douban.mvp.ui.fragment.TvChildFragment;
 
 
 /**
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 11/11/2019 10:29
+ * Created by MVPArmsTemplate on 11/14/2019 11:25
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -25,17 +25,17 @@ import com.example.douban.mvp.ui.fragment.BookFragment;
  * ================================================
  */
 @FragmentScope
-@Component(modules = BookModule.class, dependencies = AppComponent.class)
-public interface BookComponent {
-    void inject(BookFragment fragment);
+@Component(modules = TvChildModule.class, dependencies = AppComponent.class)
+public interface TvChildComponent {
+    void inject(TvChildFragment fragment);
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        BookComponent.Builder view(BookContract.View view);
+        TvChildComponent.Builder view(TvChildContract.View view);
 
-        BookComponent.Builder appComponent(AppComponent appComponent);
+        TvChildComponent.Builder appComponent(AppComponent appComponent);
 
-        BookComponent build();
+        TvChildComponent build();
     }
 }

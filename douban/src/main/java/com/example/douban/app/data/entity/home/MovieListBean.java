@@ -1,4 +1,4 @@
-package com.example.douban.app.data.entity;
+package com.example.douban.app.data.entity.home;
 
 import java.util.List;
 

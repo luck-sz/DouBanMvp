@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.douban.R;
 import com.example.douban.app.base.MySupportFragment;
-import com.example.douban.app.data.entity.Banner;
+import com.example.douban.app.data.entity.home.Banner;
 import com.example.douban.di.component.DaggerHomeComponent;
 import com.example.douban.mvp.contract.HomeContract;
 import com.example.douban.mvp.presenter.HomePresenter;
