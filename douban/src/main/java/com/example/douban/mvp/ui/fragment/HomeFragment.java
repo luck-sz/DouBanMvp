@@ -175,7 +175,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     }
 
     private void initRefreshLayout() {
-        mRefreshLayout.setColorSchemeColors(ArmsUtils.getColor(_mActivity, R.color.colorPrimary));
+        mRefreshLayout.setColorSchemeColors(ArmsUtils.getColor(_mActivity, R.color.black));
         mRefreshLayout.setOnRefreshListener(() -> {
             if (mPresenter != null) {
                 mPresenter.getBanners(true);
@@ -212,8 +212,8 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     }
 
     @Override
-    public void setMovieItem(SectionMultipleItemAdapter sectionMultipleItemAdapter) {
-        mRecycleView.setLayoutManager(new GridLayoutManager(_mActivity, 6));
+    public void setMovieItemAdapter(SectionMultipleItemAdapter sectionMultipleItemAdapter) {
+        mRecycleView.setLayoutManager(new GridLayoutManager(mContext, 6));
         mRecycleView.setAdapter(sectionMultipleItemAdapter);
     }
 }

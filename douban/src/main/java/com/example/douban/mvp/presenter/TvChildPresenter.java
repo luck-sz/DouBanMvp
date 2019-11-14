@@ -2,16 +2,28 @@ package com.example.douban.mvp.presenter;
 
 import android.app.Application;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.douban.R;
+import com.example.douban.app.data.entity.tv.TvBean;
+import com.example.douban.mvp.ui.adapter.TvItemAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 
 import com.example.douban.mvp.contract.TvChildContract;
+import com.jess.arms.utils.RxLifecycleUtils;
+
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -36,6 +48,7 @@ public class TvChildPresenter extends BasePresenter<TvChildContract.Model, TvChi
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
+    TvItemAdapter tvItemAdapter;
 
     @Inject
     public TvChildPresenter(TvChildContract.Model model, TvChildContract.View rootView) {
@@ -49,5 +62,39 @@ public class TvChildPresenter extends BasePresenter<TvChildContract.Model, TvChi
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+    }
+
+    public void getData(String tag, boolean update) {
+        mModel.getTvData(tag, update)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    if (update) {
+                        mRootView.showLoading();
+                    }
+                })
+                .doFinally(() -> {
+                    if (update) {
+                        mRootView.hideLoading();
+                    }
+                })
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<List<TvBean.SubjectsBean>>(mErrorHandler) {
+                    @Override
+                    public void onNext(List<TvBean.SubjectsBean> subjectsBeans) {
+                        setTvAdapter(subjectsBeans, update);
+                    }
+                });
+    }
+
+    private void setTvAdapter(List<TvBean.SubjectsBean> subjectsBeans, boolean update) {
+        if (tvItemAdapter == null) {
+            tvItemAdapter = new TvItemAdapter(R.layout.item_tv, subjectsBeans);
+        }
+        if (update) {
+            tvItemAdapter.setNewData(subjectsBeans);
+        }
+        tvItemAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        mRootView.setTvItemAdapter(tvItemAdapter);
     }
 }

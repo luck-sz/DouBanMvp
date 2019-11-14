@@ -26,6 +26,7 @@ import com.example.douban.R;
 import java.util.List;
 
 import butterknife.BindView;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -128,6 +129,7 @@ public class TvFragment extends MySupportFragment<TvPresenter> implements TvCont
     public void setTabTitle(List<String> title) {
         TabAdapter adapter = new TabAdapter(getChildFragmentManager());
         for (int i = 0; i < title.size(); i++) {
+            Timber.d(title.get(i));
             adapter.addFragment(TvChildFragment.newInstance(title.get(i)), title.get(i));
         }
         vp_content.setAdapter(adapter);

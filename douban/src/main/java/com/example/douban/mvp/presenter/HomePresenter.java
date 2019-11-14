@@ -110,7 +110,7 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
         if (update){
             sectionMultipleItemAdapter.setNewData(sectionMultipleItems);
         }
-        mRootView.setMovieItem(sectionMultipleItemAdapter);
+        mRootView.setMovieItemAdapter(sectionMultipleItemAdapter);
         sectionMultipleItemAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
             @Override
             public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
