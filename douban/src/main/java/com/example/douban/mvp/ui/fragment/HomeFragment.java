@@ -19,6 +19,7 @@ import com.example.douban.app.data.entity.home.Banner;
 import com.example.douban.di.component.DaggerHomeComponent;
 import com.example.douban.mvp.contract.HomeContract;
 import com.example.douban.mvp.presenter.HomePresenter;
+import com.example.douban.mvp.ui.activity.MoreActivity;
 import com.example.douban.mvp.ui.adapter.SectionMultipleItemAdapter;
 import com.example.douban.mvp.ui.view.BannerViewHolder;
 import com.jess.arms.di.component.AppComponent;
@@ -185,6 +186,15 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     }
 
     @Override
+    public void readGo(String title) {
+        Intent intent = new Intent(_mActivity, MoreActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(MoreActivity.TITLE, title);
+        intent.putExtras(bundle);
+        launchActivity(intent);
+    }
+
+    @Override
     public void setBanner(List<Banner> banners) {
         mMyBanner.setIndicatorVisible(false);
         mMyBanner.setDelayedTime(3000);
@@ -204,6 +214,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         mMyBanner.start();
     }
 
+    // 添加头部Banner
     @Override
     public void addHeadView(SectionMultipleItemAdapter sectionMultipleItemAdapter) {
         if (sectionMultipleItemAdapter.getHeaderLayoutCount() < 1) {
@@ -211,6 +222,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         }
     }
 
+    // 设置Adapter Item
     @Override
     public void setMovieItemAdapter(SectionMultipleItemAdapter sectionMultipleItemAdapter) {
         mRecycleView.setLayoutManager(new GridLayoutManager(mContext, 6));

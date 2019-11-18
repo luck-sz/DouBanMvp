@@ -20,6 +20,7 @@ public class TvItemAdapter extends BaseQuickAdapter<TvBean.SubjectsBean, BaseVie
 
     @Override
     protected void convert(BaseViewHolder helper, TvBean.SubjectsBean item) {
+        helper.addOnClickListener(R.id.iv_img);
         ArmsUtils.obtainAppComponentFromContext(mContext)
                 .imageLoader()
                 .loadImage(mContext, ImageConfigImpl

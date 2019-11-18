@@ -1,6 +1,8 @@
 package com.example.douban.mvp.presenter;
 
 import android.app.Application;
+import android.view.View;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.douban.R;
@@ -95,6 +97,12 @@ public class TvChildPresenter extends BasePresenter<TvChildContract.Model, TvChi
             tvItemAdapter.setNewData(subjectsBeans);
         }
         tvItemAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        tvItemAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Toast.makeText(mApplication, subjectsBeans.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
         mRootView.setTvItemAdapter(tvItemAdapter);
     }
 }

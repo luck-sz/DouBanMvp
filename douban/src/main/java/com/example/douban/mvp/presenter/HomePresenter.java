@@ -107,7 +107,7 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
             sectionMultipleItemAdapter = new SectionMultipleItemAdapter(sectionMultipleItems);
             mRootView.addHeadView(sectionMultipleItemAdapter);
         }
-        if (update){
+        if (update) {
             sectionMultipleItemAdapter.setNewData(sectionMultipleItems);
         }
         mRootView.setMovieItemAdapter(sectionMultipleItemAdapter);
@@ -129,7 +129,7 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 SectionMultipleItem sectionMultipleItem = sectionMultipleItemAdapter.getData().get(position);
                 if (view.getId() == R.id.more) {
-                    Toast.makeText(mApplication, sectionMultipleItem.getHeader(), Toast.LENGTH_SHORT).show();
+                    mRootView.readGo(sectionMultipleItem.getHeader());
                 }
             }
         });
