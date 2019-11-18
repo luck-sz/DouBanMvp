@@ -6,7 +6,6 @@ import java.util.List;
 
 public class DoubanBean {
 
-
     /**
      * count : 20
      * start : 0
