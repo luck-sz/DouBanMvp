@@ -27,10 +27,21 @@ public class MoreHotAdapter extends BaseQuickAdapter<DoubanBean.SubjectsBean, Ba
                         .imageView(helper.getView(R.id.iv_img))
                         .url(item.getImages().getLarge())
                         .build());
+        // 电影名
         helper.setText(R.id.tv_movie_title, item.getTitle());
         // 评分
-//        MaterialRatingBar ratingBar = helper.getView(R.id.rating_movie);
-//        ratingBar.setRating(Float.parseFloat(item.getRate()) / 2);
-//        helper.setText(R.id.tv_rating, item.getRate());
+        MaterialRatingBar ratingBar = helper.getView(R.id.rating_movie);
+        ratingBar.setRating((float) (item.getRating().getAverage() / 2));
+        helper.setText(R.id.tv_rating, item.getRating().getAverage() + "");
+        // 电影介绍
+        StringBuffer sbType = new StringBuffer();
+        for (String type : item.getGenres()) {
+            sbType.append(type + " ");
+        }
+        StringBuffer sbActor = new StringBuffer();
+        for (int i = 0; i < item.getCasts().size(); i++) {
+            sbActor.append(item.getCasts().get(i).getName() + " / ");
+        }
+        helper.setText(R.id.tv_year_actor, item.getYear() + " / " + sbType + "/ " + sbActor);
     }
 }

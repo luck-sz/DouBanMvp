@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl_item"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_movie_title"
@@ -14,12 +14,49 @@
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="6dp"
+        android:maxEms="6"
         android:text="海上钢琴师"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/lcv_home"
         app:layout_constraintTop_toTopOf="@+id/lcv_home" />
+
+    <TextView
+        android:id="@+id/tv_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:text="9.6"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/rating_movie"
+        app:layout_constraintStart_toEndOf="@+id/rating_movie"
+        app:layout_constraintTop_toTopOf="@+id/rating_movie" />
+
+    <TextView
+        android:id="@+id/tv_year_actor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="5dp"
+        android:lines="2"
+        android:maxEms="6"
+        android:text="1998 / 剧情 音乐 / 朱塞佩·托纳多雷"
+        app:layout_constraintStart_toStartOf="@+id/rating_movie"
+        app:layout_constraintTop_toBottomOf="@+id/rating_movie" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="收藏"
+        android:textColor="#f44336"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_year_actor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_year_actor" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/lcv_home"
@@ -52,7 +89,7 @@
         style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:maxHeight="14dp"
         android:minHeight="14dp"
         android:rating="3.8"
@@ -61,16 +98,5 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
         app:mrb_progressTint="#f44336" />
 
-    <TextView
-        android:id="@+id/tv_rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:text="9.6"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/rating_movie"
-        app:layout_constraintStart_toEndOf="@+id/rating_movie"
-        app:layout_constraintTop_toTopOf="@+id/rating_movie" />
 
 </android.support.constraint.ConstraintLayout>
