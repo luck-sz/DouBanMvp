@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/user_download"
-        android:icon="@drawable/ic_download"
+        android:id="@+id/user_setting"
+        android:icon="@drawable/ic_setting"
         android:title="@string/main_search"
         app:showAsAction="always" />
 
