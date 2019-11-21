@@ -4,7 +4,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.home.DoubanBean;
-import com.example.douban.app.data.entity.tv.TvBean;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 
@@ -13,11 +12,11 @@ import java.util.List;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 /**
- * 更多正在热映电影
+ * 更多即将上映电影
  */
-public class MoreHotAdapter extends BaseQuickAdapter<DoubanBean.SubjectsBean, BaseViewHolder> {
+public class MoreComingAdapter extends BaseQuickAdapter<DoubanBean.SubjectsBean, BaseViewHolder> {
 
-    public MoreHotAdapter(int layoutResId, List<DoubanBean.SubjectsBean> data) {
+    public MoreComingAdapter(int layoutResId, List<DoubanBean.SubjectsBean> data) {
         super(layoutResId, data);
     }
 

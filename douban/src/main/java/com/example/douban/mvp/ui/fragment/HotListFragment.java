@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.douban.app.base.MySupportFragment;
 import com.example.douban.app.data.entity.home.DoubanBean;
 import com.example.douban.app.utils.RecycleViewDivider;
@@ -60,6 +61,7 @@ public class HotListFragment extends MySupportFragment<HotListPresenter> impleme
     SwipeRefreshLayout mRefreshLayout;
 
     private String title;
+    private RecycleViewDivider divider;
 
     public static HotListFragment newInstance(String title) {
         HotListFragment fragment = new HotListFragment();
@@ -152,8 +154,11 @@ public class HotListFragment extends MySupportFragment<HotListPresenter> impleme
     public void setAdapter(MoreHotAdapter moreHotAdapter) {
         mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // 添加自定义分割线
-        RecycleViewDivider divider = new RecycleViewDivider(_mActivity, LinearLayoutManager.HORIZONTAL);
-        mRecycleView.addItemDecoration(divider);
+        if (divider == null) {
+            // 只添加一次
+            divider = new RecycleViewDivider(_mActivity, LinearLayoutManager.HORIZONTAL);
+            mRecycleView.addItemDecoration(divider);
+        }
         mRecycleView.setAdapter(moreHotAdapter);
     }
 }

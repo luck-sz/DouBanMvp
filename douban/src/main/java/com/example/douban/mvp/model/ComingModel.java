@@ -2,6 +2,9 @@ package com.example.douban.mvp.model;
 
 import android.app.Application;
 
+import com.example.douban.app.data.api.cache.MoreListCache;
+import com.example.douban.app.data.api.service.DouBanService;
+import com.example.douban.app.data.entity.home.DoubanBean;
 import com.google.gson.Gson;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
@@ -11,6 +14,13 @@ import com.jess.arms.di.scope.FragmentScope;
 import javax.inject.Inject;
 
 import com.example.douban.mvp.contract.ComingContract;
+
+import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
+import io.rx_cache2.EvictProvider;
+import io.rx_cache2.Reply;
 
 
 /**
@@ -42,5 +52,26 @@ public class ComingModel extends BaseModel implements ComingContract.Model {
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<List<DoubanBean.SubjectsBean>> getAllData(boolean update) {
+        Observable<List<DoubanBean.SubjectsBean>> listObservable = mRepositoryManager.obtainRetrofitService(DouBanService.class)
+                .getComing()
+                .map(new Function<DoubanBean, List<DoubanBean.SubjectsBean>>() {
+                    @Override
+                    public List<DoubanBean.SubjectsBean> apply(DoubanBean doubanBean) throws Exception {
+                        return doubanBean.getSubjects();
+                    }
+                });
+
+        return mRepositoryManager.obtainCacheService(MoreListCache.class)
+                .getMoreComing(listObservable, new EvictProvider(update))
+                .map(new Function<Reply<List<DoubanBean.SubjectsBean>>, List<DoubanBean.SubjectsBean>>() {
+                    @Override
+                    public List<DoubanBean.SubjectsBean> apply(Reply<List<DoubanBean.SubjectsBean>> listReply) throws Exception {
+                        return listReply.getData();
+                    }
+                });
     }
 }

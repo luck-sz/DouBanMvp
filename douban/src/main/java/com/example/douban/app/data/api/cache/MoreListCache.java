@@ -24,4 +24,14 @@ public interface MoreListCache {
     @LifeCache(duration = 3, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<List<DoubanBean.SubjectsBean>>> getMoreHot(Observable<List<DoubanBean.SubjectsBean>> data, EvictProvider evictProvider);
 
+    /**
+     * 即将上映电影
+     *
+     * @param data
+     * @param evictProvider
+     * @return
+     */
+    @LifeCache(duration = 3, timeUnit = TimeUnit.MINUTES)
+    Observable<Reply<List<DoubanBean.SubjectsBean>>> getMoreComing(Observable<List<DoubanBean.SubjectsBean>> data, EvictProvider evictProvider);
+
 }

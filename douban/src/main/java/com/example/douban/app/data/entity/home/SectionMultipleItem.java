@@ -9,15 +9,18 @@ import java.util.List;
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
  */
-public class SectionMultipleItem extends SectionMultiEntity<Object> implements MultiItemEntity,Serializable {
+public class SectionMultipleItem extends SectionMultiEntity<Object> implements MultiItemEntity, Serializable {
 
     public static final int HOT_ITEM = 1;
     public static final int COMING_ITEM = 2;
     public static final int MOVIE_LIST_ITEM = 3;
     public static final int HEAD_ITEM = 4;
 
+    // Item类型
     private int itemType;
+    // 是否显示更多
     private boolean isMore;
+    // 头部标题
     private String sectionHead;
     private DoubanBean.SubjectsBean subjectsBean;
     private List<MovieListBean> list;

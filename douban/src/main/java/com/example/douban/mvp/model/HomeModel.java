@@ -235,7 +235,7 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
         }).map(new Function<List<MovieListBean>, List<SectionMultipleItem>>() {
             @Override
             public List<SectionMultipleItem> apply(List<MovieListBean> movieListBeans) throws Exception {
-                movieList.add(new SectionMultipleItem(SectionMultipleItem.HEAD_ITEM, true, "电影榜单", true));
+                movieList.add(new SectionMultipleItem(SectionMultipleItem.HEAD_ITEM, true, "电影榜单", false));
                 movieList.add(new SectionMultipleItem(SectionMultipleItem.MOVIE_LIST_ITEM, movieListBeans));
                 return movieList;
             }

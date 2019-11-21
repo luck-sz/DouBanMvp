@@ -6,14 +6,19 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.douban.app.base.MySupportFragment;
+import com.example.douban.app.utils.RecycleViewDivider;
 import com.example.douban.mvp.ui.activity.MainActivity;
 import com.example.douban.mvp.ui.activity.MoreActivity;
+import com.example.douban.mvp.ui.adapter.MoreComingAdapter;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
@@ -45,8 +50,13 @@ public class ComingFragment extends MySupportFragment<ComingPresenter> implement
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.rv_list)
+    RecyclerView mRecycleView;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout mRefreshLayout;
 
     private String title;
+    private RecycleViewDivider divider;
 
     public static ComingFragment newInstance(String title) {
         ComingFragment fragment = new ComingFragment();
@@ -78,6 +88,8 @@ public class ComingFragment extends MySupportFragment<ComingPresenter> implement
             title = bundle.getString(MoreActivity.TITLE);
             initToolBar(title);
         }
+        mPresenter.getAllData(true);
+        initRefreshLayout();
     }
 
     @Override
@@ -87,12 +99,12 @@ public class ComingFragment extends MySupportFragment<ComingPresenter> implement
 
     @Override
     public void showLoading() {
-
+        mRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideLoading() {
-
+        mRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -112,6 +124,15 @@ public class ComingFragment extends MySupportFragment<ComingPresenter> implement
 
     }
 
+    private void initRefreshLayout() {
+        mRefreshLayout.setColorSchemeColors(ArmsUtils.getColor(_mActivity, R.color.black));
+        mRefreshLayout.setOnRefreshListener(() -> {
+            if (mPresenter != null) {
+                mPresenter.getAllData(true);
+            }
+        });
+    }
+
     private void initToolBar(String title) {
         toolbar.setTitle(title + "电影");
         toolbar.setNavigationIcon(R.drawable.ic_back);
@@ -122,5 +143,17 @@ public class ComingFragment extends MySupportFragment<ComingPresenter> implement
                 launchActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void setAdapter(MoreComingAdapter moreComingAdapter) {
+        mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // 添加自定义分割线
+        if (divider == null) {
+            // 只添加一次
+            divider = new RecycleViewDivider(_mActivity, LinearLayoutManager.HORIZONTAL);
+            mRecycleView.addItemDecoration(divider);
+        }
+        mRecycleView.setAdapter(moreComingAdapter);
     }
 }
