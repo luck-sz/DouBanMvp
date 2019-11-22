@@ -2,16 +2,28 @@ package com.example.douban.mvp.presenter;
 
 import android.app.Application;
 
+import com.example.douban.R;
+import com.example.douban.app.data.entity.home.DoubanBean;
+import com.example.douban.app.data.entity.more.MoreListBean;
+import com.example.douban.mvp.ui.adapter.more.MoreHotAdapter;
+import com.example.douban.mvp.ui.adapter.more.MoreListAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 
 import com.example.douban.mvp.contract.MoreListContract;
+import com.jess.arms.utils.RxLifecycleUtils;
+
+import java.util.List;
 
 
 /**
@@ -36,6 +48,7 @@ public class MoreListPresenter extends BasePresenter<MoreListContract.Model, Mor
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
+    MoreListAdapter moreListAdapter;
 
     @Inject
     public MoreListPresenter(MoreListContract.Model model, MoreListContract.View rootView) {
@@ -50,4 +63,39 @@ public class MoreListPresenter extends BasePresenter<MoreListContract.Model, Mor
         this.mImageLoader = null;
         this.mApplication = null;
     }
+
+    public void getMoreList(boolean update, String title) {
+        mModel.getMoreList(update, title)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    if (update) {
+                        mRootView.showLoading();
+                    }
+                })
+                .doFinally(() -> {
+                    if (update) {
+                        mRootView.hideLoading();
+                    }
+                })
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<List<MoreListBean>>(mErrorHandler) {
+                    @Override
+                    public void onNext(List<MoreListBean> moreListBeans) {
+                        setAdapter(moreListBeans, update);
+                    }
+                });
+    }
+
+    private void setAdapter(List<MoreListBean> moreListBeans, boolean update) {
+        if (moreListAdapter == null) {
+            moreListAdapter = new MoreListAdapter(R.layout.item_more_list, moreListBeans);
+        }
+        if (update) {
+            moreListAdapter.setNewData(moreListBeans);
+        }
+        mRootView.setAdapter(moreListAdapter);
+    }
+
+
 }

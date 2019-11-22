@@ -5,6 +5,7 @@
     android:id="@+id/cl_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:ignore="MissingPrefix"
     android:background="@color/white">
 
     <TextView
@@ -65,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="16dp"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardBackgroundColor="@android:color/white"
@@ -113,5 +114,28 @@
         app:layout_constraintTop_toTopOf="@+id/rating_movie"
         app:shine_size="24dp"
         app:siShape="@raw/heart" />
+
+    <TextView
+        android:id="@+id/tv_rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:text="No.1"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:bl_corners_radius="2dp"
+        app:bl_stroke_color="#f44336"
+        app:bl_solid_color="#f44336"
+        app:bl_stroke_width="1dp"
+        app:bl_padding_right="3dp"
+        app:bl_padding_left="3dp"
+        app:bl_padding_top="3dp"
+        app:bl_padding_bottom="3dp"
+        app:layout_constraintBottom_toTopOf="@+id/lcv_home"
+        app:layout_constraintStart_toStartOf="@+id/lcv_home"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
