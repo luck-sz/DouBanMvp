@@ -1,4 +1,4 @@
-package com.example.douban.mvp.ui.fragment;
+package com.example.douban.mvp.ui.fragment.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +20,7 @@ import com.example.douban.di.component.DaggerHomeComponent;
 import com.example.douban.mvp.contract.HomeContract;
 import com.example.douban.mvp.presenter.HomePresenter;
 import com.example.douban.mvp.ui.activity.MoreActivity;
-import com.example.douban.mvp.ui.adapter.SectionMultipleItemAdapter;
+import com.example.douban.mvp.ui.adapter.home.SectionMultipleItemAdapter;
 import com.example.douban.mvp.ui.view.BannerViewHolder;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;

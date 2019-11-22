@@ -1,4 +1,4 @@
-package com.example.douban.mvp.ui.adapter;
+package com.example.douban.mvp.ui.adapter.home;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

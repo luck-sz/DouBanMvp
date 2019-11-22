@@ -3,13 +3,12 @@ package com.example.douban.mvp.presenter;
 import android.app.Application;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.home.Banner;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
-import com.example.douban.mvp.ui.adapter.SectionMultipleItemAdapter;
+import com.example.douban.mvp.ui.adapter.home.SectionMultipleItemAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;

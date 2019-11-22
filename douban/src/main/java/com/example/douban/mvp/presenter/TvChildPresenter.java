@@ -7,7 +7,7 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.tv.TvBean;
-import com.example.douban.mvp.ui.adapter.TvItemAdapter;
+import com.example.douban.mvp.ui.adapter.tv.TvItemAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
@@ -17,14 +17,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import timber.log.Timber;
 
 import javax.inject.Inject;
 
 import com.example.douban.mvp.contract.TvChildContract;
 import com.jess.arms.utils.RxLifecycleUtils;
 
-import java.util.HashMap;
 import java.util.List;
 
 

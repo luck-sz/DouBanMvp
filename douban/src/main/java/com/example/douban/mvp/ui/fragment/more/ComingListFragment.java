@@ -1,13 +1,10 @@
-package com.example.douban.mvp.ui.fragment;
+package com.example.douban.mvp.ui.fragment.more;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,24 +12,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.douban.app.base.MySupportFragment;
-import com.example.douban.app.data.entity.home.DoubanBean;
 import com.example.douban.app.utils.RecycleViewDivider;
+import com.example.douban.mvp.presenter.ComingListPresenter;
 import com.example.douban.mvp.ui.activity.MainActivity;
 import com.example.douban.mvp.ui.activity.MoreActivity;
-import com.example.douban.mvp.ui.adapter.MoreHotAdapter;
-import com.jess.arms.base.BaseFragment;
+import com.example.douban.mvp.ui.adapter.more.MoreComingAdapter;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 
-import com.example.douban.di.component.DaggerHotListComponent;
-import com.example.douban.mvp.contract.HotListContract;
-import com.example.douban.mvp.presenter.HotListPresenter;
+import com.example.douban.di.component.DaggerComingListComponent;
+import com.example.douban.mvp.contract.ComingListContract;
 
 import com.example.douban.R;
-
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -43,7 +35,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 11/18/2019 15:34
+ * Created by MVPArmsTemplate on 11/18/2019 16:38
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -51,7 +43,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
  * ================================================
  */
-public class HotListFragment extends MySupportFragment<HotListPresenter> implements HotListContract.View {
+public class ComingListFragment extends MySupportFragment<ComingListPresenter> implements ComingListContract.View {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -63,8 +55,8 @@ public class HotListFragment extends MySupportFragment<HotListPresenter> impleme
     private String title;
     private RecycleViewDivider divider;
 
-    public static HotListFragment newInstance(String title) {
-        HotListFragment fragment = new HotListFragment();
+    public static ComingListFragment newInstance(String title) {
+        ComingListFragment fragment = new ComingListFragment();
         Bundle bundle = new Bundle();
         bundle.putString(MoreActivity.TITLE, title);
         fragment.setArguments(bundle);
@@ -73,7 +65,7 @@ public class HotListFragment extends MySupportFragment<HotListPresenter> impleme
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-        DaggerHotListComponent //如找不到该类,请编译一下项目
+        DaggerComingListComponent //如找不到该类,请编译一下项目
                 .builder()
                 .appComponent(appComponent)
                 .view(this)
@@ -83,7 +75,7 @@ public class HotListFragment extends MySupportFragment<HotListPresenter> impleme
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_hot_list, container, false);
+        return inflater.inflate(R.layout.fragment_coming, container, false);
     }
 
     @Override
@@ -129,8 +121,17 @@ public class HotListFragment extends MySupportFragment<HotListPresenter> impleme
 
     }
 
+    private void initRefreshLayout() {
+        mRefreshLayout.setColorSchemeColors(ArmsUtils.getColor(_mActivity, R.color.black));
+        mRefreshLayout.setOnRefreshListener(() -> {
+            if (mPresenter != null) {
+                mPresenter.getAllData(true);
+            }
+        });
+    }
+
     private void initToolBar(String title) {
-        toolbar.setTitle(title + "电影");
+        toolbar.setTitle(title);
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,17 +142,8 @@ public class HotListFragment extends MySupportFragment<HotListPresenter> impleme
         });
     }
 
-    private void initRefreshLayout() {
-        mRefreshLayout.setColorSchemeColors(ArmsUtils.getColor(_mActivity, R.color.black));
-        mRefreshLayout.setOnRefreshListener(() -> {
-            if (mPresenter != null) {
-                mPresenter.getAllData(true);
-            }
-        });
-    }
-
     @Override
-    public void setAdapter(MoreHotAdapter moreHotAdapter) {
+    public void setAdapter(MoreComingAdapter moreComingAdapter) {
         mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // 添加自定义分割线
         if (divider == null) {
@@ -159,6 +151,6 @@ public class HotListFragment extends MySupportFragment<HotListPresenter> impleme
             divider = new RecycleViewDivider(_mActivity, LinearLayoutManager.HORIZONTAL);
             mRecycleView.addItemDecoration(divider);
         }
-        mRecycleView.setAdapter(moreHotAdapter);
+        mRecycleView.setAdapter(moreComingAdapter);
     }
 }

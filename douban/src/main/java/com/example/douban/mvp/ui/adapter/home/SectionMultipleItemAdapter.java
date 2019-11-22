@@ -1,4 +1,4 @@
-package com.example.douban.mvp.ui.adapter;
+package com.example.douban.mvp.ui.adapter.home;
 
 import android.support.annotation.Nullable;
 

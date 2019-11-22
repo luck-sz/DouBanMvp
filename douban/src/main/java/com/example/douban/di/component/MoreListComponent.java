@@ -5,18 +5,18 @@ import dagger.Component;
 
 import com.jess.arms.di.component.AppComponent;
 
-import com.example.douban.di.module.ComingModule;
-import com.example.douban.mvp.contract.ComingContract;
+import com.example.douban.di.module.MoreListModule;
+import com.example.douban.mvp.contract.MoreListContract;
 
 import com.jess.arms.di.scope.FragmentScope;
-import com.example.douban.mvp.ui.fragment.ComingFragment;
+import com.example.douban.mvp.ui.fragment.more.MoreListFragment;
 
 
 /**
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 11/18/2019 16:38
+ * Created by MVPArmsTemplate on 11/22/2019 14:19
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -25,17 +25,17 @@ import com.example.douban.mvp.ui.fragment.ComingFragment;
  * ================================================
  */
 @FragmentScope
-@Component(modules = ComingModule.class, dependencies = AppComponent.class)
-public interface ComingComponent {
-    void inject(ComingFragment fragment);
+@Component(modules = MoreListModule.class, dependencies = AppComponent.class)
+public interface MoreListComponent {
+    void inject(MoreListFragment fragment);
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        ComingComponent.Builder view(ComingContract.View view);
+        MoreListComponent.Builder view(MoreListContract.View view);
 
-        ComingComponent.Builder appComponent(AppComponent appComponent);
+        MoreListComponent.Builder appComponent(AppComponent appComponent);
 
-        ComingComponent build();
+        MoreListComponent build();
     }
 }

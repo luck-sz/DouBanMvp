@@ -1,5 +1,7 @@
-package com.example.douban.mvp.ui.adapter;
+package com.example.douban.mvp.ui.adapter.home;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.home.MovieListBean;
+import com.example.douban.mvp.ui.activity.MoreActivity;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 
@@ -34,7 +37,11 @@ public class MoviesListAdapter extends BaseQuickAdapter<MovieListBean, BaseViewH
         subTitleAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Toast.makeText(mContext, item.getTitle(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, MoreActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(MoreActivity.TITLE, item.getTitle());
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
         mRecycleView.setAdapter(subTitleAdapter);

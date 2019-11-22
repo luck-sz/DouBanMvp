@@ -1,7 +1,7 @@
 package com.example.douban.mvp.contract;
 
 import com.example.douban.app.data.entity.home.DoubanBean;
-import com.example.douban.mvp.ui.adapter.MoreHotAdapter;
+import com.example.douban.mvp.ui.adapter.more.MoreHotAdapter;
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 

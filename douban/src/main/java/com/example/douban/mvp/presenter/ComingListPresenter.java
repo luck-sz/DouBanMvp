@@ -4,8 +4,8 @@ import android.app.Application;
 
 import com.example.douban.R;
 import com.example.douban.app.data.entity.home.DoubanBean;
-import com.example.douban.mvp.ui.adapter.MoreComingAdapter;
-import com.example.douban.mvp.ui.adapter.MoreHotAdapter;
+import com.example.douban.mvp.contract.ComingListContract;
+import com.example.douban.mvp.ui.adapter.more.MoreComingAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
@@ -18,7 +18,6 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
 import javax.inject.Inject;
 
-import com.example.douban.mvp.contract.ComingContract;
 import com.jess.arms.utils.RxLifecycleUtils;
 
 import java.util.List;
@@ -37,7 +36,7 @@ import java.util.List;
  * ================================================
  */
 @FragmentScope
-public class ComingPresenter extends BasePresenter<ComingContract.Model, ComingContract.View> {
+public class ComingListPresenter extends BasePresenter<ComingListContract.Model, ComingListContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -50,7 +49,7 @@ public class ComingPresenter extends BasePresenter<ComingContract.Model, ComingC
     MoreComingAdapter moreComingAdapter;
 
     @Inject
-    public ComingPresenter(ComingContract.Model model, ComingContract.View rootView) {
+    public ComingListPresenter(ComingListContract.Model model, ComingListContract.View rootView) {
         super(model, rootView);
     }
 

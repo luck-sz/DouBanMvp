@@ -1,9 +1,9 @@
-package com.example.douban.mvp.ui.adapter;
+package com.example.douban.mvp.ui.adapter.tv;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.example.douban.mvp.ui.fragment.TvChildFragment;
+import com.example.douban.mvp.ui.fragment.tv.TvChildFragment;
 
 import java.util.ArrayList;
 import java.util.List;

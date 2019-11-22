@@ -2,7 +2,7 @@ package com.example.douban.mvp.contract;
 
 import com.example.douban.app.data.entity.home.Banner;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
-import com.example.douban.mvp.ui.adapter.SectionMultipleItemAdapter;
+import com.example.douban.mvp.ui.adapter.home.SectionMultipleItemAdapter;
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 

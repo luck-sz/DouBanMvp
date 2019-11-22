@@ -1,13 +1,11 @@
 package com.example.douban.di.module;
 
-import com.jess.arms.di.scope.FragmentScope;
+import com.example.douban.mvp.model.ComingListModel;
 
 import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
 
-import com.example.douban.mvp.contract.ComingContract;
-import com.example.douban.mvp.model.ComingModel;
+import com.example.douban.mvp.contract.ComingListContract;
 
 
 /**
@@ -23,8 +21,8 @@ import com.example.douban.mvp.model.ComingModel;
  * ================================================
  */
 @Module
-public abstract class ComingModule {
+public abstract class ComingListModule {
 
     @Binds
-    abstract ComingContract.Model bindComingModel(ComingModel model);
+    abstract ComingListContract.Model bindComingModel(ComingListModel model);
 }

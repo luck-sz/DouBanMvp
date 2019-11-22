@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.provider.BaseItemProvider;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
-import com.example.douban.mvp.ui.adapter.SectionMultipleItemAdapter;
+import com.example.douban.mvp.ui.adapter.home.SectionMultipleItemAdapter;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 

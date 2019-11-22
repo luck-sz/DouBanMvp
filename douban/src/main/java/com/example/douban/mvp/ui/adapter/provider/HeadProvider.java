@@ -1,12 +1,10 @@
 package com.example.douban.mvp.ui.adapter.provider;
 
-import android.widget.Toast;
-
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.provider.BaseItemProvider;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
-import com.example.douban.mvp.ui.adapter.SectionMultipleItemAdapter;
+import com.example.douban.mvp.ui.adapter.home.SectionMultipleItemAdapter;
 
 public class HeadProvider extends BaseItemProvider<SectionMultipleItem, BaseViewHolder> {
     @Override

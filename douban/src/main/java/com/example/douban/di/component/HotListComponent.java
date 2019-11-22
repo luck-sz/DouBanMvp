@@ -9,7 +9,7 @@ import com.example.douban.di.module.HotListModule;
 import com.example.douban.mvp.contract.HotListContract;
 
 import com.jess.arms.di.scope.FragmentScope;
-import com.example.douban.mvp.ui.fragment.HotListFragment;
+import com.example.douban.mvp.ui.fragment.more.HotListFragment;
 
 
 /**

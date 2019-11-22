@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.example.douban.R;
 import com.example.douban.app.data.entity.home.DoubanBean;
-import com.example.douban.mvp.ui.adapter.MoreHotAdapter;
+import com.example.douban.mvp.ui.adapter.more.MoreHotAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;

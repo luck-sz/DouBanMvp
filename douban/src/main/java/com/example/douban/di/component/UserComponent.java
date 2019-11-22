@@ -9,7 +9,7 @@ import com.example.douban.di.module.UserModule;
 import com.example.douban.mvp.contract.UserContract;
 
 import com.jess.arms.di.scope.FragmentScope;
-import com.example.douban.mvp.ui.fragment.UserFragment;
+import com.example.douban.mvp.ui.fragment.user.UserFragment;
 
 
 /**

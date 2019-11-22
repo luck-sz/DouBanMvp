@@ -13,7 +13,7 @@ import com.jess.arms.di.scope.FragmentScope;
 
 import javax.inject.Inject;
 
-import com.example.douban.mvp.contract.ComingContract;
+import com.example.douban.mvp.contract.ComingListContract;
 
 import java.util.List;
 
@@ -36,14 +36,14 @@ import io.rx_cache2.Reply;
  * ================================================
  */
 @FragmentScope
-public class ComingModel extends BaseModel implements ComingContract.Model {
+public class ComingListModel extends BaseModel implements ComingListContract.Model {
     @Inject
     Gson mGson;
     @Inject
     Application mApplication;
 
     @Inject
-    public ComingModel(IRepositoryManager repositoryManager) {
+    public ComingListModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
     }
 

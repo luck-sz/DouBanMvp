@@ -9,7 +9,7 @@ import com.jess.arms.di.component.AppComponent;
 import com.example.douban.di.module.TvModule;
 
 import com.jess.arms.di.scope.FragmentScope;
-import com.example.douban.mvp.ui.fragment.TvFragment;
+import com.example.douban.mvp.ui.fragment.tv.TvFragment;
 
 
 /**

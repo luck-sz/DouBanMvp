@@ -6,10 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.example.douban.app.base.MySupportActivity;
-import com.example.douban.mvp.ui.fragment.ComingFragment;
-import com.example.douban.mvp.ui.fragment.HotListFragment;
+import com.example.douban.mvp.ui.fragment.more.ComingListFragment;
+import com.example.douban.mvp.ui.fragment.more.HotListFragment;
+import com.example.douban.mvp.ui.fragment.more.MoreListFragment;
 import com.gyf.immersionbar.ImmersionBar;
-import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 
@@ -19,8 +19,6 @@ import com.example.douban.mvp.presenter.MorePresenter;
 
 import com.example.douban.R;
 
-
-import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -107,16 +105,22 @@ public class MoreActivity extends MySupportActivity<MorePresenter> implements Mo
     private void loadFragment(String title) {
         switch (title) {
             case "影院热映":
+                // 影院热映
                 if (findFragment(HotListFragment.class) == null) {
-                    loadRootFragment(R.id.frame_content, HotListFragment.newInstance(title));  // 加载根Fragment
+                    loadRootFragment(R.id.frame_content, HotListFragment.newInstance(title + "电影"));  // 加载根Fragment
                 }
                 break;
             case "即将上映":
-                if (findFragment(ComingFragment.class) == null) {
-                    loadRootFragment(R.id.frame_content, ComingFragment.newInstance(title));  // 加载根Fragment
+                // 即将上映
+                if (findFragment(ComingListFragment.class) == null) {
+                    loadRootFragment(R.id.frame_content, ComingListFragment.newInstance(title + "电影"));  // 加载根Fragment
                 }
                 break;
             default:
+                // 电影榜单
+                if (findFragment(MoreListFragment.class) == null) {
+                    loadRootFragment(R.id.frame_content, MoreListFragment.newInstance(title));  // 加载根Fragment
+                }
                 break;
         }
     }

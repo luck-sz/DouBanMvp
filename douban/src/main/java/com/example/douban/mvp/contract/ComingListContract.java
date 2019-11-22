@@ -1,8 +1,7 @@
 package com.example.douban.mvp.contract;
 
 import com.example.douban.app.data.entity.home.DoubanBean;
-import com.example.douban.mvp.ui.adapter.MoreComingAdapter;
-import com.example.douban.mvp.ui.adapter.MoreHotAdapter;
+import com.example.douban.mvp.ui.adapter.more.MoreComingAdapter;
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 
@@ -23,7 +22,7 @@ import io.reactivex.Observable;
  * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
  * ================================================
  */
-public interface ComingContract {
+public interface ComingListContract {
     //对于经常使用的关于UI的方法可以定义到IView中,如显示隐藏进度条,和显示文字消息
     interface View extends IView {
         void setAdapter(MoreComingAdapter moreComingAdapter);

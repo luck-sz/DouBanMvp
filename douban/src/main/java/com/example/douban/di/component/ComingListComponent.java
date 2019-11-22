@@ -3,20 +3,20 @@ package com.example.douban.di.component;
 import dagger.BindsInstance;
 import dagger.Component;
 
+import com.example.douban.mvp.contract.ComingListContract;
+import com.example.douban.mvp.ui.fragment.more.ComingListFragment;
 import com.jess.arms.di.component.AppComponent;
 
-import com.example.douban.di.module.HomeModule;
-import com.example.douban.mvp.contract.HomeContract;
+import com.example.douban.di.module.ComingListModule;
 
 import com.jess.arms.di.scope.FragmentScope;
-import com.example.douban.mvp.ui.fragment.home.HomeFragment;
 
 
 /**
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 11/02/2019 13:29
+ * Created by MVPArmsTemplate on 11/18/2019 16:38
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -25,17 +25,17 @@ import com.example.douban.mvp.ui.fragment.home.HomeFragment;
  * ================================================
  */
 @FragmentScope
-@Component(modules = HomeModule.class, dependencies = AppComponent.class)
-public interface HomeComponent {
-    void inject(HomeFragment fragment);
+@Component(modules = ComingListModule.class, dependencies = AppComponent.class)
+public interface ComingListComponent {
+    void inject(ComingListFragment fragment);
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        HomeComponent.Builder view(HomeContract.View view);
+        ComingListComponent.Builder view(ComingListContract.View view);
 
-        HomeComponent.Builder appComponent(AppComponent appComponent);
+        ComingListComponent.Builder appComponent(AppComponent appComponent);
 
-        HomeComponent build();
+        ComingListComponent build();
     }
 }
