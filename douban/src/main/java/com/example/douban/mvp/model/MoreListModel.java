@@ -3,6 +3,9 @@ package com.example.douban.mvp.model;
 import android.app.Application;
 
 import com.example.douban.app.data.api.service.DouBanService;
+import com.example.douban.app.data.entity.home.DoubanBean;
+import com.example.douban.app.data.entity.home.NewMoviesBean;
+import com.example.douban.app.data.entity.home.UsBoxBean;
 import com.example.douban.app.data.entity.home.WeeklyBean;
 import com.example.douban.app.data.entity.more.MoreListBean;
 import com.google.gson.Gson;
@@ -84,9 +87,53 @@ public class MoreListModel extends BaseModel implements MoreListContract.Model {
                             }
                         });
             case "一周新电影榜":
-                return null;
+                return mRepositoryManager.obtainRetrofitService(DouBanService.class)
+                        .getNewMovies()
+                        .map(new Function<NewMoviesBean, List<MoreListBean>>() {
+                            @Override
+                            public List<MoreListBean> apply(NewMoviesBean newMoviesBean) throws Exception {
+                                List<MoreListBean> moreListBeans = new ArrayList<>();
+                                types = new ArrayList<>();
+                                actors = new ArrayList<>();
+                                for (int i = 0; i < newMoviesBean.getSubjects().size(); i++) {
+                                    String id = newMoviesBean.getSubjects().get(i).getId();
+                                    String title = newMoviesBean.getSubjects().get(i).getTitle();
+                                    String img = newMoviesBean.getSubjects().get(i).getImages().getLarge();
+                                    double rating = newMoviesBean.getSubjects().get(i).getRating().getAverage();
+                                    String year = newMoviesBean.getSubjects().get(i).getYear();
+                                    types = newMoviesBean.getSubjects().get(i).getGenres();
+                                    // 循环获取演员名字
+                                    for (int j = 0; j < newMoviesBean.getSubjects().get(i).getCasts().size(); j++) {
+                                        actors.add(newMoviesBean.getSubjects().get(i).getCasts().get(j).getName());
+                                    }
+                                    MoreListBean bean = new MoreListBean(i + 1, id, title, img, rating, year, types, actors);
+                                    moreListBeans.add(bean);
+                                }
+                                return moreListBeans;
+                            }
+                        });
             case "北美票房榜":
-                return null;
+                return mRepositoryManager.obtainRetrofitService(DouBanService.class)
+                        .getUsBox()
+                        .map(usBoxBean -> {
+                            List<MoreListBean> moreListBeans = new ArrayList<>();
+                            types = new ArrayList<>();
+                            actors = new ArrayList<>();
+                            for (int i = 0; i < usBoxBean.getSubjects().size(); i++) {
+                                String id = usBoxBean.getSubjects().get(i).getSubject().getId();
+                                String title1 = usBoxBean.getSubjects().get(i).getSubject().getTitle();
+                                String img = usBoxBean.getSubjects().get(i).getSubject().getImages().getLarge();
+                                double rating = usBoxBean.getSubjects().get(i).getSubject().getRating().getAverage();
+                                String year = usBoxBean.getSubjects().get(i).getSubject().getYear();
+                                types = usBoxBean.getSubjects().get(i).getSubject().getGenres();
+                                for (int j = 0; j < usBoxBean.getSubjects().get(i).getSubject().getCasts().size(); j++) {
+                                    actors.add(usBoxBean.getSubjects().get(i).getSubject().getCasts().get(j).getName());
+                                }
+                                MoreListBean bean = new MoreListBean(i + 1, id, title1, img, rating, year, types, actors);
+                                moreListBeans.add(bean);
+                            }
+                            return moreListBeans;
+                        });
             default:
                 return null;
         }

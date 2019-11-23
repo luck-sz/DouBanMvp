@@ -16,6 +16,7 @@ import com.noober.background.drawable.DrawableCreator;
 import java.util.List;
 
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
+import timber.log.Timber;
 
 import static com.vondear.rxtool.RxImageTool.dip2px;
 
@@ -54,6 +55,24 @@ public class MoreListAdapter extends BaseQuickAdapter<MoreListBean, BaseViewHold
             sbActor.append(item.getActors() + " / ");
         }
         helper.setText(R.id.tv_year_actor, item.getYear() + " / " + sbType + "/ " + sbActor);
-        helper.setText(R.id.tv_rank, "No." + item.getRank());
+        int rank = item.getRank();
+        Timber.d("排名" + rank);
+        helper.setText(R.id.tv_rank, "No." + rank);
+        // 为不同的排名设置不同颜色
+        switch (rank) {
+            case 1:
+                helper.setBackgroundRes(R.id.tv_rank, R.drawable.movie_list_no_1);
+                break;
+            case 2:
+                helper.setBackgroundRes(R.id.tv_rank, R.drawable.movie_list_no_2);
+                break;
+            case 3:
+                helper.setBackgroundRes(R.id.tv_rank, R.drawable.movie_list_no_3);
+                break;
+            default:
+                helper.setBackgroundRes(R.id.tv_rank, R.drawable.movie_list_no_other);
+                break;
+        }
+
     }
 }

@@ -94,13 +94,13 @@ ext {
                 "retrofit-url-manager"     : "me.jessyan:retrofit-url-manager:1.4.0",
                 "lifecyclemodel"           : "me.jessyan:lifecyclemodel:1.0.1",
 
-                //test
+                //movie_list_no_1
                 "junit"                    : "junit:junit:4.12",
-                "androidJUnitRunner"       : "android.support.test.runner.AndroidJUnitRunner",
-                "runner"                   : "com.android.support.test:runner:1.0.1",
-                "espresso-core"            : "com.android.support.test.espresso:espresso-core:${version["espressoSdkVersion"]}",
-                "espresso-contrib"         : "com.android.support.test.espresso:espresso-contrib:${version["espressoSdkVersion"]}",
-                "espresso-intents"         : "com.android.support.test.espresso:espresso-intents:${version["espressoSdkVersion"]}",
+                "androidJUnitRunner"       : "android.support.movie_list_no_1.runner.AndroidJUnitRunner",
+                "runner"                   : "com.android.support.movie_list_no_1:runner:1.0.1",
+                "espresso-core"            : "com.android.support.movie_list_no_1.espresso:espresso-core:${version["espressoSdkVersion"]}",
+                "espresso-contrib"         : "com.android.support.movie_list_no_1.espresso:espresso-contrib:${version["espressoSdkVersion"]}",
+                "espresso-intents"         : "com.android.support.movie_list_no_1.espresso:espresso-intents:${version["espressoSdkVersion"]}",
                 "mockito-core"             : "org.mockito:mockito-core:1.+",
                 "timber"                   : "com.jakewharton.timber:timber:4.7.1",
                 "logger"                   : "com.orhanobut:logger:2.2.0",

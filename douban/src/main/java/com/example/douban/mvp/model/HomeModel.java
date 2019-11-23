@@ -174,7 +174,7 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
                         MovieListBean movieListBean = new MovieListBean();
                         movieListBean.setTitle("一周口碑电影榜");
                         movieListBean.setSize(weeklyBean.getSubjects().size());
-                        movieListBean.setImg(weeklyBean.getSubjects().get(1).getSubject().getImages().getLarge());
+                        movieListBean.setImg(weeklyBean.getSubjects().get(0).getSubject().getImages().getLarge());
                         for (int i = 0; i < 3; i++) {
                             movies.add(new MovieListBean.Movie(i + 1, weeklyBean.getSubjects().get(i).getSubject().getTitle(), weeklyBean.getSubjects().get(i).getSubject().getRating().getAverage()));
                         }
