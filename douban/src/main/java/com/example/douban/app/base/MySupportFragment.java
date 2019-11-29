@@ -4,10 +4,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.douban.R;
+import com.gyf.immersionbar.ImmersionBar;
 import com.jess.arms.base.delegate.IFragment;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.integration.cache.CacheType;
@@ -27,6 +30,8 @@ public abstract class MySupportFragment<P extends IPresenter> extends SupportFra
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
     protected Context mContext;
+    protected Toolbar toolbar;
+    protected View statusBarView;
     @Inject
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
@@ -59,6 +64,14 @@ public abstract class MySupportFragment<P extends IPresenter> extends SupportFra
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        statusBarView = view.findViewById(R.id.status_bar_view);
+        toolbar = view.findViewById(R.id.toolbar);
+        fitsLayoutOverlap();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
@@ -71,15 +84,14 @@ public abstract class MySupportFragment<P extends IPresenter> extends SupportFra
         mContext = null;
     }
 
-    /**
-     * 是否使用 EventBus
-     * Arms 核心库现在并不会依赖某个 EventBus, 要想使用 EventBus, 还请在项目中自行依赖对应的 EventBus
-     * 现在支持两种 EventBus, greenrobot 的 EventBus 和畅销书 《Android源码设计模式解析与实战》的作者 何红辉 所作的 AndroidEventBus
-     * 确保依赖后, 将此方法返回 true, Arms 会自动检测您依赖的 EventBus, 并自动注册
-     * 这种做法可以让使用者有自行选择三方库的权利, 并且还可以减轻 Arms 的体积
-     *
-     * @return 返回 {@code true} (默认为 {@code true}), Arms 会自动注册 EventBus
-     */
+    private void fitsLayoutOverlap() {
+        if (statusBarView != null) {
+            ImmersionBar.setStatusBarView(this, statusBarView);
+        } else {
+            ImmersionBar.setTitleBar(this, toolbar);
+        }
+    }
+
     @Override
     public boolean useEventBus() {
         return true;

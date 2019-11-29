@@ -6,8 +6,8 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/white"
+    android:background="@color/colorPrimary"
     app:title="首页"
-    app:titleTextAppearance="@style/Toolbar.TitleText">
+    app:titleTextAppearance="@style/Toolbar.TitleText.White">
 
 </android.support.v7.widget.Toolbar>

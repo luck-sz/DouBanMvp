@@ -61,7 +61,7 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        initStatusBar();
+//        initStatusBar();
         initFragment();
         initBottomNav();
     }
@@ -93,13 +93,10 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
         finish();
     }
 
-    private void initStatusBar() {
+    private void initStatusBar(boolean isDark) {
         ImmersionBar.with(this)
-                .transparentStatusBar()
-                .statusBarColor(R.color.white)  // 状态栏颜色
-                .statusBarDarkFont(true)        // 状态栏字体颜色(黑色)
-                .fitsSystemWindows(true)
-                .keyboardEnable(true)           // 解决软键盘与底部输入框冲突问题，默认为false
+                .keyboardEnable(true)
+                .statusBarDarkFont(isDark,0.2f)
                 .init();
     }
 
@@ -129,12 +126,15 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
+                        initStatusBar(true);
                         showHideFragment(mFragments[0]);
                         break;
                     case R.id.nav_book:
+                        initStatusBar(true);
                         showHideFragment(mFragments[1]);
                         break;
                     case R.id.nav_user:
+                        initStatusBar(false);
                         showHideFragment(mFragments[2]);
                         break;
                     default:
