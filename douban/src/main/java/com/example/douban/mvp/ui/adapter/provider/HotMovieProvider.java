@@ -1,11 +1,13 @@
 package com.example.douban.mvp.ui.adapter.provider;
 
+import android.content.Intent;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.provider.BaseItemProvider;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.home.SectionMultipleItem;
+import com.example.douban.mvp.ui.activity.DetailActivity;
 import com.example.douban.mvp.ui.adapter.home.SectionMultipleItemAdapter;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
@@ -43,7 +45,9 @@ public class HotMovieProvider extends BaseItemProvider<SectionMultipleItem, Base
 
     @Override
     public void onClick(BaseViewHolder helper, SectionMultipleItem data, int position) {
-        Toast.makeText(mContext, data.getSubjectsBean().getTitle(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(mContext, DetailActivity.class);
+        intent.putExtra("id", data.getSubjectsBean().getId());
+        mContext.startActivity(intent);
     }
 
     @Override

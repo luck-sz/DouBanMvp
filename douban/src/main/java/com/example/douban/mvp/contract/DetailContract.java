@@ -1,7 +1,10 @@
 package com.example.douban.mvp.contract;
 
+import com.example.douban.app.data.entity.detail.DetailBean;
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
+
+import io.reactivex.Observable;
 
 
 /**
@@ -19,11 +22,15 @@ import com.jess.arms.mvp.IModel;
 public interface DetailContract {
     //对于经常使用的关于UI的方法可以定义到IView中,如显示隐藏进度条,和显示文字消息
     interface View extends IView {
-
+        // 设置动画效果
+        void setMotion();
+        // 设置标题
+        void setTitleBar(String title, String subTitle);
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel {
-
+        // 获取详情页数据
+        Observable<DetailBean> getDetail(String id);
     }
 }

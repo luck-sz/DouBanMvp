@@ -13,4 +13,6 @@
     <string name="tv_tab_jp_tv">日剧</string>
     <string name="tv_tab_us_tv">美剧</string>
     <string name="tv_tab_animation">日本动画</string>
+
+    <string name="transition_book_img">transition_movie_img</string>
 </resources>

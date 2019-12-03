@@ -2,6 +2,8 @@ package com.example.douban.mvp.model;
 
 import android.app.Application;
 
+import com.example.douban.app.data.api.service.DetailService;
+import com.example.douban.app.data.entity.detail.DetailBean;
 import com.google.gson.Gson;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
@@ -11,6 +13,8 @@ import com.jess.arms.di.scope.ActivityScope;
 import javax.inject.Inject;
 
 import com.example.douban.mvp.contract.DetailContract;
+
+import io.reactivex.Observable;
 
 
 /**
@@ -42,5 +46,11 @@ public class DetailModel extends BaseModel implements DetailContract.Model {
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<DetailBean> getDetail(String id) {
+        return mRepositoryManager.obtainRetrofitService(DetailService.class)
+                .getDetail(id);
     }
 }

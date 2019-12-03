@@ -2,16 +2,22 @@ package com.example.douban.mvp.presenter;
 
 import android.app.Application;
 
+import com.example.douban.app.data.entity.detail.DetailBean;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 
 import com.example.douban.mvp.contract.DetailContract;
+import com.jess.arms.utils.RxLifecycleUtils;
 
 
 /**
@@ -49,5 +55,19 @@ public class DetailPresenter extends BasePresenter<DetailContract.Model, DetailC
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+    }
+
+    public void getDetail(String id) {
+        mRootView.setMotion();
+        mModel.getDetail(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<DetailBean>(mErrorHandler) {
+                    @Override
+                    public void onNext(DetailBean detailBean) {
+                        mRootView.setTitleBar(detailBean.getTitle(),detailBean.getOriginal_title());
+                    }
+                });
     }
 }
