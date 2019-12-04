@@ -58,6 +58,8 @@ dependencies {
     }
     // 引入multidex库
     implementation 'com.android.support:multidex:1.0.3'
+    // 高斯模糊和圆角等
+    implementation 'jp.wasabeef:glide-transformations:4.1.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
     // 沉浸状态栏
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'

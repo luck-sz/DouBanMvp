@@ -67,6 +67,8 @@ public class DetailPresenter extends BasePresenter<DetailContract.Model, DetailC
                     @Override
                     public void onNext(DetailBean detailBean) {
                         mRootView.setTitleBar(detailBean.getTitle(),detailBean.getOriginal_title());
+                        mRootView.setPicture(detailBean.getImages().getLarge(),detailBean.getImages().getMedium());
+                        mRootView.initSlideShapeTheme(detailBean.getImages().getLarge());
                     }
                 });
     }

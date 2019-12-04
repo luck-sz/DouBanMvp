@@ -1,14 +1,18 @@
 package com.example.douban.mvp.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.transition.ArcMotion;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
@@ -16,8 +20,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.douban.R;
 import com.example.douban.app.base.MySupportActivity;
+import com.example.douban.app.utils.CommonUtils;
+import com.example.douban.app.utils.StatusBarUtil;
 import com.example.douban.di.component.DaggerDetailComponent;
 import com.example.douban.mvp.contract.DetailContract;
 import com.example.douban.mvp.presenter.DetailPresenter;
@@ -28,6 +40,7 @@ import com.jess.arms.utils.ArmsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -72,6 +85,10 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
     RelativeLayout rlTitleHead;
     // 影片详情页id
     private String id;
+    // 这个是高斯图背景的高度
+    private int imageBgHeight;
+    // 在多大范围内变色
+    private int slidingDistance;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -163,5 +180,120 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    public void setPicture(String largeUrl, String mediumUrl) {
+        Glide.with(this)
+                .load(largeUrl)
+                .override(140, 180)
+                .into(ivOnePhoto);
+
+        // "14":模糊度；"3":图片缩放3倍后再进行模糊
+        Glide.with(this)
+                .load(mediumUrl)
+                .placeholder(R.drawable.stackblur_default)
+                .transition(DrawableTransitionOptions.withCrossFade(500))
+                .transform(new BlurTransformation(40, 8))// 设置高斯模糊
+                .into(imgItemBg);
+    }
+
+    @Override
+    public void initSlideShapeTheme(String largeUrl) {
+        setImgHeaderBg(largeUrl);
+
+        // toolbar的高度
+        int toolbarHeight = titleToolBar.getLayoutParams().height;
+        final int headerBgHeight = toolbarHeight + StatusBarUtil.getStatusBarHeight(this);
+
+        // 使背景图向上移动到图片的最低端，保留（titlebar+statusbar）的高度
+        ViewGroup.LayoutParams params = ivTitleHeadBg.getLayoutParams();
+        ViewGroup.MarginLayoutParams ivTitleHeadBgParams = (ViewGroup.MarginLayoutParams) ivTitleHeadBg.getLayoutParams();
+        int marginTop = params.height - headerBgHeight;
+        ivTitleHeadBgParams.setMargins(0, -marginTop, 0, 0);
+
+        ivTitleHeadBg.setImageAlpha(0);
+        StatusBarUtil.setTranslucentImageHeader(this, 0, titleToolBar);
+
+        // 上移背景图片，使空白状态栏消失(这样下方就空了状态栏的高度)
+        if (imgItemBg != null) {
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) imgItemBg.getLayoutParams();
+            layoutParams.setMargins(0, -StatusBarUtil.getStatusBarHeight(this), 0, 0);
+
+            ViewGroup.LayoutParams imgItemBgparams = imgItemBg.getLayoutParams();
+            // 获得高斯图背景的高度
+            imageBgHeight = imgItemBgparams.height;
+        }
+
+        // 变色
+        initScrollViewListener();
+        initNewSlidingParams();
+    }
+
+    /**
+     * 加载titlebar背景
+     */
+    private void setImgHeaderBg(String imgUrl) {
+        if (!TextUtils.isEmpty(imgUrl)) {
+
+            // 高斯模糊背景 原来 参数：12,5  23,4
+            Glide.with(this).load(imgUrl)
+                    .error(R.drawable.stackblur_default)
+                    .transform(new BlurTransformation(40, 8))
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            titleToolBar.setBackgroundColor(Color.TRANSPARENT);
+                            ivTitleHeadBg.setImageAlpha(0);
+                            ivTitleHeadBg.setVisibility(View.VISIBLE);
+                            return false;
+                        }
+                    }).into(ivTitleHeadBg);
+        }
+    }
+
+    private void initScrollViewListener() {
+        // 为了兼容23以下
+        nsvScrollview.setOnMyScrollChangeListener(new MyNestedScrollView.ScrollInterface() {
+            @Override
+            public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                scrollChangeHeader(scrollY);
+            }
+        });
+    }
+
+    /**
+     * 根据页面滑动距离改变Header方法
+     */
+    private void scrollChangeHeader(int scrolledY) {
+        if (scrolledY < 0) {
+            scrolledY = 0;
+        }
+        float alpha = Math.abs(scrolledY) * 1.0f / (slidingDistance);
+
+        Drawable drawable = ivTitleHeadBg.getDrawable();
+
+        if (drawable == null) {
+            return;
+        }
+        if (scrolledY <= slidingDistance) {
+            // title部分的渐变
+            drawable.mutate().setAlpha((int) (alpha * 255));
+            ivTitleHeadBg.setImageDrawable(drawable);
+        } else {
+            drawable.mutate().setAlpha(255);
+            ivTitleHeadBg.setImageDrawable(drawable);
+        }
+    }
+
+    private void initNewSlidingParams() {
+        int titleBarAndStatusHeight = (int) (CommonUtils.getDimens(this, R.dimen.nav_bar_height) + StatusBarUtil.getStatusBarHeight(this));
+        // 减掉后，没到顶部就不透明了
+        slidingDistance = imageBgHeight - titleBarAndStatusHeight - (int) (CommonUtils.getDimens(this, R.dimen.nav_bar_height_more));
     }
 }

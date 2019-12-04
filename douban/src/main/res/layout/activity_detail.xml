@@ -39,7 +39,7 @@
             android:id="@+id/iv_title_head_bg"
             android:layout_width="match_parent"
             android:layout_height="310dp"
-            android:scaleType="fitXY" />
+            android:scaleType="centerCrop" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/title_tool_bar"

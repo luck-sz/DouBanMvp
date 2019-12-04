@@ -7,7 +7,7 @@
     <!--<dimen name="movie_detail_width">125dp</dimen>-->
     <dimen name="movie_detail_width">125dp</dimen>
     <!--<dimen name="movie_detail_height">165dp</dimen>-->
-    <dimen name="movie_detail_height">165</dimen>
+    <dimen name="movie_detail_height">165dp</dimen>
     <dimen name="nav_bar_height">58dp</dimen>
     <dimen name="nav_bar_height_more">45dp</dimen>
     <dimen name="height_image">100dp</dimen>

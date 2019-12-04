@@ -24,8 +24,15 @@ public interface DetailContract {
     interface View extends IView {
         // 设置动画效果
         void setMotion();
+
         // 设置标题
         void setTitleBar(String title, String subTitle);
+
+        // 设置图片
+        void setPicture(String largeUrl, String mediumUrl);
+
+        // 初始化滑动
+        void initSlideShapeTheme(String largeUrl);
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
