@@ -64,26 +64,12 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
     ImageView imgItemBg;
     @BindView(R.id.iv_one_photo)
     ImageView ivOnePhoto;
-    @BindView(R.id.tv_one_directors)
-    TextView tvOneDirectors;
-    @BindView(R.id.tv_one_casts)
-    TextView tvOneCasts;
-    @BindView(R.id.tv_one_genres)
-    TextView tvOneGenres;
-    @BindView(R.id.tv_one_day)
-    TextView tvOneDay;
-    @BindView(R.id.tv_one_city)
-    TextView tvOneCity;
-    @BindView(R.id.ll_one_item)
-    LinearLayout llOneItem;
     @BindView(R.id.nsv_scrollview)
     MyNestedScrollView nsvScrollview;
     @BindView(R.id.iv_title_head_bg)
     ImageView ivTitleHeadBg;
     @BindView(R.id.title_tool_bar)
     Toolbar titleToolBar;
-    @BindView(R.id.rl_title_head)
-    RelativeLayout rlTitleHead;
     // 影片详情页id
     private String id;
     // 这个是高斯图背景的高度
