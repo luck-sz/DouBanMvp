@@ -61,7 +61,6 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-//        initStatusBar();
         initFragment();
         initBottomNav();
     }

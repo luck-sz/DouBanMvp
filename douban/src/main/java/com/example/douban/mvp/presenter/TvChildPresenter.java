@@ -1,12 +1,14 @@
 package com.example.douban.mvp.presenter;
 
 import android.app.Application;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.tv.TvBean;
+import com.example.douban.mvp.ui.activity.DetailActivity;
 import com.example.douban.mvp.ui.adapter.tv.TvItemAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
@@ -98,7 +100,9 @@ public class TvChildPresenter extends BasePresenter<TvChildContract.Model, TvChi
         tvItemAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Toast.makeText(mApplication, subjectsBeans.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mApplication, DetailActivity.class);
+                intent.putExtra("id", subjectsBeans.get(position).getId());
+                mRootView.launchActivity(intent);
             }
         });
         mRootView.setTvItemAdapter(tvItemAdapter);

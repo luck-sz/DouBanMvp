@@ -1,10 +1,15 @@
 package com.example.douban.mvp.presenter;
 
 import android.app.Application;
+import android.content.Intent;
+import android.view.View;
+import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.home.DoubanBean;
 import com.example.douban.app.data.entity.more.MoreListBean;
+import com.example.douban.mvp.ui.activity.DetailActivity;
 import com.example.douban.mvp.ui.adapter.more.MoreHotAdapter;
 import com.example.douban.mvp.ui.adapter.more.MoreListAdapter;
 import com.jess.arms.integration.AppManager;
@@ -95,6 +100,14 @@ public class MoreListPresenter extends BasePresenter<MoreListContract.Model, Mor
             moreListAdapter.setNewData(moreListBeans);
         }
         mRootView.setAdapter(moreListAdapter);
+        moreListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(mApplication, DetailActivity.class);
+                intent.putExtra("id", moreListBeans.get(position).getId());
+                mRootView.launchActivity(intent);
+            }
+        });
     }
 
 

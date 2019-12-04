@@ -96,10 +96,10 @@ public class MoreActivity extends MySupportActivity<MorePresenter> implements Mo
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarColor(R.color.white)  // 状态栏颜色
-                .statusBarDarkFont(true)        // 状态栏字体颜色(黑色)
-                .fitsSystemWindows(true)
+                .statusBarDarkFont(true, 0.2f)        // 状态栏字体颜色(黑色)
                 .keyboardEnable(true)           // 解决软键盘与底部输入框冲突问题，默认为false
                 .init();
+
     }
 
     private void loadFragment(String title) {
