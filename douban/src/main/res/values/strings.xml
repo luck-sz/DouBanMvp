@@ -3,6 +3,7 @@
 
     <string name="title_home">首页</string>
     <string name="main_search">搜索</string>
+    <string name="detail_more">更多详情</string>
 
     <string name="bottom_nav_home">首页</string>
     <string name="bottom_nav_book">电视</string>

@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.ArcMotion;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -174,12 +175,19 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
         }
         titleToolBar.setTitle(title);
         titleToolBar.setSubtitle(subTitle);
+        titleToolBar.inflateMenu(R.menu.detail_menu);
         titleToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

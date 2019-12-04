@@ -34,6 +34,11 @@
         <item name="android:windowAnimationStyle">@style/default_animation_down</item>
     </style>
 
+    <!--电影详情页subTitle标题大小-->
+    <style name="Toolbar.SubTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <!--只有上一页面退出时有动画-->
     <style name="default_animation_down" mce_bogus="1" parent="@android:style/Animation.Activity">
         <item name="android:activityCloseEnterAnimation">@anim/activity_down_in</item>
