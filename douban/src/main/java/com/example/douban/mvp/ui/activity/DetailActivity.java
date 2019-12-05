@@ -17,8 +17,6 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,6 +27,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.douban.R;
 import com.example.douban.app.base.MySupportActivity;
+import com.example.douban.app.data.entity.detail.DetailBean;
 import com.example.douban.app.utils.CommonUtils;
 import com.example.douban.app.utils.StatusBarUtil;
 import com.example.douban.di.component.DaggerDetailComponent;
@@ -42,6 +41,7 @@ import com.jess.arms.utils.ArmsUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.BlurTransformation;
+import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -70,6 +70,16 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
     ImageView ivTitleHeadBg;
     @BindView(R.id.title_tool_bar)
     Toolbar titleToolBar;
+    @BindView(R.id.tv_detail_title)
+    TextView tvDetailTitle;
+    @BindView(R.id.tv_detail_sub_title)
+    TextView tvDetailSubTitle;
+    @BindView(R.id.mrb_detail_rating)
+    MaterialRatingBar mrbDetailRating;
+    @BindView(R.id.tv_detail_rating)
+    TextView tvDetailRating;
+    @BindView(R.id.tv_detail_type_and_time)
+    TextView tvDetailTypeAndTime;
     // 影片详情页id
     private String id;
     // 这个是高斯图背景的高度
@@ -184,6 +194,7 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
                 .into(ivOnePhoto);
 
         // "14":模糊度；"3":图片缩放3倍后再进行模糊
+        // 这里是设置详情页背景
         Glide.with(this)
                 .load(mediumUrl)
                 .placeholder(R.drawable.stackblur_default)
@@ -222,6 +233,31 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
         // 变色
         initScrollViewListener();
         initNewSlidingParams();
+    }
+
+    @Override
+    public void setHeadData(DetailBean detailBean) {
+        // 标题
+        tvDetailTitle.setText(detailBean.getTitle());
+        // 副标题和时间
+        tvDetailSubTitle.setText(detailBean.getOriginal_title() + "  (" + detailBean.getYear() + ")");
+        // 评分
+        mrbDetailRating.setRating((float) (detailBean.getRating().getAverage() / 2));
+        tvDetailRating.setText(detailBean.getRating().getAverage() + "");
+        // 地区 类型 上映时间
+        StringBuffer county = new StringBuffer();
+        StringBuffer type = new StringBuffer();
+        StringBuffer time = new StringBuffer();
+        for (String c : detailBean.getCountries()) {
+            county.append(c + " ");
+        }
+        for (String t : detailBean.getGenres()) {
+            type.append(t + " ");
+        }
+        for (String m : detailBean.getPubdates()) {
+            time.append(m + " \n");
+        }
+        tvDetailTypeAndTime.setText(county + " / " + type + "/ 上映时间:\n" + time);
     }
 
     /**

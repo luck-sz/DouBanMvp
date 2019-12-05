@@ -52,7 +52,10 @@
         android:layout_marginLeft="16dp"
         android:text="冰雪奇缘"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:maxEms="9"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/lcv_home"
         app:layout_constraintTop_toTopOf="@+id/lcv_home" />
@@ -62,23 +65,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="冰雪奇缘"
+        android:text="冰雪奇缘 (2019)"
+        android:maxEms="9"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tv_detail_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_detail_title" />
-
-    <TextView
-        android:id="@+id/tv_detail_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:text="(2019)"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/tv_detail_sub_title"
-        app:layout_constraintTop_toTopOf="@+id/tv_detail_sub_title" />
 
     <me.zhanghai.android.materialratingbar.MaterialRatingBar
         android:id="@+id/mrb_detail_rating"
@@ -115,8 +110,9 @@
         android:text="美国 / 剧情 喜剧 犯罪 / 上映时间:"
         android:textColor="@color/white"
         android:maxLines="3"
+        android:lineSpacingExtra="5dp"
         android:ellipsize="end"
-        android:textSize="11sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/mrb_detail_rating"
         app:layout_constraintTop_toBottomOf="@+id/mrb_detail_rating" />
 
