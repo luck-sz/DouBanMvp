@@ -19,7 +19,7 @@
 
             <include
                 android:id="@+id/include"
-                layout="@layout/header_slide_shape1" />
+                layout="@layout/header_slide_shape" />
 
             <View
                 android:layout_width="match_parent"
@@ -39,7 +39,7 @@
         <ImageView
             android:id="@+id/iv_title_head_bg"
             android:layout_width="match_parent"
-            android:layout_height="310dp"
+            android:layout_height="300dp"
             android:scaleType="centerCrop" />
 
         <android.support.v7.widget.Toolbar

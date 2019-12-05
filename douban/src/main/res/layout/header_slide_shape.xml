@@ -1,137 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/img_item_bg"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:scaleType="fitXY" />
+        android:layout_height="300dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <LinearLayout
-        android:id="@+id/ll_one_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:paddingBottom="20dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="95dp"
-        android:layout_alignParentLeft="true">
+    <android.support.v7.widget.CardView
+        android:id="@+id/lcv_home"
+        android:layout_width="@dimen/movie_detail_width"
+        android:layout_height="@dimen/movie_detail_height"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="56dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/iv_one_photo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="@color/tabBackground"
+            android:scaleType="centerCrop"
+            android:transitionName="@string/transition_book_img" />
 
-            <ImageView
-                android:id="@+id/iv_one_photo"
-                android:layout_width="@dimen/movie_detail_width"
-                android:layout_height="@dimen/movie_detail_height"
-                android:layout_marginRight="15dp"
-                android:scaleType="fitXY"
-                android:transitionName="@string/transition_book_img" />
+    </android.support.v7.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="12dp"
-                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/tv_detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="冰雪奇缘"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/lcv_home"
+        app:layout_constraintTop_toTopOf="@+id/lcv_home" />
 
-                    <LinearLayout
-                        android:layout_width="43dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_detail_sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="冰雪奇缘"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_detail_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail_title" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="作者："
-                            android:textColor="@color/white" />
+    <TextView
+        android:id="@+id/tv_detail_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:text="(2019)"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_detail_sub_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_detail_sub_title" />
 
-                        <View
-                            android:layout_width="28dp"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="2dp"
-                            android:background="@color/colorTheme" />
+    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+        android:id="@+id/mrb_detail_rating"
+        style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:maxHeight="18dp"
+        android:minHeight="18dp"
+        android:rating="3.8"
+        android:stepSize="0.01"
+        app:layout_constraintStart_toStartOf="@+id/tv_detail_sub_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail_sub_title"
+        app:mrb_progressTint="#f44336" />
 
-                    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_detail_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="9.6"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mrb_detail_rating"
+        app:layout_constraintStart_toEndOf="@+id/mrb_detail_rating"
+        app:layout_constraintTop_toTopOf="@+id/mrb_detail_rating" />
 
-                    <TextView
-                        android:id="@+id/tv_one_directors"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:text="韩寒"
-                        android:textColor="@color/white" />
-                </LinearLayout>
+    <TextView
+        android:id="@+id/tv_detail_type_and_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="美国 / 剧情 喜剧 犯罪 / 上映时间:"
+        android:textColor="@color/white"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="@+id/mrb_detail_rating"
+        app:layout_constraintTop_toBottomOf="@+id/mrb_detail_rating" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="文学体裁："
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/tv_one_casts"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:text="长篇小说"
-                        android:textColor="@color/white" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_one_genres"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    android:ellipsize="end"
-                    android:text="首版时间：2010年7月6日"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:id="@+id/tv_one_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    android:ellipsize="end"
-                    android:text="字    数：210000"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:id="@+id/tv_one_city"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    android:ellipsize="end"
-                    android:lines="2"
-                    android:text="人物介绍：娜娜、丁丁哥哥、10号、刘茵茵等"
-                    android:textColor="@color/white" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </LinearLayout>
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
 
 
 
