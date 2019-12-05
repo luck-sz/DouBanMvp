@@ -47,5 +47,6 @@ public class DetailMultipleItemAdapter extends MultipleItemRvAdapter<DetailMulti
         mProviderDelegate.registerProvider(new DetailHeadProvider());
         mProviderDelegate.registerProvider(new DetailTagListProvider());
         mProviderDelegate.registerProvider(new DetailSummaryProvider());
+        mProviderDelegate.registerProvider(new DetailActorListProvider());
     }
 }

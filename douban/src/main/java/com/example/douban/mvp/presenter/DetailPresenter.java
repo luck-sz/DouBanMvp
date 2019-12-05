@@ -90,6 +90,8 @@ public class DetailPresenter extends BasePresenter<DetailContract.Model, DetailC
         list.add(new DetailMultipleItem(DetailMultipleItem.HEAD_ITEM, true, "简介"));
         list.add(new DetailMultipleItem(DetailMultipleItem.TEXT_ITEM, detailBean));
         list.add(new DetailMultipleItem(DetailMultipleItem.HEAD_ITEM, true, "演职员"));
+        list.add(new DetailMultipleItem(DetailMultipleItem.ACTOR_LIST_ITEM, detailBean));
+        list.add(new DetailMultipleItem(DetailMultipleItem.HEAD_ITEM, true, "预告片 / 剧照"));
     }
 
     private void setAdapter(List<DetailMultipleItem> list) {
