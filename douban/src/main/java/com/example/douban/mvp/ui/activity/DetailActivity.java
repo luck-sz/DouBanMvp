@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.ArcMotion;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +37,14 @@ import com.example.douban.mvp.presenter.DetailPresenter;
 import com.example.douban.mvp.ui.view.CustomChangeBounds;
 import com.example.douban.mvp.ui.view.MyNestedScrollView;
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -187,11 +190,14 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
     }
 
     @Override
-    public void setPicture(String largeUrl, String mediumUrl) {
-        Glide.with(this)
-                .load(largeUrl)
-                .override(140, 180)
-                .into(ivOnePhoto);
+    public void setPicture(String largeUrl,String mediumUrl) {
+        ArmsUtils.obtainAppComponentFromContext(this)
+                .imageLoader()
+                .loadImage(this, ImageConfigImpl
+                        .builder()
+                        .imageView(ivOnePhoto)
+                        .url(largeUrl)
+                        .build());
 
         // "14":模糊度；"3":图片缩放3倍后再进行模糊
         // 这里是设置详情页背景
