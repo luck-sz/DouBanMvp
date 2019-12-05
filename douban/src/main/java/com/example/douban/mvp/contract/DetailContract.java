@@ -1,6 +1,7 @@
 package com.example.douban.mvp.contract;
 
 import com.example.douban.app.data.entity.detail.DetailBean;
+import com.example.douban.mvp.ui.adapter.detail.DetailMultipleItemAdapter;
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 
@@ -36,6 +37,8 @@ public interface DetailContract {
 
         // 填充头部数据
         void setHeadData(DetailBean detailBean);
+        // 填充内容数据
+        void setDetailAdapter(DetailMultipleItemAdapter detailAdapter);
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存

@@ -15,5 +15,7 @@
     <string name="tv_tab_us_tv">美剧</string>
     <string name="tv_tab_animation">日本动画</string>
 
+    <string name="expand_string">展开全部</string>
+    <string name="collapsed_string">收起</string>
     <string name="transition_book_img">transition_movie_img</string>
 </resources>

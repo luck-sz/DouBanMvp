@@ -3,6 +3,8 @@ package com.example.douban.mvp.presenter;
 import android.app.Application;
 
 import com.example.douban.app.data.entity.detail.DetailBean;
+import com.example.douban.app.data.entity.detail.DetailMultipleItem;
+import com.example.douban.mvp.ui.adapter.detail.DetailMultipleItemAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
@@ -18,6 +20,9 @@ import javax.inject.Inject;
 
 import com.example.douban.mvp.contract.DetailContract;
 import com.jess.arms.utils.RxLifecycleUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -42,6 +47,8 @@ public class DetailPresenter extends BasePresenter<DetailContract.Model, DetailC
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
+    List<DetailMultipleItem> list;
+    DetailMultipleItemAdapter adapter;
 
     @Inject
     public DetailPresenter(DetailContract.Model model, DetailContract.View rootView) {
@@ -66,11 +73,29 @@ public class DetailPresenter extends BasePresenter<DetailContract.Model, DetailC
                 .subscribe(new ErrorHandleSubscriber<DetailBean>(mErrorHandler) {
                     @Override
                     public void onNext(DetailBean detailBean) {
-                        mRootView.setTitleBar(detailBean.getTitle(),detailBean.getOriginal_title());
-                        mRootView.setPicture(detailBean.getImages().getLarge(),detailBean.getImages().getMedium());
+                        mRootView.setTitleBar(detailBean.getTitle(), detailBean.getOriginal_title());
+                        mRootView.setPicture(detailBean.getImages().getLarge(), detailBean.getImages().getMedium());
                         mRootView.initSlideShapeTheme(detailBean.getImages().getLarge());
                         mRootView.setHeadData(detailBean);
+                        setDate(detailBean);
+                        setAdapter(list);
                     }
                 });
+    }
+
+    private void setDate(DetailBean detailBean) {
+        list = new ArrayList<>();
+        list.add(new DetailMultipleItem(DetailMultipleItem.HEAD_ITEM, true, "所属频道"));
+        list.add(new DetailMultipleItem(DetailMultipleItem.TAG_LIST_ITEM, detailBean));
+        list.add(new DetailMultipleItem(DetailMultipleItem.HEAD_ITEM, true, "简介"));
+        list.add(new DetailMultipleItem(DetailMultipleItem.TEXT_ITEM, detailBean));
+        list.add(new DetailMultipleItem(DetailMultipleItem.HEAD_ITEM, true, "演职员"));
+    }
+
+    private void setAdapter(List<DetailMultipleItem> list) {
+        if (adapter == null) {
+            adapter = new DetailMultipleItemAdapter(list);
+        }
+        mRootView.setDetailAdapter(adapter);
     }
 }

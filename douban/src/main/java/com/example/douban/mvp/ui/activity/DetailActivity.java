@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.ArcMotion;
@@ -34,6 +36,7 @@ import com.example.douban.app.utils.StatusBarUtil;
 import com.example.douban.di.component.DaggerDetailComponent;
 import com.example.douban.mvp.contract.DetailContract;
 import com.example.douban.mvp.presenter.DetailPresenter;
+import com.example.douban.mvp.ui.adapter.detail.DetailMultipleItemAdapter;
 import com.example.douban.mvp.ui.view.CustomChangeBounds;
 import com.example.douban.mvp.ui.view.MyNestedScrollView;
 import com.jess.arms.di.component.AppComponent;
@@ -83,6 +86,8 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
     TextView tvDetailRating;
     @BindView(R.id.tv_detail_type_and_time)
     TextView tvDetailTypeAndTime;
+    @BindView(R.id.rv_content)
+    RecyclerView rvContent;
     // 影片详情页id
     private String id;
     // 这个是高斯图背景的高度
@@ -264,6 +269,12 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
             time.append(m + " \n");
         }
         tvDetailTypeAndTime.setText(county + " / " + type + "/ 上映时间:\n" + time);
+    }
+
+    @Override
+    public void setDetailAdapter(DetailMultipleItemAdapter detailAdapter) {
+        rvContent.setLayoutManager(new LinearLayoutManager(this));
+        rvContent.setAdapter(detailAdapter);
     }
 
     /**
