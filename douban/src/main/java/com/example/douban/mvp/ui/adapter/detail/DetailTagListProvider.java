@@ -22,7 +22,7 @@ public class DetailTagListProvider extends BaseItemProvider<DetailMultipleItem, 
     @Override
     public void convert(BaseViewHolder helper, DetailMultipleItem data, int position) {
         RecyclerView mRecycleView = helper.getView(R.id.rv_tag_list);
-        DetailTagAdapter detailTagAdapter = new DetailTagAdapter(R.layout.item_detail_tag_item, data.getBean().getTags());
+        DetailTagAdapter detailTagAdapter = new DetailTagAdapter(R.layout.item_detail_tag_item, data.getBean().getGenres());
         mRecycleView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         mRecycleView.setAdapter(detailTagAdapter);
     }

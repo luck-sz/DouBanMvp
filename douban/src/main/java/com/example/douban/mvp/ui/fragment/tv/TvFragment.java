@@ -15,6 +15,7 @@ import com.example.douban.app.base.MySupportFragment;
 import com.example.douban.mvp.contract.TvContract;
 import com.example.douban.mvp.ui.adapter.tv.TabAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.gyf.immersionbar.ImmersionBar;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 
