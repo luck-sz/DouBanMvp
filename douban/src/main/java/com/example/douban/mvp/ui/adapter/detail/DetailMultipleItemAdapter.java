@@ -22,6 +22,7 @@ public class DetailMultipleItemAdapter extends MultipleItemRvAdapter<DetailMulti
     public static final int TYPE_TEXT = 200;
     public static final int TYPE_TAG_LIST = 300;
     public static final int TYPE_ACTOR_LIST = 400;
+    public static final int TYPE_VIDEO_LIST = 500;
 
     public DetailMultipleItemAdapter(@Nullable List<DetailMultipleItem> data) {
         super(data);
@@ -32,12 +33,14 @@ public class DetailMultipleItemAdapter extends MultipleItemRvAdapter<DetailMulti
     protected int getViewType(DetailMultipleItem entity) {
         if (entity.getItemType() == DetailMultipleItem.HEAD_ITEM) {
             return TYPE_HEAD;
-        } else if (entity.getItemType() == DetailMultipleItem.TEXT_ITEM){
+        } else if (entity.getItemType() == DetailMultipleItem.TEXT_ITEM) {
             return TYPE_TEXT;
-        }else if (entity.getItemType() == DetailMultipleItem.TAG_LIST_ITEM){
+        } else if (entity.getItemType() == DetailMultipleItem.TAG_LIST_ITEM) {
             return TYPE_TAG_LIST;
-        }else if (entity.getItemType() == DetailMultipleItem.ACTOR_LIST_ITEM){
+        } else if (entity.getItemType() == DetailMultipleItem.ACTOR_LIST_ITEM) {
             return TYPE_ACTOR_LIST;
+        } else if (entity.getItemType() == DetailMultipleItem.VIDEO_LIST_ITEM) {
+            return TYPE_VIDEO_LIST;
         }
         return 0;
     }
@@ -48,5 +51,6 @@ public class DetailMultipleItemAdapter extends MultipleItemRvAdapter<DetailMulti
         mProviderDelegate.registerProvider(new DetailTagListProvider());
         mProviderDelegate.registerProvider(new DetailSummaryProvider());
         mProviderDelegate.registerProvider(new DetailActorListProvider());
+        mProviderDelegate.registerProvider(new DetailVideoListProvider());
     }
 }
