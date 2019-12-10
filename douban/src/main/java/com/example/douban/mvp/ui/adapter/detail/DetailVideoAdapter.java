@@ -1,5 +1,6 @@
 package com.example.douban.mvp.ui.adapter.detail;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
@@ -9,9 +10,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.detail.DetailBean;
+import com.example.douban.app.data.entity.detail.DetailMultipleItem;
+import com.example.douban.mvp.ui.activity.PlayerActivity;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class DetailVideoAdapter extends BaseQuickAdapter<DetailBean.TrailersBean, BaseViewHolder> {
@@ -29,5 +33,6 @@ public class DetailVideoAdapter extends BaseQuickAdapter<DetailBean.TrailersBean
                         .imageView(helper.getView(R.id.iv_video))
                         .url(trailersBean.getMedium())
                         .build());
+
     }
 }

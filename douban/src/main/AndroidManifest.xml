@@ -19,9 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".mvp.ui.activity.DetailActivity"
+        <activity android:name=".mvp.ui.activity.PlayerActivity"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".mvp.ui.activity.DetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MyScrollPage"/>
+            android:theme="@style/MyScrollPage" />
         <activity android:name=".mvp.ui.activity.MoreActivity" />
         <activity
             android:name=".mvp.ui.activity.MainActivity"

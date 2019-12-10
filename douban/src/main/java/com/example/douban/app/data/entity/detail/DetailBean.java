@@ -2,6 +2,7 @@ package com.example.douban.app.data.entity.detail;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class DetailBean {
@@ -940,7 +941,7 @@ public class DetailBean {
         }
     }
 
-    public static class TrailersBean {
+    public static class TrailersBean implements Serializable {
         /**
          * medium : https://img3.doubanio.com/img/trailer/medium/2569586491.jpg?
          * title : 中国预告片 (中文字幕)

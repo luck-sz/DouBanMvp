@@ -56,6 +56,8 @@ dependencies {
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
     }
+    //视频播放器
+    implementation 'com.shuyu:GSYVideoPlayer:6.0.3'
     // 引入multidex库
     implementation 'com.android.support:multidex:1.0.3'
     // 高斯模糊和圆角等
