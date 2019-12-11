@@ -5,11 +5,7 @@ import android.support.annotation.Nullable;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.MultipleItemRvAdapter;
 import com.example.douban.app.data.entity.detail.DetailMultipleItem;
-import com.example.douban.app.data.entity.home.SectionMultipleItem;
 import com.example.douban.mvp.ui.adapter.provider.ComingMovieProvider;
-import com.example.douban.mvp.ui.adapter.provider.HeadProvider;
-import com.example.douban.mvp.ui.adapter.provider.HotMovieProvider;
-import com.example.douban.mvp.ui.adapter.provider.MovieListProvider;
 
 import java.util.List;
 
@@ -23,6 +19,7 @@ public class DetailMultipleItemAdapter extends MultipleItemRvAdapter<DetailMulti
     public static final int TYPE_TAG_LIST = 300;
     public static final int TYPE_ACTOR_LIST = 400;
     public static final int TYPE_VIDEO_LIST = 500;
+    public static final int TYPE_COMMENT_LIST = 600;
 
     public DetailMultipleItemAdapter(@Nullable List<DetailMultipleItem> data) {
         super(data);
@@ -41,16 +38,19 @@ public class DetailMultipleItemAdapter extends MultipleItemRvAdapter<DetailMulti
             return TYPE_ACTOR_LIST;
         } else if (entity.getItemType() == DetailMultipleItem.VIDEO_LIST_ITEM) {
             return TYPE_VIDEO_LIST;
+        } else if (entity.getItemType() == DetailMultipleItem.COMMENT_LIST_ITEM) {
+            return TYPE_COMMENT_LIST;
         }
         return 0;
     }
 
     @Override
     public void registerItemProvider() {
-        mProviderDelegate.registerProvider(new DetailHeadProvider());
-        mProviderDelegate.registerProvider(new DetailTagListProvider());
-        mProviderDelegate.registerProvider(new DetailSummaryProvider());
-        mProviderDelegate.registerProvider(new DetailActorListProvider());
-        mProviderDelegate.registerProvider(new DetailVideoListProvider());
+        mProviderDelegate.registerProvider(new HeadProvider());
+        mProviderDelegate.registerProvider(new TagListProvider());
+        mProviderDelegate.registerProvider(new SummaryProvider());
+        mProviderDelegate.registerProvider(new ActorListProvider());
+        mProviderDelegate.registerProvider(new VideoListProvider());
+        mProviderDelegate.registerProvider(new CommentListProvider());
     }
 }

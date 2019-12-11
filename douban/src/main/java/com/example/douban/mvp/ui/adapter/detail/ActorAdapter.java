@@ -13,9 +13,9 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class DetailActorAdapter extends BaseQuickAdapter<DetailBean.CastsBean, BaseViewHolder> {
+public class ActorAdapter extends BaseQuickAdapter<DetailBean.CastsBean, BaseViewHolder> {
 
-    public DetailActorAdapter(int layoutResId, List<DetailBean.CastsBean> data) {
+    public ActorAdapter(int layoutResId, List<DetailBean.CastsBean> data) {
         super(layoutResId, data);
     }
 

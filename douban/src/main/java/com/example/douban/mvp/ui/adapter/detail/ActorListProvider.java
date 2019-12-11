@@ -8,23 +8,23 @@ import com.chad.library.adapter.base.provider.BaseItemProvider;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.detail.DetailMultipleItem;
 
-public class DetailTagListProvider extends BaseItemProvider<DetailMultipleItem, BaseViewHolder> {
+public class ActorListProvider extends BaseItemProvider<DetailMultipleItem, BaseViewHolder> {
     @Override
     public int viewType() {
-        return DetailMultipleItemAdapter.TYPE_TAG_LIST;
+        return DetailMultipleItemAdapter.TYPE_ACTOR_LIST;
     }
 
     @Override
     public int layout() {
-        return R.layout.item_detail_tag_list;
+        return R.layout.item_detail_list;
     }
 
     @Override
     public void convert(BaseViewHolder helper, DetailMultipleItem data, int position) {
-        RecyclerView mRecycleView = helper.getView(R.id.rv_tag_list);
-        DetailTagAdapter detailTagAdapter = new DetailTagAdapter(R.layout.item_detail_tag_item, data.getBean().getGenres());
+        RecyclerView mRecycleView = helper.getView(R.id.rv_detail_list);
+        ActorAdapter detailActorAdapter = new ActorAdapter(R.layout.item_detail_actor_item, data.getBean().getCasts());
         mRecycleView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        mRecycleView.setAdapter(detailTagAdapter);
+        mRecycleView.setAdapter(detailActorAdapter);
     }
 
 }

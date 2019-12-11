@@ -10,15 +10,13 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.provider.BaseItemProvider;
 import com.example.douban.R;
 import com.example.douban.app.data.entity.detail.DetailMultipleItem;
-import com.example.douban.app.data.entity.home.SectionMultipleItem;
-import com.example.douban.mvp.ui.activity.DetailActivity;
 import com.example.douban.mvp.ui.activity.PlayerActivity;
 
 import java.io.Serializable;
 
-public class DetailVideoListProvider extends BaseItemProvider<DetailMultipleItem, BaseViewHolder> {
+public class VideoListProvider extends BaseItemProvider<DetailMultipleItem, BaseViewHolder> {
 
-    DetailVideoAdapter detailVideoAdapter;
+    VideoAdapter detailVideoAdapter;
 
     @Override
     public int viewType() {
@@ -27,20 +25,20 @@ public class DetailVideoListProvider extends BaseItemProvider<DetailMultipleItem
 
     @Override
     public int layout() {
-        return R.layout.item_detail_video_list;
+        return R.layout.item_detail_list;
     }
 
     @Override
     public void convert(BaseViewHolder helper, DetailMultipleItem data, int position) {
-        RecyclerView mRecycleView = helper.getView(R.id.rv_video_list);
-        detailVideoAdapter = new DetailVideoAdapter(R.layout.item_detail_video_item, data.getBean().getTrailers());
+        RecyclerView mRecycleView = helper.getView(R.id.rv_detail_list);
+        detailVideoAdapter = new VideoAdapter(R.layout.item_detail_video_item, data.getBean().getTrailers());
         mRecycleView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         mRecycleView.setAdapter(detailVideoAdapter);
         detailVideoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(mContext, PlayerActivity.class);
-                intent.putExtra("PlayBean", (Serializable) data.getBean().getTrailers());
+                intent.putExtra("PlayBean", (Serializable) data.getBean().getTrailers().get(position));
                 mContext.startActivity(intent);
             }
         });

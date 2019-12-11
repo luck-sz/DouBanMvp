@@ -18,9 +18,9 @@ import com.jess.arms.utils.ArmsUtils;
 
 import java.util.List;
 
-public class DetailTagAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class TagAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
-    public DetailTagAdapter(int layoutResId, List<String> data) {
+    public TagAdapter(int layoutResId, List<String> data) {
         super(layoutResId, data);
     }
 

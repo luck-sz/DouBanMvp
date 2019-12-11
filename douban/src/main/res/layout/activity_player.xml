@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <com.example.player.SmartPickVideo
+    <com.example.douban.mvp.ui.view.SmartPickVideo
         android:id="@+id/video_player"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

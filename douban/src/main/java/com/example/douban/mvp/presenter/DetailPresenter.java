@@ -97,6 +97,7 @@ public class DetailPresenter extends BasePresenter<DetailContract.Model, DetailC
             list.add(new DetailMultipleItem(DetailMultipleItem.VIDEO_LIST_ITEM, detailBean));
         }
         list.add(new DetailMultipleItem(DetailMultipleItem.HEAD_ITEM, true, "短评"));
+        list.add(new DetailMultipleItem(DetailMultipleItem.COMMENT_LIST_ITEM, detailBean));
     }
 
     private void setAdapter(List<DetailMultipleItem> list) {

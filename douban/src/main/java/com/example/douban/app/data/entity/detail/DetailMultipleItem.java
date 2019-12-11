@@ -18,6 +18,7 @@ public class DetailMultipleItem extends SectionMultiEntity<Object> implements Mu
     public static final int TEXT_ITEM = 3;
     public static final int ACTOR_LIST_ITEM = 4;
     public static final int VIDEO_LIST_ITEM = 5;
+    public static final int COMMENT_LIST_ITEM =6;
 
     // Item类型
     private int itemType;

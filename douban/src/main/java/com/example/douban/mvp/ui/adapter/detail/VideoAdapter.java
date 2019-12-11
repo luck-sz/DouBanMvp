@@ -18,9 +18,9 @@ import com.jess.arms.utils.ArmsUtils;
 import java.io.Serializable;
 import java.util.List;
 
-public class DetailVideoAdapter extends BaseQuickAdapter<DetailBean.TrailersBean, BaseViewHolder> {
+public class VideoAdapter extends BaseQuickAdapter<DetailBean.TrailersBean, BaseViewHolder> {
 
-    public DetailVideoAdapter(int layoutResId, List<DetailBean.TrailersBean> data) {
+    public VideoAdapter(int layoutResId, List<DetailBean.TrailersBean> data) {
         super(layoutResId, data);
     }
 

@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,6 +73,7 @@ public class SmartPickVideo extends StandardGSYVideoPlayer {
 
     private void initView() {
         mSwitchSize = (TextView) findViewById(R.id.switchSize);
+        mFullscreenButton = (ImageView)findViewById(R.id.fullscreen);
         //切换视频清晰度
         mSwitchSize.setOnClickListener(new OnClickListener() {
             @Override

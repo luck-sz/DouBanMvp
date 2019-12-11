@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_content_head"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:ignore="MissingPrefix">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/cv_avatar"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="十九啊"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/cv_avatar"
+        app:layout_constraintTop_toTopOf="@+id/cv_avatar" />
+
+    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+        android:id="@+id/rating_comment"
+        style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxHeight="14dp"
+        android:minHeight="14dp"
+        android:rating="3.8"
+        android:stepSize="0.01"
+        app:layout_constraintBottom_toBottomOf="@+id/cv_avatar"
+        app:layout_constraintStart_toStartOf="@+id/tv_author"
+        app:mrb_progressTint="#f44336" />
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="打法开发的话费卡电话发卡号的饭卡很疯狂"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/cv_avatar"
+        app:layout_constraintTop_toBottomOf="@+id/cv_avatar" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="2019-10-30"
+        android:textColor="@color/black"
+        android:maxLines="1"
+        android:maxLength="10"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/rating_comment"
+        app:layout_constraintStart_toEndOf="@+id/rating_comment"
+        app:layout_constraintTop_toTopOf="@+id/rating_comment" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#d8d8d8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_comment" />
+
+</android.support.constraint.ConstraintLayout>

@@ -16,6 +16,7 @@ import com.example.douban.di.component.DaggerPlayerComponent;
 import com.example.douban.mvp.contract.PlayerContract;
 import com.example.douban.mvp.presenter.PlayerPresenter;
 import com.example.douban.mvp.ui.view.SmartPickVideo;
+import com.gyf.immersionbar.ImmersionBar;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
@@ -27,6 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -50,6 +52,7 @@ public class PlayerActivity extends BaseActivity<PlayerPresenter> implements Pla
 
     OrientationUtils orientationUtils;
 
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerPlayerComponent //如找不到该类,请编译一下项目
@@ -67,8 +70,10 @@ public class PlayerActivity extends BaseActivity<PlayerPresenter> implements Pla
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        initImmersionBar();
         if (getIntent() != null) {
             DetailBean.TrailersBean trailersBean = (DetailBean.TrailersBean) getIntent().getSerializableExtra("PlayBean");
+            Timber.d("获取到的标题" + trailersBean.getTitle());
             mPresenter.playerVideo(trailersBean);
         }
     }
@@ -171,4 +176,7 @@ public class PlayerActivity extends BaseActivity<PlayerPresenter> implements Pla
         }, 500);
     }
 
+    private void initImmersionBar() {
+        ImmersionBar.with(this).statusBarDarkFont(false).init();
+    }
 }
