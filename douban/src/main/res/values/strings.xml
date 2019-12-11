@@ -26,5 +26,9 @@
     <string name="login">登陆</string>
     <string name="register_dou_ban">注册豆瓣</string>
     <string name="forget_password">忘记密码</string>
-
+    
+    <!--Setting-->
+    <string name="clear">清除缓存</string>
+    <string name="opinion">意见反馈</string>
+    <string name="about">关于</string>
 </resources>

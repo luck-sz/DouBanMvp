@@ -3,8 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <include layout="@layout/include_title" />
+    <include layout="@layout/include_title_setting" />
+
+    <com.example.douban.mvp.ui.view.SettingBar
+        android:id="@+id/sb_setting_clear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:bar_leftText="@string/clear"
+        app:bar_rightIcon="@drawable/ic_right"
+        tools:bar_rightHint="@string/setting_language_simple" />
+
+    <com.example.douban.mvp.ui.view.SettingBar
+        android:id="@+id/sb_setting_opinion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="@string/opinion"
+        app:bar_rightIcon="@drawable/ic_right"
+        tools:bar_rightHint="@string/setting_language_simple" />
+
+    <com.example.douban.mvp.ui.view.SettingBar
+        android:id="@+id/sb_setting_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="@string/about"
+        app:bar_rightIcon="@drawable/ic_right"
+        tools:bar_rightHint="@string/setting_language_simple" />
 
 </LinearLayout>
