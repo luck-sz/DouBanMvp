@@ -155,7 +155,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home_search:
-                        showMessage("搜索...");
+                        ArmsUtils.makeText(_mActivity,"搜索...");
                         break;
                     default:
                         break;

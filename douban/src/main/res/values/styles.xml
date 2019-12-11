@@ -63,4 +63,9 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <style name="EditTextStyle">
+        <item name="android:textSize">15.0sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>

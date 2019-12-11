@@ -9,4 +9,8 @@
     <color name="colorTheme">#ffce3d3a</color>
     <color name="colorTransparent">#00000000</color>
     <color name="tabBackground">#777D7D7D</color>
+
+    <color name="color_green">#ff42bd56</color>
+    <color name="colorGray">#ff9b9b9b</color>
+    <color name="hint_color">#ffcccccc</color>
 </resources>

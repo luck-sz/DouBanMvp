@@ -4,21 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.douban.app.base.MySupportActivity;
-import com.example.douban.mvp.ui.fragment.more.ComingListFragment;
-import com.example.douban.mvp.ui.fragment.more.HotListFragment;
-import com.example.douban.mvp.ui.fragment.more.MoreListFragment;
 import com.gyf.immersionbar.ImmersionBar;
+import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 
-import com.example.douban.di.component.DaggerMoreComponent;
-import com.example.douban.mvp.contract.MoreContract;
-import com.example.douban.mvp.presenter.MorePresenter;
+import com.example.douban.di.component.DaggerSettingComponent;
+import com.example.douban.mvp.contract.SettingContract;
+import com.example.douban.mvp.presenter.SettingPresenter;
 
 import com.example.douban.R;
 
+
+import butterknife.BindView;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -27,7 +29,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 11/18/2019 15:14
+ * Created by MVPArmsTemplate on 12/11/2019 16:21
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -35,14 +37,14 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
  * ================================================
  */
-public class MoreActivity extends MySupportActivity<MorePresenter> implements MoreContract.View {
+public class SettingActivity extends MySupportActivity<SettingPresenter> implements SettingContract.View {
 
-    public static final String TITLE = "title";
-    private String title;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerMoreComponent //如找不到该类,请编译一下项目
+        DaggerSettingComponent //如找不到该类,请编译一下项目
                 .builder()
                 .appComponent(appComponent)
                 .view(this)
@@ -52,17 +54,13 @@ public class MoreActivity extends MySupportActivity<MorePresenter> implements Mo
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_more; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
+        return R.layout.activity_setting; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         initStatusBar();
-        if (getIntent() != null) {
-            Intent intent = getIntent();
-            title = intent.getStringExtra(TITLE);
-            loadFragment(title);
-        }
+        initToolBar();
     }
 
     @Override
@@ -98,29 +96,18 @@ public class MoreActivity extends MySupportActivity<MorePresenter> implements Mo
                 .statusBarColor(R.color.white)  // 状态栏颜色
                 .statusBarDarkFont(true, 0.2f)        // 状态栏字体颜色(黑色)
                 .keyboardEnable(true)           // 解决软键盘与底部输入框冲突问题，默认为false
+                .fitsSystemWindows(true)
                 .init();
     }
 
-    private void loadFragment(String title) {
-        switch (title) {
-            case "影院热映":
-                // 影院热映
-                if (findFragment(HotListFragment.class) == null) {
-                    loadRootFragment(R.id.frame_content, HotListFragment.newInstance(title + "电影"));  // 加载根Fragment
-                }
-                break;
-            case "即将上映":
-                // 即将上映
-                if (findFragment(ComingListFragment.class) == null) {
-                    loadRootFragment(R.id.frame_content, ComingListFragment.newInstance(title + "电影"));  // 加载根Fragment
-                }
-                break;
-            default:
-                // 电影榜单
-                if (findFragment(MoreListFragment.class) == null) {
-                    loadRootFragment(R.id.frame_content, MoreListFragment.newInstance(title));  // 加载根Fragment
-                }
-                break;
-        }
+    private void initToolBar() {
+        toolbar.setTitle("设置");
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

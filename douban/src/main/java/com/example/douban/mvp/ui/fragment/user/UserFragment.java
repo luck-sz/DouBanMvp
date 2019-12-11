@@ -4,23 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabHost;
 
+import com.example.douban.R;
 import com.example.douban.app.base.MySupportFragment;
-import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.ArmsUtils;
-
 import com.example.douban.di.component.DaggerUserComponent;
 import com.example.douban.mvp.contract.UserContract;
 import com.example.douban.mvp.presenter.UserPresenter;
+import com.example.douban.mvp.ui.activity.LoginActivity;
+import com.example.douban.mvp.ui.activity.SettingActivity;
+import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.utils.ArmsUtils;
 
-import com.example.douban.R;
-
-import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -39,9 +40,8 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  */
 public class UserFragment extends MySupportFragment<UserPresenter> implements UserContract.View {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     View view;
+    Unbinder unbinder;
 
     public static UserFragment newInstance() {
         UserFragment fragment = new UserFragment();
@@ -60,12 +60,15 @@ public class UserFragment extends MySupportFragment<UserPresenter> implements Us
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_user, container, false);
+        }
+        return view;
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        initToolBar();
+
     }
 
     @Override
@@ -100,14 +103,16 @@ public class UserFragment extends MySupportFragment<UserPresenter> implements Us
 
     }
 
-    private void initToolBar() {
-        toolbar.setTitle("我的");
-        toolbar.inflateMenu(R.menu.main_user_menu);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                return false;
-            }
-        });
+    @OnClick({R.id.iv_setting, R.id.btn_login})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_setting:
+                Intent intent = new Intent(_mActivity, SettingActivity.class);
+                launchActivity(intent);
+                break;
+            case R.id.btn_login:
+                ArmsUtils.makeText(_mActivity, "暂未开发~");
+                break;
+        }
     }
 }

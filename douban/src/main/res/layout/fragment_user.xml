@@ -1,10 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:ignore="MissingPrefix">
 
-    <include layout="@layout/include_title_user"/>
+    <View
+        android:id="@+id/view_head"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:background="@drawable/ic_my_default_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avatar"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/white"
+        android:src="@drawable/ic_user_default"
+        app:layout_constraintBottom_toBottomOf="@+id/view_head"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_head" />
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:text="请登录"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintStart_toEndOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar" />
+
+    <ImageView
+        android:id="@+id/iv_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/ic_setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_empty"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="96dp"
+        android:src="@drawable/ic_empty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_head" />
+
+    <TextView
+        android:id="@+id/tv_info1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="登录查看标记数据"
+        android:textColor="#9A9A99"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/iv_empty"
+        app:layout_constraintStart_toStartOf="@+id/iv_empty"
+        app:layout_constraintTop_toBottomOf="@+id/iv_empty" />
+
+    <TextView
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:paddingLeft="36dp"
+        android:paddingTop="6dp"
+        android:paddingRight="36dp"
+        android:paddingBottom="6dp"
+        android:text="登录"
+        android:textColor="#5CB36F"
+        android:textSize="16sp"
+        app:bl_corners_radius="6dp"
+        app:bl_stroke_color="#5CB36F"
+        app:bl_stroke_width="1dp"
+        app:layout_constraintEnd_toEndOf="@+id/iv_empty"
+        app:layout_constraintStart_toStartOf="@+id/iv_empty"
+        app:layout_constraintTop_toBottomOf="@+id/tv_info1" />
+
+</android.support.constraint.ConstraintLayout>
