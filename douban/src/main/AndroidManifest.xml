@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".mvp.ui.activity.SettingActivity"></activity>
+        <activity android:name=".mvp.ui.activity.SearchActivity"></activity>
+        <activity android:name=".mvp.ui.activity.SettingActivity" />
         <activity android:name=".mvp.ui.activity.LoginActivity" />
         <activity
             android:name=".mvp.ui.activity.PlayerActivity"

@@ -66,6 +66,8 @@ dependencies {
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
     }
+    // 搜索控件
+    implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
     //视频播放器
     implementation 'com.shuyu:GSYVideoPlayer:6.0.3'
     // 引入multidex库

@@ -20,6 +20,7 @@ import com.example.douban.di.component.DaggerHomeComponent;
 import com.example.douban.mvp.contract.HomeContract;
 import com.example.douban.mvp.presenter.HomePresenter;
 import com.example.douban.mvp.ui.activity.MoreActivity;
+import com.example.douban.mvp.ui.activity.SearchActivity;
 import com.example.douban.mvp.ui.adapter.home.SectionMultipleItemAdapter;
 import com.example.douban.mvp.ui.view.BannerViewHolder;
 import com.jess.arms.di.component.AppComponent;
@@ -155,7 +156,8 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home_search:
-                        ArmsUtils.makeText(_mActivity,"搜索...");
+                        Intent intent = new Intent(_mActivity, SearchActivity.class);
+                        launchActivity(intent);
                         break;
                     default:
                         break;

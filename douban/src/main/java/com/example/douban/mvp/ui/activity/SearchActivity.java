@@ -4,21 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.widget.Toast;
 
 import com.example.douban.R;
 import com.example.douban.app.base.MySupportActivity;
-import com.example.douban.di.component.DaggerSettingComponent;
-import com.example.douban.mvp.contract.SettingContract;
-import com.example.douban.mvp.presenter.SettingPresenter;
+import com.example.douban.di.component.DaggerSearchComponent;
+import com.example.douban.mvp.contract.SearchContract;
+import com.example.douban.mvp.presenter.SearchPresenter;
+import com.example.douban.mvp.ui.view.MySearchView;
 import com.gyf.immersionbar.ImmersionBar;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -27,7 +26,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 12/11/2019 16:21
+ * Created by MVPArmsTemplate on 12/12/2019 15:46
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -35,14 +34,14 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
  * ================================================
  */
-public class SettingActivity extends MySupportActivity<SettingPresenter> implements SettingContract.View {
+public class SearchActivity extends MySupportActivity<SearchPresenter> implements SearchContract.View {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.searchBar)
+    MySearchView searchBar;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerSettingComponent //如找不到该类,请编译一下项目
+        DaggerSearchComponent //如找不到该类,请编译一下项目
                 .builder()
                 .appComponent(appComponent)
                 .view(this)
@@ -52,13 +51,13 @@ public class SettingActivity extends MySupportActivity<SettingPresenter> impleme
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_setting; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
+        return R.layout.activity_search; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         initStatusBar();
-        initToolBar();
+        mPresenter.setSearchView(searchBar);
     }
 
     @Override
@@ -88,6 +87,30 @@ public class SettingActivity extends MySupportActivity<SettingPresenter> impleme
         finish();
     }
 
+    @Override
+    public void initSearchView(MySearchView searchBar) {
+        searchBar.enableSearch();
+        searchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
+            @Override
+            public void onSearchStateChanged(boolean enabled) {
+
+            }
+
+            @Override
+            public void onSearchConfirmed(CharSequence text) {
+                Toast.makeText(SearchActivity.this, text, Toast.LENGTH_SHORT).show();
+                searchBar.setText("");
+            }
+
+            @Override
+            public void onButtonClicked(int buttonCode) {
+                if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
+                    finish();
+                }
+            }
+        });
+    }
+
     private void initStatusBar() {
         ImmersionBar.with(this)
                 .transparentStatusBar()
@@ -96,28 +119,5 @@ public class SettingActivity extends MySupportActivity<SettingPresenter> impleme
                 .keyboardEnable(true)           // 解决软键盘与底部输入框冲突问题，默认为false
                 .fitsSystemWindows(true)
                 .init();
-    }
-
-    private void initToolBar() {
-        toolbar.setTitle("设置");
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
-
-    @OnClick({R.id.sb_setting_clear, R.id.sb_setting_opinion, R.id.sb_setting_about})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.sb_setting_clear:
-                break;
-            case R.id.sb_setting_opinion:
-                break;
-            case R.id.sb_setting_about:
-                break;
-        }
     }
 }
