@@ -39,6 +39,7 @@ import com.example.douban.mvp.presenter.DetailPresenter;
 import com.example.douban.mvp.ui.adapter.detail.DetailMultipleItemAdapter;
 import com.example.douban.mvp.ui.view.CustomChangeBounds;
 import com.example.douban.mvp.ui.view.MyNestedScrollView;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
@@ -88,6 +89,8 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
     TextView tvDetailTypeAndTime;
     @BindView(R.id.rv_content)
     RecyclerView rvContent;
+    @BindView((R.id.loading))
+    SpinKitView loading;
     // 影片详情页id
     private String id;
     // 这个是高斯图背景的高度
@@ -121,12 +124,14 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
 
     @Override
     public void showLoading() {
-
+        nsvScrollview.setVisibility(View.GONE);
+        loading.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        nsvScrollview.setVisibility(View.VISIBLE);
+        loading.setVisibility(View.GONE);
     }
 
     @Override

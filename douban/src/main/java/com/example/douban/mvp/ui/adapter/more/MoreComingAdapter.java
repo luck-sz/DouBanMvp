@@ -45,5 +45,8 @@ public class MoreComingAdapter extends BaseQuickAdapter<DoubanBean.SubjectsBean,
             sbActor.append(item.getCasts().get(i).getName() + " / ");
         }
         helper.setText(R.id.tv_year_actor, item.getYear() + " / " + sbType + "/ " + sbActor);
+        String month = item.getMainland_pubdate().substring(5, 7);
+        String day = item.getMainland_pubdate().substring(8);
+        helper.setText(R.id.tv_date, month + "月" + day + "日");
     }
 }

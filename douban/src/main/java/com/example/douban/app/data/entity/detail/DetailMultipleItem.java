@@ -42,12 +42,6 @@ public class DetailMultipleItem extends SectionMultiEntity<Object> implements Mu
         this.itemType = itemType;
     }
 
-    public DetailMultipleItem(int itemType, String content) {
-        super(content);
-        this.content = content;
-        this.itemType = itemType;
-    }
-
     public String getTitle() {
         return title;
     }

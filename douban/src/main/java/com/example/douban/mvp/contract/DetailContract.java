@@ -37,6 +37,7 @@ public interface DetailContract {
 
         // 填充头部数据
         void setHeadData(DetailBean detailBean);
+
         // 填充内容数据
         void setDetailAdapter(DetailMultipleItemAdapter detailAdapter);
     }

@@ -66,6 +66,11 @@ dependencies {
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
     }
+    implementation 'jp.co.cyberagent.android:gpuimage:2.0.4'
+    // 图片效果
+    implementation 'jp.wasabeef:glide-transformations:4.1.0'
+    // 加载动画
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
     // 搜索控件
     implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
     //视频播放器

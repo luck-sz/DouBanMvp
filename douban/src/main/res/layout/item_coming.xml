@@ -68,7 +68,7 @@
         android:paddingBottom="3dp"
         android:text="11月08日"
         android:textColor="#f44336"
-        android:textSize="8sp"
+        android:textSize="10sp"
         app:bl_corners_radius="2dp"
         app:bl_stroke_color="#f44336"
         app:bl_stroke_width="1dp" />

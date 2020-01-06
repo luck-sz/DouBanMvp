@@ -11,6 +11,9 @@ import com.example.douban.mvp.ui.activity.DetailActivity;
 import com.example.douban.mvp.ui.adapter.home.SectionMultipleItemAdapter;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
+import com.vondear.rxtool.RxTimeTool;
+
+import timber.log.Timber;
 
 public class ComingMovieProvider extends BaseItemProvider<SectionMultipleItem, BaseViewHolder> {
     @Override
@@ -35,7 +38,10 @@ public class ComingMovieProvider extends BaseItemProvider<SectionMultipleItem, B
         // 电影名字
         helper.setText(R.id.tv_movie_name, data.getSubjectsBean().getTitle());
         helper.setText(R.id.tv_wish, data.getSubjectsBean().getCollect_count() + "人想看");
-        helper.setText(R.id.tv_date, data.getSubjectsBean().getMainland_pubdate());
+        Timber.d(data.getSubjectsBean().getMainland_pubdate());
+        String month = data.getSubjectsBean().getMainland_pubdate().substring(5, 7);
+        String day = data.getSubjectsBean().getMainland_pubdate().substring(8);
+        helper.setText(R.id.tv_date, month + "月" + day + "日");
     }
 
     @Override
