@@ -6,8 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.douban.R;
@@ -17,6 +20,8 @@ import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.gpu.VignetteFilterTransformation;
 
 public class MoviesListAdapter extends BaseQuickAdapter<MovieListBean, BaseViewHolder> {
 
@@ -45,12 +50,15 @@ public class MoviesListAdapter extends BaseQuickAdapter<MovieListBean, BaseViewH
             }
         });
         mRecycleView.setAdapter(subTitleAdapter);
-        ArmsUtils.obtainAppComponentFromContext(mContext)
-                .imageLoader()
-                .loadImage(mContext, ImageConfigImpl
-                        .builder()
-                        .imageView(helper.getView(R.id.movies_img))
-                        .url(item.getImg())
-                        .build());
+//        ArmsUtils.obtainAppComponentFromContext(mContext)
+//                .imageLoader()
+//                .loadImage(mContext, ImageConfigImpl
+//                        .builder()
+//                        .transformation()
+//                        .imageView(helper.getView(R.id.movies_img))
+//                        .url(item.getImg())
+//                        .build());
+        Glide.with(mContext).load(item.getImg())
+                .apply(RequestOptions.bitmapTransform(new VignetteFilterTransformation())).into((ImageView) helper.getView(R.id.movies_img));
     }
 }
