@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import com.example.douban.app.base.MySupportFragment;
 import com.example.douban.mvp.contract.TvContract;
 import com.example.douban.mvp.ui.adapter.tv.TabAdapter;
+import com.example.douban.mvp.ui.view.NoAnimationViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.immersionbar.ImmersionBar;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
@@ -49,7 +51,7 @@ public class TvFragment extends MySupportFragment<TvPresenter> implements TvCont
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.vp_content)
-    ViewPager vp_content;
+    NoAnimationViewPager vp_content;
     @BindView(R.id.tab)
     SlidingTabLayout st_tab;
     View view;
@@ -135,6 +137,12 @@ public class TvFragment extends MySupportFragment<TvPresenter> implements TvCont
         }
         vp_content.setAdapter(adapter);
         st_tab.setViewPager(vp_content);
+        st_tab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vp_content.setCurrentItem(st_tab.getCurrentTab());
+            }
+        });
         // 设置tab选项卡的默认选项
         st_tab.setCurrentTab(0);
     }
