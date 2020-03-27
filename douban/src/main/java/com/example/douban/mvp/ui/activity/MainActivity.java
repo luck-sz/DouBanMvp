@@ -119,6 +119,7 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
     }
 
     private void initBottomNav() {
+        bottomNav.enableAnimation(false);
         bottomNav.setCurrentItem(0);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

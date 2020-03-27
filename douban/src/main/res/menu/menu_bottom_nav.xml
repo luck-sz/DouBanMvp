@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/nav_book"
-        android:icon="@drawable/ic_book"
+        android:icon="@drawable/ic_tv"
         android:title="@string/bottom_nav_book" />
 
     <item

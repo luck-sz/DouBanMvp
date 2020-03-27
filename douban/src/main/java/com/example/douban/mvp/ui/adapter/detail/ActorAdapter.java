@@ -9,11 +9,14 @@ import com.example.douban.app.data.entity.detail.DetailBean;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 
+import java.net.URL;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActorAdapter extends BaseQuickAdapter<DetailBean.CastsBean, BaseViewHolder> {
+
+    private String url = "http://img3.doubanio.com/f/movie/63acc16ca6309ef191f0378faf793d1096a3e606/pics/movie/celebrity-default-large.png";
 
     public ActorAdapter(int layoutResId, List<DetailBean.CastsBean> data) {
         super(layoutResId, data);
@@ -21,8 +24,12 @@ public class ActorAdapter extends BaseQuickAdapter<DetailBean.CastsBean, BaseVie
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, DetailBean.CastsBean castsBean) {
-        // 头像地址
-        String url = castsBean.getAvatars().getLarge();
+
+        if (castsBean.getAvatars() != null) {
+            // 头像地址
+            url = castsBean.getAvatars().getLarge();
+        }
+
         ArmsUtils.obtainAppComponentFromContext(mContext)
                 .imageLoader()
                 .loadImage(mContext, ImageConfigImpl

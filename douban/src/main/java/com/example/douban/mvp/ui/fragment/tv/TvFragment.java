@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.douban.app.base.MySupportFragment;
+import com.example.douban.app.eventbus.Sort;
 import com.example.douban.mvp.contract.TvContract;
 import com.example.douban.mvp.ui.adapter.tv.TabAdapter;
 import com.example.douban.mvp.ui.view.NoAnimationViewPager;
@@ -26,6 +27,8 @@ import com.example.douban.mvp.presenter.TvPresenter;
 
 import com.example.douban.R;
 
+import org.simple.eventbus.EventBus;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,19 +36,6 @@ import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
-
-/**
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 11/11/2019 10:29
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
- */
 public class TvFragment extends MySupportFragment<TvPresenter> implements TvContract.View {
 
     @BindView(R.id.toolbar)
@@ -123,6 +113,14 @@ public class TvFragment extends MySupportFragment<TvPresenter> implements TvCont
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.book_filter:
+                    case R.id.main_note:
+                        showMessage("暂未开发...");
+                        break;
+                    default:
+                        break;
+                }
                 return false;
             }
         });

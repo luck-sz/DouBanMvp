@@ -100,7 +100,6 @@ public class SettingActivity extends MySupportActivity<SettingPresenter> impleme
 
     private void initToolBar() {
         toolbar.setTitle("设置");
-        toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

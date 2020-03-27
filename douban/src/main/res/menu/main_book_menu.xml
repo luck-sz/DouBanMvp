@@ -5,13 +5,13 @@
     <item
         android:id="@+id/book_filter"
         android:icon="@drawable/ic_filter"
-        android:title="@string/main_search"
+        android:title="排序"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/main_note"
         android:icon="@drawable/ic_note"
-        android:title="@string/main_search"
+        android:title="日期"
         app:showAsAction="always" />
 
 </menu>

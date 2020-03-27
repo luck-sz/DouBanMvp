@@ -111,7 +111,7 @@ public class UserFragment extends MySupportFragment<UserPresenter> implements Us
                 launchActivity(intent);
                 break;
             case R.id.btn_login:
-                ArmsUtils.makeText(_mActivity, "暂未开发~");
+                showMessage("暂未开发...");
                 break;
         }
     }

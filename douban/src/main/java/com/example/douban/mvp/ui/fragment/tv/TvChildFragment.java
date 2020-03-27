@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.douban.app.base.MySupportFragment;
+import com.example.douban.app.eventbus.Sort;
 import com.example.douban.mvp.ui.adapter.tv.TvItemAdapter;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
@@ -22,7 +23,11 @@ import com.example.douban.mvp.presenter.TvChildPresenter;
 
 import com.example.douban.R;
 
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
+
 import butterknife.BindView;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -135,6 +140,7 @@ public class TvChildFragment extends MySupportFragment<TvChildPresenter> impleme
         mRefreshLayout.setOnRefreshListener(() -> {
             if (mPresenter != null) {
                 mPresenter.getData(tag, true);
+                Timber.d("标签%s", tag);
             }
         });
     }

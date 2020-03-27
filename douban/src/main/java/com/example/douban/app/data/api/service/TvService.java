@@ -26,7 +26,7 @@ public interface TvService {
      * 根据标签获取该分类的电视
      */
     @Headers({"Domain-Name: tv"})
-    @GET("/j/search_subjects?type=tv&sort=recommend&page_limit=20&page_start=0")
+    @GET("/j/search_subjects?type=tv&sort=recommend&page_limit=100&page_start=0")
     Observable<TvBean> getTvData(@Query("tag") String tag);
 
 }

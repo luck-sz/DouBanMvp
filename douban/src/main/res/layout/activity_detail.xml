@@ -58,7 +58,7 @@
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/loading"
-        style="@style/SpinKitView.Large.FadingCircle"
+        style="@style/SpinKitView.CubeGrid"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_gravity="center"

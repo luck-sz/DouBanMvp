@@ -21,6 +21,7 @@ import com.example.douban.mvp.contract.HomeContract;
 import com.example.douban.mvp.presenter.HomePresenter;
 import com.example.douban.mvp.ui.activity.MoreActivity;
 import com.example.douban.mvp.ui.activity.SearchActivity;
+import com.example.douban.mvp.ui.activity.WebViewActivity;
 import com.example.douban.mvp.ui.adapter.home.SectionMultipleItemAdapter;
 import com.example.douban.mvp.ui.view.BannerViewHolder;
 import com.jess.arms.di.component.AppComponent;
@@ -32,6 +33,7 @@ import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import java.util.List;
 
 import butterknife.BindView;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -204,7 +206,10 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         mMyBanner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int position) {
-                showMessage("当前位置:" + position);
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra(WebViewActivity.PARAM_TITLE, banners.get(position).getTitle());
+                intent.putExtra(WebViewActivity.PARAM_URL, banners.get(position).getDetail());
+                launchActivity(intent);
             }
         });
         mMyBanner.setPages(banners, new MZHolderCreator<BannerViewHolder>() {

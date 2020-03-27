@@ -92,6 +92,7 @@ public class TvChildPresenter extends BasePresenter<TvChildContract.Model, TvChi
     private void setTvAdapter(List<TvBean.SubjectsBean> subjectsBeans, boolean update) {
         if (tvItemAdapter == null) {
             tvItemAdapter = new TvItemAdapter(R.layout.item_tv, subjectsBeans);
+            mRootView.setTvItemAdapter(tvItemAdapter);
         }
         if (update) {
             tvItemAdapter.setNewData(subjectsBeans);
@@ -105,6 +106,5 @@ public class TvChildPresenter extends BasePresenter<TvChildContract.Model, TvChi
                 mRootView.launchActivity(intent);
             }
         });
-        mRootView.setTvItemAdapter(tvItemAdapter);
     }
 }
