@@ -38,7 +38,7 @@ public class VideoListProvider extends BaseItemProvider<DetailMultipleItem, Base
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(mContext, PlayerActivity.class);
-                intent.putExtra("PlayBean", (Serializable) data.getBean().getTrailers().get(position));
+                intent.putExtra("PlayBean", data.getBean().getTrailers().get(position));
                 mContext.startActivity(intent);
             }
         });

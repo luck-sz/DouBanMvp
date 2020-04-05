@@ -4,12 +4,6 @@ import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
-/**
- * Created by apk2sf on 2017/12/2.
- * email: apk2sf@163.com
- * QQ：337081267
- */
-
 public class NoAnimationViewPager extends ViewPager {
 
     public NoAnimationViewPager(Context context) {

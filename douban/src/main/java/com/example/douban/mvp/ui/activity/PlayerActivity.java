@@ -73,7 +73,6 @@ public class PlayerActivity extends BaseActivity<PlayerPresenter> implements Pla
         initImmersionBar();
         if (getIntent() != null) {
             DetailBean.TrailersBean trailersBean = (DetailBean.TrailersBean) getIntent().getSerializableExtra("PlayBean");
-            Timber.d("获取到的标题" + trailersBean.getTitle());
             mPresenter.playerVideo(trailersBean);
         }
     }
