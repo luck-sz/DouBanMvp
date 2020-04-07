@@ -18,6 +18,10 @@ android {
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
         multiDexEnabled true
+        ndk {
+            //APP的build.gradle设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
+        }
     }
 
     buildTypes {
@@ -43,17 +47,20 @@ android {
         disable "ResourceType"
         abortOnError false
     }
-    buildToolsVersion = android.buildToolsVersion
-//    configurations.all {
-//        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-//            def requested = details.requested
-//            if (requested.group == 'com.android.support') {
-//                if (!requested.name.startsWith("multidex")) {
-//                    details.useVersion '28.0.0'
-//                }
-//            }
-//        }
-//    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+        jumboMode = true
+        preDexLibraries = false
+        additionalParameters = [
+                '--multi-dex',//多分包
+                '--set-max-idx-number=60000'//每个包内方法数上限
+        ]
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
