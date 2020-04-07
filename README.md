@@ -1,7 +1,7 @@
 # DouBanMvp
 #### 项目地址
 
-[下载体验](https://www.pgyer.com/7JS0)
+[下载体验【密码:123456】](https://www.pgyer.com/7JS0)
 
 #### 项目截图
 
