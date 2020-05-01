@@ -74,26 +74,20 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     @Override
     public Observable<List<Banner>> getBanners(boolean update) {
 
-        Observable<List<Banner>> mCacheBanner = Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-                String mBannerData = RxSPTool.getContent(mApplication, "BannerData");
-                if (!mBannerData.equals("")) {
-                    emitter.onNext(mBannerData);
-                } else {
-                    emitter.onComplete();
-                }
+        Observable<List<Banner>> mCacheBanner = Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            String mBannerData = RxSPTool.getContent(mApplication, "BannerData");
+            if (!mBannerData.equals("")) {
+                emitter.onNext(mBannerData);
+            } else {
+                emitter.onComplete();
             }
-        }).map(new Function<String, List<Banner>>() {
-            @Override
-            public List<Banner> apply(String s) throws Exception {
-                List<Banner> list = mGson.fromJson(s, new TypeToken<List<Banner>>() {
-                }.getType());
-                if (list.size() > 0) {
-                    return list;
-                } else {
-                    return null;
-                }
+        }).map(s -> {
+            List<Banner> list = mGson.fromJson(s, new TypeToken<List<Banner>>() {
+            }.getType());
+            if (list.size() > 0) {
+                return list;
+            } else {
+                return null;
             }
         });
 

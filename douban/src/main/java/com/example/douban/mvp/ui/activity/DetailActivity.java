@@ -327,6 +327,8 @@ public class DetailActivity extends MySupportActivity<DetailPresenter> implement
         } else {
             drawable.mutate().setAlpha(255);
             ivTitleHeadBg.setImageDrawable(drawable);
+
+
         }
     }
 
